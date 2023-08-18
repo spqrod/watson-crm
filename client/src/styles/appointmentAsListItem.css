@@ -1,0 +1,33 @@
+.appointmentAsListItem {
+    display: grid;
+    gap: var(--small-gap);
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    grid-template-rows: 30px;
+
+    .infoContainer {
+        overflow: scroll;
+    }
+
+    .time {
+
+    }
+
+    .firstName {
+
+    }
+
+    .lastName {
+
+    }   
+
+    .doctor {
+
+    }
+
+    .procedure {
+    }
+
+    .insurance {
+    }
+}
