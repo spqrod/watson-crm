@@ -4,7 +4,7 @@
         height: 100%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 50px 50px 1fr;
+        grid-template-rows: 100px 50px 1fr;
         background-color: var(--surface);
         border: var(--border);
 
@@ -16,6 +16,13 @@
             justify-content: start;
             padding-left: var(--medium-gap);
             padding-top: var(--medium-gap);
+
+            .todayContainer, .tomorrowContainer, .pickDateContainer {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
         }
         
         .addNewContainer {

@@ -3,6 +3,10 @@ const cors = require("cors");
 const app = express();
 const { logger } = require("./logger.js");
 
+const dayjs = require("dayjs");
+const customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
+
 app.use(express.static("build"));
 app.use(express.json());
 app.use(cors());
@@ -15,21 +19,29 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/appointments", (req, res) => {
-    const appointments = exampleAppointmentsArray;
+app.get("/appointments/:selectedDate", (req, res) => {
+    const { selectedDate } = req.params;
+    function testIfDateEqualsSelectedDate(appointment) {
+        return (appointment.date === selectedDate);
+    }
+    const appointments = exampleAppointmentsArray.filter(testIfDateEqualsSelectedDate);
     res.json(appointments);
 });
 
 app.listen(port, () => console.log(`Listening to port ${port}`));
 
 // TEMP
-
-const date1 = new Date();
+const dateFormat = "DD-MM-YYYY";
+const dateToday = dayjs().format(dateFormat);
+const dateTomorrow = dayjs("20-08-2023", dateFormat).format(dateFormat);
+const date1 = dayjs("20-08-2023", dateFormat).format(dateFormat);
+const date2 = dayjs("21-08-2023", dateFormat).format(dateFormat);
+console.log(date1);
 
 const exampleAppointmentsArray = [
     {
         id: 0,
-        date: "02.03.2023",
+        date: dateToday,
         time: "10:30",
         firstName: "John",
         lastName: "Watson",
@@ -39,7 +51,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 1,
-        date: "02.03.2023",
+        date: dateToday,
         time: "11:30",
         firstName: "Mark",
         lastName: "Brown",
@@ -49,7 +61,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 2,
-        date: "02.03.2023",
+        date: date1,
         time: "12:30",
         firstName: "Leeroy",
         lastName: "Hawking",
@@ -59,7 +71,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 3,
-        date: "02.03.2023",
+        date: date1,
         time: "13:30",
         firstName: "Stephen",
         lastName: "Jenkins",
@@ -69,7 +81,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 4,
-        date: "02.03.2023",
+        date: date1,
         time: "14:00",
         firstName: "Lark",
         lastName: "Hawking",
@@ -79,7 +91,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 5,
-        date: "02.03.2023",
+        date: date1,
         time: "15:00",
         firstName: "Stephen",
         lastName: "Downing",
@@ -89,7 +101,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 6,
-        date: "02.03.2023",
+        date: date1,
         time: "15:30",
         firstName: "Jessica",
         lastName: "Hawking",
@@ -99,7 +111,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 7,
-        date: "02.03.2023",
+        date: date1,
         time: "16:00",
         firstName: "Chris",
         lastName: "Brown",
@@ -109,7 +121,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 8,
-        date: "02.03.2023",
+        date: date2,
         time: "16:30",
         firstName: "Mark",
         lastName: "Hawking",
@@ -119,7 +131,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 9,
-        date: "02.03.2023",
+        date: date2,
         time: "16:30",
         firstName: "Stephen",
         lastName: "Hawking",
@@ -129,7 +141,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 10,
-        date: "02.03.2023",
+        date: date2,
         time: "16:30",
         firstName: "Facundo",
         lastName: "Montana",
@@ -139,7 +151,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 11,
-        date: "02.03.2023",
+        date: date2,
         time: "16:30",
         firstName: "Sergey",
         lastName: "Brin",
@@ -149,7 +161,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 12,
-        date: "02.03.2023",
+        date: date2,
         time: "16:30",
         firstName: "Nikola",
         lastName: "Tesla",
@@ -159,7 +171,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 13,
-        date: "02.03.2023",
+        date: date2,
         time: "16:30",
         firstName: "John",
         lastName: "Kennedy",
@@ -169,7 +181,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 14,
-        date: "02.03.2023",
+        date: date2,
         time: "16:30",
         firstName: "Donald",
         lastName: "Ceasar",

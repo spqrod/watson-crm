@@ -2,25 +2,34 @@ import "../styles/appointments.css";
 import AppointmentAsListItem from "../components/AppointmentAsListItem";
 import AppointmentFormForDialog from "../components/AppointmentFormForDialog";
 import { useState, useEffect } from "react";
+import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 
+import dayjs from "dayjs";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 export default function Appointments() {
+    
 
-    const date = new Date().toDateString();
-
+    // const [ selectedDate, setSelectedDate ] = useState(dayjs().format("DD-MM-YYYY"));
     const [ appointmentsArray, setAppointmentsArray ] = useState([]);
     const [ selectedAppointment, setSelectedAppointment ] = useState();
 
+    const dateFormatForDB = "DD-MM-YYYY";
+    const dateFormatForHeader = "dddd, DD.MM.YYYY";
+    const todayDate = dayjs().format(dateFormatForHeader);
+    const tomorrowDate = dayjs().add(1, "day").format(dateFormatForHeader);
+    const dateInFuture = dayjs().add(9, "day").format(dateFormatForHeader);
+
     const api = {
-        getAppointments: function() {
-            const fetchURL = "/appointments";
+        getAppointments: function(data) {
+            const fetchURL = `/appointments/${data}`;
             return fetch(fetchURL).then(res => res.json());
         }
     };
 
     const controller = {
-        getAppointments: function() {
-            api.getAppointments().then(res => setAppointmentsArray(res));
+        getAppointments: function(selectedDate) {
+            api.getAppointments(selectedDate).then(res => setAppointmentsArray(res));
         },
         handleAppointmentClick: function(e) {
             const appointmentID = e.currentTarget.id;
@@ -34,6 +43,14 @@ export default function Appointments() {
         getPatientData: function() {
 
         },
+        handleTodayClick: function() {
+            const selectedDate = dayjs().format(dateFormatForDB);
+            controller.getAppointments(selectedDate);
+        },
+        handleTomorrowClick: function() {
+            const selectedDate = dayjs().add(1, "day").format(dateFormatForDB);
+            controller.getAppointments(selectedDate);
+        }
     };
     
     const display = {
@@ -52,15 +69,25 @@ export default function Appointments() {
     };
 
     useEffect(() => {
-        controller.getAppointments();
+        // controller.getAppointments();
     }, []);
 
     return (
         <section className="appointmentsPage section">
             <div className="contentContainer">
-
                 <div className="dateContainer">
-                    <p>{date}</p>
+                    <div className="todayContainer" onClick={controller.handleTodayClick}>
+                        <p>Today</p>
+                        <p>{ todayDate }</p>
+                    </div>
+                    <div className="tomorrowContainer" onClick={controller.handleTomorrowClick}>
+                        <p>Tomorrow</p>
+                        <p>{ tomorrowDate }</p>
+                    </div>
+                    <div className="pickDateContainer">
+                        <CalendarMonthOutlinedIcon />
+                        <p>{ dateInFuture }</p>
+                    </div>
                 </div>
                 <div className="addNewContainer">
                     New Appointment
