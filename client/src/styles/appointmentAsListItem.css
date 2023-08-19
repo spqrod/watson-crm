@@ -5,10 +5,6 @@
     grid-auto-flow: column;
     grid-template-rows: 30px;
 
-    &.headerRow {
-        border-bottom: var(--border);
-    }
-
     .infoContainer {
         overflow: scroll;
     }

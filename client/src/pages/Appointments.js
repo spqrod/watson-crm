@@ -209,11 +209,21 @@ export default function Appointments() {
             <div className="dateContainer">
                 <p>{date}</p>
             </div>
+            <div className="addNewContainer">
+                New Appointment
+            </div>
             <div className="searchContainer">
                 <p>Search</p>
             </div>
+            <div className="headerRowContainer">
+                <p>Time</p>
+                <p>First Name</p>
+                <p>Last Name</p>
+                <p>Doctor</p>
+                <p>Procedure</p>
+                <p>Payment</p>
+            </div>
             <ul className="appointmentListContainer" >
-                <AppointmentAsListItem isHeaderRow={ true } appointment={ appointmentHeaderRow } />
                 { display.renderAppointmentsList() }
             </ul>
             <dialog className="dialog">

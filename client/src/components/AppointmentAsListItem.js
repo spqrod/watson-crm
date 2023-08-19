@@ -3,13 +3,9 @@ import "../styles/appointmentAsListItem.css";
 export default function AppointmentAsListItem(data) {
 
     const { appointment, handleAppointmentClick } = data;
-    const { isHeaderRow } = data;
-    let classNameString = "appointmentAsListItem"
-    if (isHeaderRow) 
-        classNameString += " headerRow"
 
     return (
-        <li id={ appointment.id } className={ classNameString } onClick={handleAppointmentClick}>
+        <li id={ appointment.id } className="appointmentAsListItem" onClick={handleAppointmentClick}>
             <div className="infoContainer time">
                 <p>{appointment.time}</p>
             </div>

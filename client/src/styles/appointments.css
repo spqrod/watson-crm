@@ -1,27 +1,48 @@
 .appointmentsPage {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 50px 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 30px 30px 1fr;
 
     .dateContainer {
         grid-column: 1 / 2;
         grid-row: 1 / 2;
-        border: var(--border);
         display: flex;
         align-items: center;
+    }
+
+    .addNewContainer {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
     }
     
     .searchContainer {
-        grid-column: 2 / 3;
+        grid-column: 3 / 4;
         grid-row: 1 / 2;
-        border: var(--border);
         display: flex;
         align-items: center;
     }
     
-    .appointmentListContainer {
-        grid-column: 1 / 3;
+    .headerRowContainer {
+        grid-column: 1 / 4;
         grid-row: 2 / 3;
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+        gap: var(--small-gap);
+        border-top: var(--border);
+        border-left: var(--border);
+        border-right: var(--border);
+
+        & p {
+            display: flex;
+            align-items: center;
+        }
+
+    }
+    
+    .appointmentListContainer {
+        grid-column: 1 / 4;
+        grid-row: 3 / 4;
         border: var(--border);
         overflow: scroll;
     }
