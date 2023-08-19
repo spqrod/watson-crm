@@ -161,17 +161,6 @@ export default function Appointments() {
 
     ];
 
-    const appointmentHeaderRow = {
-        id: 0,
-        date: "Date",
-        time: "Time",
-        firstName: "First Name",
-        lastName: "Last Name",
-        doctor: "Doctor",
-        procedure: "Procedure",
-        payment: "Payment"
-    };
-
     const date = new Date().toDateString();
 
     const [ selectedAppointment, setSelectedAppointment ] = useState(appointmentsArray[0]);
@@ -206,34 +195,38 @@ export default function Appointments() {
 
     return (
         <section className="appointmentsPage section">
-            <div className="dateContainer">
-                <p>{date}</p>
+            <div className="contentContainer">
+
+                <div className="dateContainer">
+                    <p>{date}</p>
+                </div>
+                <div className="addNewContainer">
+                    New Appointment
+                </div>
+                <div className="searchContainer">
+                    <p>Search</p>
+                </div>
+                <div className="headerRowContainer">
+                    <p>Time</p>
+                    <p>First Name</p>
+                    <p>Last Name</p>
+                    <p>Doctor</p>
+                    <p>Procedure</p>
+                    <p>Payment</p>
+                </div>
+                <ul className="appointmentListContainer" >
+                    { display.renderAppointmentsList() }
+                </ul>
+                <dialog className="dialog">
+                    <form className="formForDialogCloseButton" method="dialog">
+                        <button className="closeButton" >
+                            x
+                        </button>
+                    </form>
+                    <AppointmentFormForDialog appointment={selectedAppointment} />
+                </dialog>
             </div>
-            <div className="addNewContainer">
-                New Appointment
-            </div>
-            <div className="searchContainer">
-                <p>Search</p>
-            </div>
-            <div className="headerRowContainer">
-                <p>Time</p>
-                <p>First Name</p>
-                <p>Last Name</p>
-                <p>Doctor</p>
-                <p>Procedure</p>
-                <p>Payment</p>
-            </div>
-            <ul className="appointmentListContainer" >
-                { display.renderAppointmentsList() }
-            </ul>
-            <dialog className="dialog">
-                <form className="formForDialogCloseButton" method="dialog">
-                    <button className="closeButton" >
-                        x
-                    </button>
-                </form>
-                <AppointmentFormForDialog appointment={selectedAppointment} />
-            </dialog>
+
         </section>
     );
 }

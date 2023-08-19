@@ -5,6 +5,10 @@
     grid-auto-flow: column;
     grid-template-rows: 30px;
 
+    &:hover {
+        background-color: var(--primary-container);
+    }
+
     .infoContainer {
         overflow: scroll;
     }

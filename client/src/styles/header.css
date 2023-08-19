@@ -1,7 +1,7 @@
 .header {
     height: var(--header-height);
     padding: var(--big-gap) var(--side-padding-for-sections);
-    background-color: var(--background);
+    background-color: var(--surface);
     display: flex;
     align-items: center;
     border-bottom: var(--border);

@@ -22,7 +22,7 @@ export default function AppointmentAsListItem(data) {
                 <p>{appointment.procedure}</p>
             </div>
             <div className="infoContainer insurance">
-                <p>{appointment.insurance}</p>
+                <p>{appointment.payment}</p>
             </div>
         </li>
     );

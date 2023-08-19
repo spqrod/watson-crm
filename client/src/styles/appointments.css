@@ -1,18 +1,25 @@
 .appointmentsPage {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 30px 30px 1fr;
 
-    .dateContainer {
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-        display: flex;
-        align-items: center;
-    }
+    .contentContainer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 50px 50px 1fr;
+        background-color: var(--surface);
+        border: var(--border);
 
+        .dateContainer {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            display: flex;
+            align-items: center;
+            padding-left: var(--medium-gap);
+            padding-top: var(--medium-gap);
+        }
+    
     .addNewContainer {
         grid-column: 2 / 3;
         grid-row: 1 / 2;
+        padding-top: var(--medium-gap);
     }
     
     .searchContainer {
@@ -20,6 +27,8 @@
         grid-row: 1 / 2;
         display: flex;
         align-items: center;
+        padding-right: var(--medium-gap);
+        padding-top: var(--medium-gap);
     }
     
     .headerRowContainer {
@@ -30,21 +39,25 @@
         grid-auto-flow: column;
         gap: var(--small-gap);
         border-top: var(--border);
-        border-left: var(--border);
-        border-right: var(--border);
-
+        border-bottom: var(--border);
+        padding-right: var(--medium-gap);
+        padding-left: var(--medium-gap);
+        
         & p {
             display: flex;
             align-items: center;
         }
-
+        
     }
     
     .appointmentListContainer {
         grid-column: 1 / 4;
         grid-row: 3 / 4;
-        border: var(--border);
         overflow: scroll;
+        padding-right: var(--medium-gap);
+        padding-left: var(--medium-gap);
+        padding-bottom: var(--medium-gap);
     }
+}
     
 }
