@@ -32,14 +32,145 @@ export default function Appointments() {
             id: 2,
             date: "02.03.2023",
             time: "12:30",
+            firstName: "Leeroy",
+            lastName: "Hawking",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 3,
+            date: "02.03.2023",
+            time: "13:30",
+            firstName: "Stephen",
+            lastName: "Jenkins",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 4,
+            date: "02.03.2023",
+            time: "14:00",
+            firstName: "Lark",
+            lastName: "Hawking",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 5,
+            date: "02.03.2023",
+            time: "15:00",
+            firstName: "Stephen",
+            lastName: "Downing",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 6,
+            date: "02.03.2023",
+            time: "15:30",
+            firstName: "Jessica",
+            lastName: "Hawking",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 7,
+            date: "02.03.2023",
+            time: "16:00",
+            firstName: "Chris",
+            lastName: "Brown",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 8,
+            date: "02.03.2023",
+            time: "16:30",
+            firstName: "Mark",
+            lastName: "Hawking",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 9,
+            date: "02.03.2023",
+            time: "16:30",
             firstName: "Stephen",
             lastName: "Hawking",
             doctor: "Dr Watson",
             procedure: "Scaling",
             payment: "Cash"
         },
+        {
+            id: 10,
+            date: "02.03.2023",
+            time: "16:30",
+            firstName: "Facundo",
+            lastName: "Montana",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Nhima"
+        },
+        {
+            id: 11,
+            date: "02.03.2023",
+            time: "16:30",
+            firstName: "Sergey",
+            lastName: "Brin",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
+        {
+            id: 12,
+            date: "02.03.2023",
+            time: "16:30",
+            firstName: "Nikola",
+            lastName: "Tesla",
+            doctor: "Dr Watson",
+            procedure: "Whitening",
+            payment: "Cash"
+        },
+        {
+            id: 13,
+            date: "02.03.2023",
+            time: "16:30",
+            firstName: "John",
+            lastName: "Kennedy",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Nhima"
+        },
+        {
+            id: 14,
+            date: "02.03.2023",
+            time: "16:30",
+            firstName: "Donald",
+            lastName: "Ceasar",
+            doctor: "Dr Watson",
+            procedure: "Scaling",
+            payment: "Cash"
+        },
 
     ];
+
+    const appointmentHeaderRow = {
+        id: 0,
+        date: "Date",
+        time: "Time",
+        firstName: "First Name",
+        lastName: "Last Name",
+        doctor: "Doctor",
+        procedure: "Procedure",
+        payment: "Payment"
+    };
 
     const date = new Date().toDateString();
 
@@ -82,6 +213,7 @@ export default function Appointments() {
                 <p>Search</p>
             </div>
             <ul className="appointmentListContainer" >
+                <AppointmentAsListItem isHeaderRow={ true } appointment={ appointmentHeaderRow } />
                 { display.renderAppointmentsList() }
             </ul>
             <dialog className="dialog">

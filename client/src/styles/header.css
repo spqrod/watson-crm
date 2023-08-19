@@ -4,6 +4,7 @@
     background-color: var(--background);
     display: flex;
     align-items: center;
+    border-bottom: var(--border);
 
     .menuContainer {
         display: flex;

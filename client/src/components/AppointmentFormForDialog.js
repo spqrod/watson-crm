@@ -41,13 +41,16 @@ export default function AppointmentFormForDialog(data) {
                     <input type="text" name="procedure" id="procedure" value={selectedAppointment.procedure}/>
                 </div>
 
-
-
             </div>
 
-            <button className="button">
-                Save
-            </button>
+            <div className="buttonsContainer">
+                <button className="button">
+                    Delete
+                </button>
+                <button className="button">
+                    Save
+                </button>
+            </div>
 
 
         </form>
