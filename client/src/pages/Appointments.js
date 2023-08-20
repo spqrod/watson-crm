@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 export default function Appointments() {
-    
 
     // const [ selectedDate, setSelectedDate ] = useState(dayjs().format("DD-MM-YYYY"));
     const [ appointmentsArray, setAppointmentsArray ] = useState([]);
@@ -18,7 +17,8 @@ export default function Appointments() {
     const dateFormatForHeader = "dddd, DD.MM.YYYY";
     const todayDate = dayjs().format(dateFormatForHeader);
     const tomorrowDate = dayjs().add(1, "day").format(dateFormatForHeader);
-    const dateInFuture = dayjs().add(9, "day").format(dateFormatForHeader);
+    const todayForPicker = dayjs().format("YYYY-MM-DD");
+    const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
 
     const api = {
         getAppointments: function(data) {
@@ -38,7 +38,8 @@ export default function Appointments() {
             display.showDialog(appointment);
         },
         getAppointment: function(id) {
-            return appointmentsArray[id];
+            const appointment = appointmentsArray.find(item => item.id == id);
+            return appointment;
         },
         getPatientData: function() {
 
@@ -50,7 +51,17 @@ export default function Appointments() {
         handleTomorrowClick: function() {
             const selectedDate = dayjs().add(1, "day").format(dateFormatForDB);
             controller.getAppointments(selectedDate);
+        },
+        handleDatePickerClick: function() {
+            const datePicker = document.querySelector(".datePicker");
+            datePicker.showPicker();
+        },
+        handleDateSelect: function() {
+            const datePicker = document.querySelector(".datePicker");
+            const selectedDate = dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForDB);
+            controller.getAppointments(selectedDate);
         }
+
     };
     
     const display = {
@@ -70,6 +81,7 @@ export default function Appointments() {
 
     useEffect(() => {
         // controller.getAppointments();
+
     }, []);
 
     return (
@@ -84,9 +96,11 @@ export default function Appointments() {
                         <p>Tomorrow</p>
                         <p>{ tomorrowDate }</p>
                     </div>
-                    <div className="pickDateContainer">
-                        <CalendarMonthOutlinedIcon />
-                        <p>{ dateInFuture }</p>
+                    <div className="datePickerContainer">
+                        <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
+                            <CalendarMonthOutlinedIcon />
+                            <input className="datePicker" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelect}/>
+                        </label>
                     </div>
                 </div>
                 <div className="addNewContainer">

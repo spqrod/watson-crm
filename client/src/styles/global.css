@@ -41,7 +41,7 @@ li {
 }
 
 /* Input fields */
-
+/* 
 input[type=text], input[type=tel], input[type=email], textarea {
     padding: var(--small-gap);
     font-size: 20px;
@@ -56,7 +56,6 @@ input, input:focus, textarea, textarea:focus {
     border: var(--border);
     outline: 0;
     transition: var(--transition);
-    /* min-width: 300px; */
 }
 
 .inputField {
@@ -75,7 +74,7 @@ textarea {
     align-items: center;
     gap: var(--medium-gap);
     padding-bottom: var(--big-gap);
-}
+} */
 
 /* Button */
 

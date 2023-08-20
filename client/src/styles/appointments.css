@@ -11,17 +11,39 @@
         .dateContainer {
             grid-column: 1 / 2;
             grid-row: 1 / 2;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             align-items: center;
-            justify-content: start;
             padding-left: var(--medium-gap);
             padding-top: var(--medium-gap);
 
-            .todayContainer, .tomorrowContainer, .pickDateContainer {
+            .todayContainer, .tomorrowContainer, .datePickerContainer {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+            }
+
+            .datePickerContainer {
+                position: relative;
+                height: 100%;
+
+                .datePickerLabel {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    text-align: center;
+                }
+
+                /* The input=date is hidden in this fashion, because the date picker is called by clicking the label. If the input=date element is display=none, then the picker appears on the top left on the screen. */
+                .datePicker {
+                    visibility: hidden;
+                    position: absolute;
+                    top: 50%;
+                    left: -50%;
+                    transform: scale(0.01);
+                    pointer-events: none;
+                }
             }
         }
         

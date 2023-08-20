@@ -31,12 +31,12 @@ app.get("/appointments/:selectedDate", (req, res) => {
 app.listen(port, () => console.log(`Listening to port ${port}`));
 
 // TEMP
-const dateFormat = "DD-MM-YYYY";
-const dateToday = dayjs().format(dateFormat);
-const dateTomorrow = dayjs("20-08-2023", dateFormat).format(dateFormat);
-const date1 = dayjs("20-08-2023", dateFormat).format(dateFormat);
-const date2 = dayjs("21-08-2023", dateFormat).format(dateFormat);
-console.log(date1);
+const dateFormatForDB = "DD-MM-YYYY";
+const dateToday = dayjs().format(dateFormatForDB);
+const dateTomorrow = dayjs().add(1, "day").format(dateFormatForDB);
+const date1 = dayjs().add(2, "day").format(dateFormatForDB);
+const date2 = dayjs().add(3, "day").format(dateFormatForDB);
+const date3 = dayjs().add(4, "day").format(dateFormatForDB);
 
 const exampleAppointmentsArray = [
     {
@@ -61,7 +61,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 2,
-        date: date1,
+        date: dateToday,
         time: "12:30",
         firstName: "Leeroy",
         lastName: "Hawking",
@@ -71,7 +71,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 3,
-        date: date1,
+        date: dateTomorrow,
         time: "13:30",
         firstName: "Stephen",
         lastName: "Jenkins",
@@ -81,7 +81,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 4,
-        date: date1,
+        date: dateTomorrow,
         time: "14:00",
         firstName: "Lark",
         lastName: "Hawking",
@@ -91,7 +91,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 5,
-        date: date1,
+        date: dateTomorrow,
         time: "15:00",
         firstName: "Stephen",
         lastName: "Downing",
@@ -121,7 +121,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 8,
-        date: date2,
+        date: date1,
         time: "16:30",
         firstName: "Mark",
         lastName: "Hawking",
@@ -161,7 +161,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 12,
-        date: date2,
+        date: date3,
         time: "16:30",
         firstName: "Nikola",
         lastName: "Tesla",
@@ -171,7 +171,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 13,
-        date: date2,
+        date: date3,
         time: "16:30",
         firstName: "John",
         lastName: "Kennedy",
@@ -181,7 +181,7 @@ const exampleAppointmentsArray = [
     },
     {
         id: 14,
-        date: date2,
+        date: date3,
         time: "16:30",
         firstName: "Donald",
         lastName: "Ceasar",
