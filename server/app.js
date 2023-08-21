@@ -14,6 +14,27 @@ app.use(express.urlencoded({ extended: true }));
 
 const port = 80;    
 
+const timeSlotsForAppointments = [
+    "08:00",
+    "08:30",
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+];
+
 app.use((req, res, next) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
     next();
@@ -26,6 +47,25 @@ app.get("/appointments/:selectedDate", (req, res) => {
     }
     const appointments = exampleAppointmentsArray.filter(testIfDateEqualsSelectedDate);
     res.json(appointments);
+});
+
+app.get("/time-slots/:selectedDate", (req, res) => {
+    let { selectedDate } = req.params;
+    selectedDate = dayjs(selectedDate).format(dateFormatForDB);
+
+    function testIfDateEqualsSelectedDate(appointment) {
+        return (appointment.date === selectedDate);
+    }
+
+    const appointments = exampleAppointmentsArray.filter(testIfDateEqualsSelectedDate);
+    const takenTimeSlots = [];
+    appointments.forEach(appointment => takenTimeSlots.push(appointment.time));
+    let availableTimeSlots = [...timeSlotsForAppointments];
+    takenTimeSlots.forEach(takenTimeSlot => {
+        const index = availableTimeSlots.findIndex((timeSlot) => timeSlot == takenTimeSlot);
+        availableTimeSlots.splice(index, 1);
+    });
+    res.json(availableTimeSlots);
 });
 
 app.listen(port, () => console.log(`Listening to port ${port}`));

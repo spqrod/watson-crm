@@ -35,11 +35,22 @@ p, a, span, div {
     background-color: var(--background);
 }
 
-li {
-    /* list-style-type: circle; */
-    /* list-style-position: inside; */
+input {
+    &[type=text], &[type=tel], &[type=email], &[type=date], &[type=time] {
+        padding: var(--small-gap);
+        font-size: 18px;
+        font-family: var(--font-family-2);
+        color: var(--on-background);
+        border: var(--border);
+        outline: none;
+    }
+    &:focus {
+        outline: none;
+        background-color: var(--surface);
+        color: var(--on-surface);
+        border: var(--border);
+    }
 }
-
 /* Input fields */
 /* 
 input[type=text], input[type=tel], input[type=email], textarea {

@@ -12,6 +12,7 @@ export default function Appointments() {
     // const [ selectedDate, setSelectedDate ] = useState(dayjs().format("DD-MM-YYYY"));
     const [ appointmentsArray, setAppointmentsArray ] = useState([]);
     const [ selectedAppointment, setSelectedAppointment ] = useState();
+    const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([]);
 
     const dateFormatForDB = "DD-MM-YYYY";
     const dateFormatForHeader = "dddd, DD.MM.YYYY";
@@ -24,6 +25,10 @@ export default function Appointments() {
         getAppointments: function(data) {
             const fetchURL = `/appointments/${data}`;
             return fetch(fetchURL).then(res => res.json());
+        },
+        getAvailableTimeSlots(date) {
+            const fetchURL = `/time-slots/${date}`;
+            return fetch(fetchURL).then(res => res.json());
         }
     };
 
@@ -35,7 +40,7 @@ export default function Appointments() {
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
             setSelectedAppointment(appointment);
-            display.showDialog(appointment);
+            display.showDialog();
         },
         getAppointment: function(id) {
             const appointment = appointmentsArray.find(item => item.id == id);
@@ -60,10 +65,17 @@ export default function Appointments() {
             const datePicker = document.querySelector(".datePicker");
             const selectedDate = dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForDB);
             controller.getAppointments(selectedDate);
+        },
+        handleAddNew: function() {
+            setSelectedAppointment();
+            display.showDialog();
+        },
+        getAvailableTimeSlots: function(date) {
+            api.getAvailableTimeSlots(date).then(res => setAvailableTimesSlotsForTimePicker(res));
         }
 
     };
-    
+
     const display = {
         renderAppointmentsList: function() {
             if (appointmentsArray) {
@@ -103,7 +115,7 @@ export default function Appointments() {
                         </label>
                     </div>
                 </div>
-                <div className="addNewContainer">
+                <div className="addNewContainer" onClick={ controller.handleAddNew }>
                     New Appointment
                 </div>
                 <div className="searchContainer">
@@ -120,15 +132,16 @@ export default function Appointments() {
                 <ul className="appointmentListContainer" >
                     { display.renderAppointmentsList() }
                 </ul>
-                <dialog className="dialog">
-                    <form className="formForDialogCloseButton" method="dialog">
-                        <button className="closeButton" >
-                            x
-                        </button>
-                    </form>
-                    <AppointmentFormForDialog appointment={selectedAppointment} />
-                </dialog>
             </div>
+
+            <dialog className="dialog">
+                <form className="formForDialogCloseButton" method="dialog">
+                    <button className="closeButton" >
+                        x
+                    </button>
+                </form>
+                <AppointmentFormForDialog appointment={selectedAppointment} getAvailableTimeSlots={controller.getAvailableTimeSlots} timeSlots={availableTimesSlotsForTimePicker}/>
+            </dialog>
 
         </section>
     );
