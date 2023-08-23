@@ -1,6 +1,6 @@
 import "../styles/appointments.css";
 import AppointmentList from "../components/AppointmentList";
-import AppointmentFormForDialog from "../components/AppointmentFormForDialog";
+import AppointmentFormForDialog from "../components/AppointmentFormDialog";
 import { useState, useEffect } from "react";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 
@@ -42,7 +42,6 @@ export default function Appointments() {
         handleAppointmentClick: function(e) {
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
-            console.log(appointment);
             setSelectedAppointment(appointment);
             display.showDialog();
         },
@@ -123,16 +122,7 @@ export default function Appointments() {
                 </div>
                 <AppointmentList appointmentsArray = { appointmentsArray } handleAppointmentClick = { controller.handleAppointmentClick } />
             </div>
-
-            <dialog className="dialog">
-                <form className="formForDialogCloseButton" method="dialog">
-                    <button className="closeButton" >
-                        x
-                    </button>
-                </form>
-                <AppointmentFormForDialog appointment={selectedAppointment} getAvailableTimeSlots={controller.getAvailableTimeSlots} timeSlots={availableTimesSlotsForTimePicker}/>
-            </dialog>
-
+            <AppointmentFormForDialog appointment={selectedAppointment} getAvailableTimeSlots={controller.getAvailableTimeSlots} timeSlots={availableTimesSlotsForTimePicker}/>
         </section>
     );
 }
