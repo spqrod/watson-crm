@@ -1,4 +1,4 @@
-.appointmentAsListItem {
+.appointmentListItem {
     display: grid;
     gap: var(--small-gap);
     grid-auto-columns: 1fr;
@@ -11,27 +11,5 @@
 
     .infoContainer {
         overflow: scroll;
-    }
-
-    .time {
-
-    }
-
-    .firstName {
-
-    }
-
-    .lastName {
-
-    }   
-
-    .doctor {
-
-    }
-
-    .procedure {
-    }
-
-    .insurance {
     }
 }

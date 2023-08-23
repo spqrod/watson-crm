@@ -1,5 +1,5 @@
 import "../styles/appointments.css";
-import AppointmentAsListItem from "../components/AppointmentAsListItem";
+import AppointmentList from "../components/AppointmentList";
 import AppointmentFormForDialog from "../components/AppointmentFormForDialog";
 import { useState, useEffect } from "react";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
@@ -10,11 +10,11 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 export default function Appointments() {
 
     // const [ selectedDate, setSelectedDate ] = useState(dayjs().format("DD-MM-YYYY"));
-    const [ appointmentsArray, setAppointmentsArray ] = useState([]);
+    const [ appointmentsArray, setAppointmentsArray ] = useState();
     const [ selectedAppointment, setSelectedAppointment ] = useState();
     const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([]);
 
-    const dateFormatForDB = "DD-MM-YYYY";
+    const dateFormatForDB = "YYYY-MM-DD";
     const dateFormatForHeader = "dddd, DD.MM.YYYY";
     const todayDate = dayjs().format(dateFormatForHeader);
     const tomorrowDate = dayjs().add(1, "day").format(dateFormatForHeader);
@@ -34,11 +34,15 @@ export default function Appointments() {
 
     const controller = {
         getAppointments: function(selectedDate) {
-            api.getAppointments(selectedDate).then(res => setAppointmentsArray(res));
+            api.getAppointments(selectedDate).then(res => {
+                res.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
+                setAppointmentsArray(res);
+            });
         },
         handleAppointmentClick: function(e) {
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
+            console.log(appointment);
             setSelectedAppointment(appointment);
             display.showDialog();
         },
@@ -77,24 +81,12 @@ export default function Appointments() {
     };
 
     const display = {
-        renderAppointmentsList: function() {
-            if (appointmentsArray) {
-                const liArray = appointmentsArray.map((item, index) => 
-                    <AppointmentAsListItem appointment={ item } key = { item.id } handleAppointmentClick = { controller.handleAppointmentClick } />
-                )
-                return liArray;
-            }
-        },
+
         showDialog: function() {
             const dialog = document.querySelector(".dialog");
             dialog.showModal();
         },
     };
-
-    useEffect(() => {
-        // controller.getAppointments();
-
-    }, []);
 
     return (
         <section className="appointmentsPage section">
@@ -129,9 +121,7 @@ export default function Appointments() {
                     <p>Procedure</p>
                     <p>Payment</p>
                 </div>
-                <ul className="appointmentListContainer" >
-                    { display.renderAppointmentsList() }
-                </ul>
+                <AppointmentList appointmentsArray = { appointmentsArray } handleAppointmentClick = { controller.handleAppointmentClick } />
             </div>
 
             <dialog className="dialog">
