@@ -25,6 +25,10 @@ export default function AppointmentFormDialog(data) {
         setAvailableTimesSlotsForTimePicker(data.timeSlots);
     }, [data.appointment]);
 
+    useEffect(() => {
+        setAvailableTimesSlotsForTimePicker(data.timeSlots)
+    }, [data.timeSlots]);
+
     return (
         <dialog className="dialog appointmentFormDialog">
             <form className="formForDialogCloseButton" method="dialog">

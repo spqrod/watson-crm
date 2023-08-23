@@ -74,6 +74,7 @@ export default function Appointments() {
             display.showDialog();
         },
         getAvailableTimeSlots: function(date) {
+            console.log(date);
             api.getAvailableTimeSlots(date).then(res => setAvailableTimesSlotsForTimePicker(res));
         }
 

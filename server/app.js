@@ -17,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 
 const port = 80;    
 
+const dateFormatForDB = "YYYY-MM-DD";
+
 const timeSlotsForAppointments = [
     "08:00",
     "08:30",
@@ -38,6 +40,10 @@ const timeSlotsForAppointments = [
     "16:30",
 ];
 
+function convertTimeFormatFromHHMMSSToHHMM(time) {
+    return time.substring(0, 5);
+}
+
 app.use((req, res, next) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
     next();
@@ -46,32 +52,27 @@ app.use((req, res, next) => {
 app.get("/appointments/:selectedDate", (req, res) => {
     const { selectedDate } = req.params;
     database.getAppointmentsForDate(selectedDate).then(appointments => {
-        converTimeFormatFromHHMMSSToHHMM(appointments);
+        appointments.forEach(appointment => appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time));
         res.json(appointments);
     });
-
-    function converTimeFormatFromHHMMSSToHHMM(appointments) {
-        appointments.forEach(appointment => appointment.time = appointment.time.substring(0, 5));
-    }
 });
 
 app.get("/time-slots/:selectedDate", (req, res) => {
     let { selectedDate } = req.params;
     selectedDate = dayjs(selectedDate).format(dateFormatForDB);
+    let takenTimeSlots = [];
 
-    function testIfDateEqualsSelectedDate(appointment) {
-        return (appointment.date === selectedDate);
-    }
+    database.getAvailableTimeSlots(selectedDate).then(timeSlots => {
+        timeSlots.forEach(item => takenTimeSlots.push(convertTimeFormatFromHHMMSSToHHMM(item.time)))
+        let availableTimeSlots = [...timeSlotsForAppointments];
 
-    const appointments = exampleAppointmentsArray.filter(testIfDateEqualsSelectedDate);
-    const takenTimeSlots = [];
-    appointments.forEach(appointment => takenTimeSlots.push(appointment.time));
-    let availableTimeSlots = [...timeSlotsForAppointments];
-    takenTimeSlots.forEach(takenTimeSlot => {
-        const index = availableTimeSlots.findIndex((timeSlot) => timeSlot == takenTimeSlot);
-        availableTimeSlots.splice(index, 1);
+        takenTimeSlots.forEach(takenTimeSlot => {
+            const index = availableTimeSlots.findIndex((availableTimeSlot) => availableTimeSlot == takenTimeSlot);
+            availableTimeSlots.splice(index, 1);
+        });
+
+        res.json(availableTimeSlots);
     });
-    res.json(availableTimeSlots);
 });
 
 // database.getAllAppointments().then(res => console.log(res[0]));

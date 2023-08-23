@@ -11,34 +11,31 @@ const pool = mysql.createPool({
 
 const dateFormatForDB = "YYYY-MM-DD";
 
-
-
 const database = {
     
     addNewAppointment: function(appointment) {
         return pool.query("insert into appointments (date, time, first_name, last_name, doctor, payment) values (?, ?, ?, ?, ?, ?)", 
             [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment]);
     },
-
     addNewAppointmentsFromArray: function(appointmentsArray) {
         appointmentsArray.forEach(appointment => database.addNewAppointment(appointment));
     },
-
     deleteAppointment: function(id) {
         return pool.query("delete from appointments where id=?", id);
     },
-
     deleteAllAppointments: function() {
         return pool.query("delete from appointments");
     },
-
     getAppointmentsForDate: function(date) {
-        return pool.query("select id, date, time, firstName, lastName, doctor, payment, treatment from appointments where date=?", date).then(res => res[0]);
-
+        const query = "select id, date, time, firstName, lastName, doctor, payment, treatment from appointments where date=?";
+        return pool.query(query, date).then(res => res[0]);
     },
-
     getAllAppointments: function() {
         return pool.query("select * from appointments");
+    },
+    getAvailableTimeSlots: function(date) {
+        const query = "select time from appointments where date=?"
+        return pool.query(query, date).then(res => res[0]);
     }
 
 }
