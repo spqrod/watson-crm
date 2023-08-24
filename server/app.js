@@ -57,12 +57,12 @@ app.get("/appointments/:selectedDate", (req, res) => {
     });
 });
 
-app.get("/time-slots/:selectedDate", (req, res) => {
+app.get("/taken-time-slots/:selectedDate", (req, res) => {
     let { selectedDate } = req.params;
     selectedDate = dayjs(selectedDate).format(dateFormatForDB);
     let takenTimeSlots = [];
 
-    database.getAvailableTimeSlots(selectedDate).then(timeSlots => {
+    database.getTakenTimeSlotsForDate(selectedDate).then(timeSlots => {
         timeSlots.forEach(item => takenTimeSlots.push(convertTimeFormatFromHHMMSSToHHMM(item.time)))
         let availableTimeSlots = [...timeSlotsForAppointments];
 

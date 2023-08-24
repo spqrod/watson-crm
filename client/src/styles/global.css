@@ -51,41 +51,6 @@ input {
         border: var(--border);
     }
 }
-/* Input fields */
-/* 
-input[type=text], input[type=tel], input[type=email], textarea {
-    padding: var(--small-gap);
-    font-size: 20px;
-    font-family: var(--font-family-2);
-    color: var(--on-background);
-    line-height: 1.5;
-}
-
-input, input:focus, textarea, textarea:focus {
-    border-radius: var(--border-radius);
-    background-color: var(--surface);
-    border: var(--border);
-    outline: 0;
-    transition: var(--transition);
-}
-
-.inputField {
-    width: 100%;
-}
-
-textarea {
-    width: 100%;
-    min-height: 200px;
-}
-
-.form {
-    width: min(100%, 300px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--medium-gap);
-    padding-bottom: var(--big-gap);
-} */
 
 /* Button */
 
@@ -227,5 +192,5 @@ textarea {
 } 
 
 body:has(.dialog[open]) {
-    overflow: hidden;
+    /* overflow: hidden; */
 }

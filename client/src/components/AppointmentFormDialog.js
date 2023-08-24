@@ -22,9 +22,8 @@ export default function AppointmentFormDialog(data) {
 
     useEffect(() => {
         setSelectedAppointment(data.appointment);
-        setAvailableTimesSlotsForTimePicker(data.timeSlots);
     }, [data.appointment]);
-
+    
     useEffect(() => {
         setAvailableTimesSlotsForTimePicker(data.timeSlots)
     }, [data.timeSlots]);

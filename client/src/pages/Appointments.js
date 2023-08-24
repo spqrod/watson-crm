@@ -27,7 +27,7 @@ export default function Appointments() {
             return fetch(fetchURL).then(res => res.json());
         },
         getAvailableTimeSlots(date) {
-            const fetchURL = `/time-slots/${date}`;
+            const fetchURL = `/taken-time-slots/${date}`;
             return fetch(fetchURL).then(res => res.json());
         }
     };
@@ -43,6 +43,7 @@ export default function Appointments() {
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
             setSelectedAppointment(appointment);
+            controller.getAvailableTimeSlots(appointment.date);
             display.showDialog();
         },
         getAppointment: function(id) {
@@ -74,7 +75,6 @@ export default function Appointments() {
             display.showDialog();
         },
         getAvailableTimeSlots: function(date) {
-            console.log(date);
             api.getAvailableTimeSlots(date).then(res => setAvailableTimesSlotsForTimePicker(res));
         }
 

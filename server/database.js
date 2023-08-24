@@ -14,8 +14,8 @@ const dateFormatForDB = "YYYY-MM-DD";
 const database = {
     
     addNewAppointment: function(appointment) {
-        return pool.query("insert into appointments (date, time, first_name, last_name, doctor, payment) values (?, ?, ?, ?, ?, ?)", 
-            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment]);
+        return pool.query("insert into appointments (date, time, firstName, lastName, doctor, payment, treatment) values (?, ?, ?, ?, ?, ?, ?)", 
+            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment, appointment.treatment]);
     },
     addNewAppointmentsFromArray: function(appointmentsArray) {
         appointmentsArray.forEach(appointment => database.addNewAppointment(appointment));
@@ -27,24 +27,19 @@ const database = {
         return pool.query("delete from appointments");
     },
     getAppointmentsForDate: function(date) {
-        const query = "select id, date, time, firstName, lastName, doctor, payment, treatment from appointments where date=?";
+        const query = "select id, date, time, firstName, lastName, doctor, payment, treatment from appointments where date=? order by time";
         return pool.query(query, date).then(res => res[0]);
     },
     getAllAppointments: function() {
         return pool.query("select * from appointments");
     },
-    getAvailableTimeSlots: function(date) {
+    getTakenTimeSlotsForDate: function(date) {
         const query = "select time from appointments where date=?"
         return pool.query(query, date).then(res => res[0]);
     }
 
 }
 
-// database.addNewAppointmentsFromArray(exampleAppointmentsArray);
-// database.addAppointment(exampleAppointmentsArray[1]).then(res => console.log(res));
-// database.deleteAppointment(2);
-// database.deleteAllAppointments();
-// database.getAllAppointments().then(res => console.log(res[0]));
 
 
 
@@ -62,7 +57,7 @@ const exampleAppointmentsArray = [
         firstName: "John",
         lastName: "Watson",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Nhima"
     },
     {
@@ -72,7 +67,7 @@ const exampleAppointmentsArray = [
         firstName: "Mark",
         lastName: "Brown",
         doctor: "Dr Watson",
-        procedure: "Extraction",
+        treatment: "Extraction",
         payment: "Cash"
     },
     {
@@ -82,7 +77,7 @@ const exampleAppointmentsArray = [
         firstName: "Leeroy",
         lastName: "Hawking",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -92,7 +87,7 @@ const exampleAppointmentsArray = [
         firstName: "Stephen",
         lastName: "Jenkins",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -102,7 +97,7 @@ const exampleAppointmentsArray = [
         firstName: "Lark",
         lastName: "Hawking",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -112,7 +107,7 @@ const exampleAppointmentsArray = [
         firstName: "Stephen",
         lastName: "Downing",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -122,7 +117,7 @@ const exampleAppointmentsArray = [
         firstName: "Jessica",
         lastName: "Hawking",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -132,7 +127,7 @@ const exampleAppointmentsArray = [
         firstName: "Chris",
         lastName: "Brown",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -142,7 +137,7 @@ const exampleAppointmentsArray = [
         firstName: "Mark",
         lastName: "Hawking",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -152,7 +147,7 @@ const exampleAppointmentsArray = [
         firstName: "Stephen",
         lastName: "Hawking",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -162,7 +157,7 @@ const exampleAppointmentsArray = [
         firstName: "Facundo",
         lastName: "Montana",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Nhima"
     },
     {
@@ -172,7 +167,7 @@ const exampleAppointmentsArray = [
         firstName: "Sergey",
         lastName: "Brin",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
     {
@@ -182,7 +177,7 @@ const exampleAppointmentsArray = [
         firstName: "Nikola",
         lastName: "Tesla",
         doctor: "Dr Watson",
-        procedure: "Whitening",
+        treatment: "Whitening",
         payment: "Cash"
     },
     {
@@ -192,7 +187,7 @@ const exampleAppointmentsArray = [
         firstName: "John",
         lastName: "Kennedy",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Nhima"
     },
     {
@@ -202,10 +197,14 @@ const exampleAppointmentsArray = [
         firstName: "Donald",
         lastName: "Ceasar",
         doctor: "Dr Watson",
-        procedure: "Scaling",
+        treatment: "Scaling",
         payment: "Cash"
     },
 
 ];
+
+// database.addNewAppointmentsFromArray(exampleAppointmentsArray);
+// database.deleteAllAppointments();
+// database.getAllAppointments().then(res => console.log(res[0]));
 
 module.exports = { database };
