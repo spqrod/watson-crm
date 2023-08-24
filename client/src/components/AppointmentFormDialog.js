@@ -9,6 +9,8 @@ export default function AppointmentFormDialog(data) {
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
     const { getAvailableTimeSlots } = data;
+    const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
+    const paymentsList = ["Nhima", "Cash", "Swipe", "SES", "Liberty", "Medlink"];
 
    const controller = {
         getSelectedDate: function() {
@@ -50,9 +52,9 @@ export default function AppointmentFormDialog(data) {
                         <label htmlFor="time">Time:</label>
                         <input type="time" name="time" id="time" 
                             defaultValue={selectedAppointment ? selectedAppointment.time : ""}
-                            list="availableTimes"
+                            list="availableTimesDatalist"
                         />
-                        <datalist id="availableTimes">
+                        <datalist id="availableTimesDatalist">
                             {availableTimesSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
                         </datalist>
                     </div>
@@ -66,11 +68,17 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="doctor">Doctor:</label>
-                        <input type="text" name="doctor" id="doctor" defaultValue={selectedAppointment ? selectedAppointment.doctor : ""}/>
+                        <select id="doctor" name="doctor" defaultValue="doctorDefaultValue">
+                            <option value="doctorDefaultValue" hidden disabled>{selectedAppointment ? selectedAppointment.doctor : ""}</option>
+                            { doctorsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                        </select>
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="payment">Payment:</label>
-                        <input type="tel" name="payment" id="payment" defaultValue={selectedAppointment ? selectedAppointment.payment : ""}/>
+                        <select id="payment" name="payment" defaultValue="paymentDefaultValue">
+                            <option value="paymentDefaultValue" hidden disabled>{selectedAppointment ? selectedAppointment.payment : ""}</option>
+                            { paymentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                        </select>
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="procedure">Procedure:</label>

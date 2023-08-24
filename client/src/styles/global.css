@@ -35,8 +35,8 @@ p, a, span, div {
     background-color: var(--background);
 }
 
-input {
-    &[type=text], &[type=tel], &[type=email], &[type=date], &[type=time] {
+input, select {
+    &[type=text], &[type=tel], &[type=email], &[type=date], &[type=time], & {
         padding: var(--small-gap);
         font-size: 18px;
         font-family: var(--font-family-2);
