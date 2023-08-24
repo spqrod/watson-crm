@@ -40,6 +40,10 @@ export default function Appointments() {
                 body: JSON.stringify(appointment)
             }
             return fetch(fetchURL, fetchBody).then(res => res.json());
+        },
+        deleteAppointment(id) {
+            const fetchURL = `/appointments/delete/${id}`;
+            return fetch(fetchURL).then(res => res.json());
         }
     };
 
@@ -101,16 +105,23 @@ export default function Appointments() {
             }
             api.addNewAppointment(appointment).then(res => {
                 display.closeDialog();
+                document.querySelector(".appointmentForm").reset();
                 const selectedDate = dayjs(appointment.date).format(dateFormatForDB);
                 controller.getAppointments(selectedDate);
-                
+            });
+        },
+        handleAppointmentDelete: function(e) {
+            e.preventDefault();
+            api.deleteAppointment(selectedAppointment.id).then(() => {
+                display.closeDialog();
+                document.querySelector(".appointmentForm").reset();
+                controller.getAppointments(selectedAppointment.date);
             });
         }
 
     };
 
     const display = {
-
         showDialog: function() {
             const dialog = document.querySelector(".dialog");
             dialog.showModal();
@@ -154,9 +165,18 @@ export default function Appointments() {
                     <p>Treatment</p>
                     <p>Payment</p>
                 </div>
-                <AppointmentList appointmentsArray = { appointmentsArray } handleAppointmentClick = { controller.handleAppointmentClick } />
+                <AppointmentList 
+                    appointmentsArray = { appointmentsArray } 
+                    handleAppointmentClick = { controller.handleAppointmentClick } 
+                />
             </div>
-            <AppointmentFormForDialog appointment={selectedAppointment} getAvailableTimeSlots={controller.getAvailableTimeSlots} timeSlots={availableTimesSlotsForTimePicker} handleAppointmentSubmit = {controller.handleAppointmentSubmit}/>
+            <AppointmentFormForDialog 
+                appointment={ selectedAppointment } 
+                getAvailableTimeSlots={ controller.getAvailableTimeSlots } 
+                timeSlots={ availableTimesSlotsForTimePicker } 
+                handleAppointmentSubmit = { controller.handleAppointmentSubmit }
+                handleAppointmentDelete = { controller.handleAppointmentDelete }
+            />
         </section>
     );
 }

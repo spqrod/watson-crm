@@ -8,7 +8,7 @@ export default function AppointmentFormDialog(data) {
     const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([data.timeSlots]);
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
-    const { getAvailableTimeSlots, handleAppointmentSubmit } = data;
+    const { getAvailableTimeSlots, handleAppointmentSubmit, handleAppointmentDelete } = data;
     const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
     const paymentsList = ["Nhima", "Cash", "Swipe", "SES", "Liberty", "Medlink"];
     const treatmentsList = ["Con", "XR", "TF", "PF", "RCT", "XLA", "SXLA"];
@@ -19,7 +19,7 @@ export default function AppointmentFormDialog(data) {
         return datePicker.value;
         },
         resetFormToDefault() {
-        document.querySelector(".appointmentForm").reset();
+            document.querySelector(".appointmentForm").reset();
         }
     }
 
@@ -91,7 +91,7 @@ export default function AppointmentFormDialog(data) {
                 </div>
 
                 <div className="buttonsContainer">
-                    <button className="button" type="button">
+                    <button className="button" type="button" onClick={ handleAppointmentDelete }>
                         Delete
                     </button>
                     <button className="button" type="submit">
