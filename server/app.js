@@ -9,6 +9,7 @@ const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
 const { database } = require("./database.js");
+const { sanitizeString } = require("./sanitizeString.js");
 
 app.use(express.static("build"));
 app.use(express.json());
@@ -55,6 +56,19 @@ app.get("/appointments/:selectedDate", (req, res) => {
         appointments.forEach(appointment => appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time));
         res.json(appointments);
     });
+});
+
+app.post("/appointments", (req, res) => {
+    for (const [key, value] of Object.entries(req.body)) {
+        req.body[key] = sanitizeString(value);
+    }
+    const appointment = req.body;
+    database.addNewAppointment(appointment)
+        .then((result) => res.json({success: true}))
+        .catch(error => {
+            logger.info(error);
+            res.json({success: false});
+        });
 });
 
 app.get("/taken-time-slots/:selectedDate", (req, res) => {

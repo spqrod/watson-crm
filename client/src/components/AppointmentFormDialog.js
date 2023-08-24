@@ -8,17 +8,18 @@ export default function AppointmentFormDialog(data) {
     const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([data.timeSlots]);
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
-    const { getAvailableTimeSlots } = data;
+    const { getAvailableTimeSlots, handleAppointmentSubmit } = data;
     const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
     const paymentsList = ["Nhima", "Cash", "Swipe", "SES", "Liberty", "Medlink"];
+    const treatmentsList = ["Con", "XR", "TF", "PF", "RCT", "XLA", "SXLA"];
 
-   const controller = {
+    const controller = {
         getSelectedDate: function() {
-            const datePicker = document.querySelector(".appointmentForm .datePicker");
-            return datePicker.value;
+        const datePicker = document.querySelector(".appointmentForm .datePicker");
+        return datePicker.value;
         },
         resetFormToDefault() {
-            document.querySelector(".appointmentForm").reset();
+        document.querySelector(".appointmentForm").reset();
         }
     }
 
@@ -37,7 +38,7 @@ export default function AppointmentFormDialog(data) {
                     x
                 </button>
             </form>
-            <form className="appointmentForm" action="">
+            <form className="appointmentForm" onSubmit={ handleAppointmentSubmit }>
                 <div className="infoContainer">
                     <div className="labelAndInputContainer">
                         <label htmlFor="date">Date:</label>
@@ -68,29 +69,32 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="doctor">Doctor:</label>
-                        <select id="doctor" name="doctor" defaultValue="doctorDefaultValue">
-                            <option value="doctorDefaultValue" hidden disabled>{selectedAppointment ? selectedAppointment.doctor : ""}</option>
+                        <select id="doctor" name="doctor" >
+                            <option hidden>{selectedAppointment ? selectedAppointment.doctor : ""}</option>
                             { doctorsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="payment">Payment:</label>
-                        <select id="payment" name="payment" defaultValue="paymentDefaultValue">
-                            <option value="paymentDefaultValue" hidden disabled>{selectedAppointment ? selectedAppointment.payment : ""}</option>
+                        <select id="payment" name="payment">
+                            <option hidden>{selectedAppointment ? selectedAppointment.payment : ""}</option>
                             { paymentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
                     </div>
                     <div className="labelAndInputContainer">
-                        <label htmlFor="procedure">Procedure:</label>
-                        <input type="text" name="procedure" id="procedure" defaultValue={selectedAppointment ? selectedAppointment.treatment : ""}/>
+                        <label htmlFor="procedure">Treatment:</label>
+                        <select id="treatment" name="treatment">
+                            <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
+                            { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                        </select>
                     </div>
                 </div>
 
                 <div className="buttonsContainer">
-                    <button className="button">
+                    <button className="button" type="button">
                         Delete
                     </button>
-                    <button className="button">
+                    <button className="button" type="submit">
                         Save
                     </button>
                 </div>

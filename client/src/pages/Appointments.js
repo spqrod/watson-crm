@@ -29,6 +29,17 @@ export default function Appointments() {
         getAvailableTimeSlots(date) {
             const fetchURL = `/taken-time-slots/${date}`;
             return fetch(fetchURL).then(res => res.json());
+        },
+        addNewAppointment(appointment) {
+            const fetchURL = `/appointments/`;
+            const fetchBody = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(appointment)
+            }
+            return fetch(fetchURL, fetchBody).then(res => res.json());
         }
     };
 
@@ -76,6 +87,24 @@ export default function Appointments() {
         },
         getAvailableTimeSlots: function(date) {
             api.getAvailableTimeSlots(date).then(res => setAvailableTimesSlotsForTimePicker(res));
+        },
+        handleAppointmentSubmit: function (e) {
+            e.preventDefault();
+            const appointment = { 
+                date: e.target.date.value, 
+                time: e.target.time.value,
+                firstName: e.target.firstName.value,
+                lastName: e.target.lastName.value,
+                doctor: e.target.doctor.value,
+                treatment: e.target.treatment.value,
+                payment: e.target.payment.value
+            }
+            api.addNewAppointment(appointment).then(res => {
+                display.closeDialog();
+                const selectedDate = dayjs(appointment.date).format(dateFormatForDB);
+                controller.getAppointments(selectedDate);
+                
+            });
         }
 
     };
@@ -85,6 +114,10 @@ export default function Appointments() {
         showDialog: function() {
             const dialog = document.querySelector(".dialog");
             dialog.showModal();
+        },
+        closeDialog: function() {
+            const dialog = document.querySelector(".dialog");
+            dialog.close();
         },
     };
 
@@ -118,12 +151,12 @@ export default function Appointments() {
                     <p>First Name</p>
                     <p>Last Name</p>
                     <p>Doctor</p>
-                    <p>Procedure</p>
+                    <p>Treatment</p>
                     <p>Payment</p>
                 </div>
                 <AppointmentList appointmentsArray = { appointmentsArray } handleAppointmentClick = { controller.handleAppointmentClick } />
             </div>
-            <AppointmentFormForDialog appointment={selectedAppointment} getAvailableTimeSlots={controller.getAvailableTimeSlots} timeSlots={availableTimesSlotsForTimePicker}/>
+            <AppointmentFormForDialog appointment={selectedAppointment} getAvailableTimeSlots={controller.getAvailableTimeSlots} timeSlots={availableTimesSlotsForTimePicker} handleAppointmentSubmit = {controller.handleAppointmentSubmit}/>
         </section>
     );
 }
