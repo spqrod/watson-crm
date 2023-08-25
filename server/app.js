@@ -58,15 +58,27 @@ app.get("/appointments/:selectedDate", (req, res) => {
     });
 });
 
-app.get("/appointments/delete/:id", (req, res) => {
+app.delete("/appointments/:id", (req, res) => {
     let { id } = req.params;
     id = sanitizeString(id);
-    console.log(id);
     database.deleteAppointment(id)
         .then(() => res.json({ success: true }))
         .catch((error) => {
             logger.info(error);
             res.json({ success: false });
+        });
+    });
+    
+app.put("/appointments/", (req, res) => {
+    for (const [key, value] of Object.entries(req.body)) {
+        req.body[key] = sanitizeString(String(value));
+    }
+    const appointment = req.body;
+    database.updateAppointment(appointment)
+        .then(() => res.json({success: true}))
+        .catch(error => {
+            logger.info(error);
+            res.json({success: false});
         });
 });
 

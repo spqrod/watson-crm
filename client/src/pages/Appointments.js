@@ -41,9 +41,23 @@ export default function Appointments() {
             }
             return fetch(fetchURL, fetchBody).then(res => res.json());
         },
+        updateAppointment(appointment) {
+            const fetchURL = `/appointments/`;
+            const fetchBody = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(appointment)
+            }
+            return fetch(fetchURL, fetchBody).then(res => res.json());
+        },
         deleteAppointment(id) {
-            const fetchURL = `/appointments/delete/${id}`;
-            return fetch(fetchURL).then(res => res.json());
+            const fetchURL = `/appointments/${id}`;
+            const fetchOptions = {
+                method: "DELETE"
+            }
+            return fetch(fetchURL, fetchOptions).then(res => res.json());
         }
     };
 
@@ -104,6 +118,25 @@ export default function Appointments() {
                 payment: e.target.payment.value
             }
             api.addNewAppointment(appointment).then(res => {
+                display.closeDialog();
+                document.querySelector(".appointmentForm").reset();
+                const selectedDate = dayjs(appointment.date).format(dateFormatForDB);
+                controller.getAppointments(selectedDate);
+            });
+        },
+        handleAppointmentUpdate: function (e) {
+            e.preventDefault();
+            const appointment = { 
+                id: selectedAppointment.id,
+                date: e.target.date.value, 
+                time: e.target.time.value,
+                firstName: e.target.firstName.value,
+                lastName: e.target.lastName.value,
+                doctor: e.target.doctor.value,
+                treatment: e.target.treatment.value,
+                payment: e.target.payment.value
+            };
+            api.updateAppointment(appointment).then(res => {
                 display.closeDialog();
                 document.querySelector(".appointmentForm").reset();
                 const selectedDate = dayjs(appointment.date).format(dateFormatForDB);
@@ -175,6 +208,7 @@ export default function Appointments() {
                 getAvailableTimeSlots={ controller.getAvailableTimeSlots } 
                 timeSlots={ availableTimesSlotsForTimePicker } 
                 handleAppointmentSubmit = { controller.handleAppointmentSubmit }
+                handleAppointmentUpdate = { controller.handleAppointmentUpdate }
                 handleAppointmentDelete = { controller.handleAppointmentDelete }
             />
         </section>

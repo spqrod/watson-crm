@@ -8,7 +8,12 @@ export default function AppointmentFormDialog(data) {
     const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([data.timeSlots]);
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
-    const { getAvailableTimeSlots, handleAppointmentSubmit, handleAppointmentDelete } = data;
+    const { 
+        getAvailableTimeSlots, 
+        handleAppointmentSubmit, 
+        handleAppointmentUpdate, 
+        handleAppointmentDelete 
+    } = data;
     const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
     const paymentsList = ["Nhima", "Cash", "Swipe", "SES", "Liberty", "Medlink"];
     const treatmentsList = ["Con", "XR", "TF", "PF", "RCT", "XLA", "SXLA"];
@@ -38,7 +43,7 @@ export default function AppointmentFormDialog(data) {
                     x
                 </button>
             </form>
-            <form className="appointmentForm" onSubmit={ handleAppointmentSubmit }>
+            <form className="appointmentForm" onSubmit={ selectedAppointment ? handleAppointmentUpdate : handleAppointmentSubmit }>
                 <div className="infoContainer">
                     <div className="labelAndInputContainer">
                         <label htmlFor="date">Date:</label>
@@ -95,7 +100,7 @@ export default function AppointmentFormDialog(data) {
                         Delete
                     </button>
                     <button className="button" type="submit">
-                        Save
+                        { selectedAppointment ? "Update Appointment" : "Add New" }
                     </button>
                 </div>
             </form>

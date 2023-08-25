@@ -17,6 +17,10 @@ const database = {
         return pool.query("insert into appointments (date, time, firstName, lastName, doctor, payment, treatment) values (?, ?, ?, ?, ?, ?, ?)", 
             [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment, appointment.treatment]);
     },
+    updateAppointment: function(appointment) {
+        return pool.query("UPDATE appointments SET date=?, time=?, firstName=?, lastName=?, doctor=?, payment=?, treatment=? WHERE id = ?", 
+            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment, appointment.treatment, appointment.id]);
+    },
     addNewAppointmentsFromArray: function(appointmentsArray) {
         appointmentsArray.forEach(appointment => database.addNewAppointment(appointment));
     },
