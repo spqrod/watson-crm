@@ -25,6 +25,10 @@ export default function AppointmentFormDialog(data) {
         },
         resetFormToDefault() {
             document.querySelector(".appointmentForm").reset();
+        },
+        makeUpdateButtonActive() {
+            const submitButton = document.querySelector(".button.update");
+            submitButton.classList.remove("disabled");
         }
     }
 
@@ -50,15 +54,22 @@ export default function AppointmentFormDialog(data) {
                         <input type="date" name="date" id="date" className="datePicker"
                             min={todayForPicker}
                             max={sixMonthsFromTodayForPicker}
-                            onChange={() => getAvailableTimeSlots(controller.getSelectedDate())}
+                            onChange={() => { 
+                                getAvailableTimeSlots(controller.getSelectedDate());
+                                controller.makeUpdateButtonActive();
+                            }}
                             defaultValue={ selectedAppointment ? selectedAppointment.date : ""}
                         />
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="time">Time:</label>
-                        <input type="time" name="time" id="time" 
+                        <input 
+                            type="time" 
+                            name="time" 
+                            id="time" 
                             defaultValue={selectedAppointment ? selectedAppointment.time : ""}
                             list="availableTimesDatalist"
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
                         />
                         <datalist id="availableTimesDatalist">
                             {availableTimesSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
@@ -66,29 +77,53 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="firstName">First Name:</label>
-                        <input type="text" name="firstName" id="firstName" defaultValue={selectedAppointment ? selectedAppointment.firstName : ""}/>
+                        <input 
+                            type="text" 
+                            name="firstName" 
+                            id="firstName" 
+                            defaultValue={selectedAppointment ? selectedAppointment.firstName : ""}
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        />
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="lastName">Last Name:</label>
-                        <input type="text" name="lastName" id="lastName" defaultValue={selectedAppointment ? selectedAppointment.lastName : ""}/>
+                        <input 
+                            type="text" 
+                            name="lastName" 
+                            id="lastName" 
+                            defaultValue={selectedAppointment ? selectedAppointment.lastName : ""}
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        />
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="doctor">Doctor:</label>
-                        <select id="doctor" name="doctor" >
+                        <select 
+                            id="doctor" 
+                            name="doctor" 
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        >
                             <option hidden>{selectedAppointment ? selectedAppointment.doctor : ""}</option>
                             { doctorsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="payment">Payment:</label>
-                        <select id="payment" name="payment">
+                        <select 
+                            id="payment" 
+                            name="payment"
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        >
                             <option hidden>{selectedAppointment ? selectedAppointment.payment : ""}</option>
                             { paymentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="procedure">Treatment:</label>
-                        <select id="treatment" name="treatment">
+                        <select 
+                            id="treatment" 
+                            name="treatment"
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        >
                             <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
                             { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
@@ -96,10 +131,17 @@ export default function AppointmentFormDialog(data) {
                 </div>
 
                 <div className="buttonsContainer">
-                    <button className="button" type="button" onClick={ handleAppointmentDelete }>
+                    <button 
+                        className={`button ${ selectedAppointment ? null : "disabled"}`} 
+                        type="button" 
+                        onClick={ handleAppointmentDelete }
+                    >
                         Delete
                     </button>
-                    <button className="button" type="submit">
+                    <button 
+                        className={`button ${ selectedAppointment ? "disabled update" : null}`} 
+                        type="submit"
+                    >
                         { selectedAppointment ? "Update Appointment" : "Add New" }
                     </button>
                 </div>
