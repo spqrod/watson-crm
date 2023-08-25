@@ -8,18 +8,17 @@ const pool = mysql.createPool({
     database: process.env.DATABASE_DATABASE_NAME,
 }).promise();
 
-
 const dateFormatForDB = "YYYY-MM-DD";
 
 const database = {
     
     addNewAppointment: function(appointment) {
-        return pool.query("insert into appointments (date, time, firstName, lastName, doctor, payment, treatment) values (?, ?, ?, ?, ?, ?, ?)", 
-            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment, appointment.treatment]);
+        return pool.query("insert into appointments (date, time, firstName, lastName, doctor, payment, treatment, phone, file, comments, noshow) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment, appointment.treatment, appointment.file, appointment.phone, appointment.comments, appointment.noshow]);
     },
     updateAppointment: function(appointment) {
-        return pool.query("UPDATE appointments SET date=?, time=?, firstName=?, lastName=?, doctor=?, payment=?, treatment=? WHERE id = ?", 
-            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment, appointment.treatment, appointment.id]);
+        return pool.query("UPDATE appointments SET date=?, time=?, firstName=?, lastName=?, doctor=?, payment=?, treatment=?, file=?, phone=?, comments=?, noshow=? WHERE id = ?", 
+            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.payment, appointment.treatment, appointment.file, appointment.phone, appointment.comments, appointment.noshow, appointment.id]);
     },
     addNewAppointmentsFromArray: function(appointmentsArray) {
         appointmentsArray.forEach(appointment => database.addNewAppointment(appointment));
@@ -31,7 +30,7 @@ const database = {
         return pool.query("delete from appointments");
     },
     getAppointmentsForDate: function(date) {
-        const query = "select id, date, time, firstName, lastName, doctor, payment, treatment from appointments where date=? order by time";
+        const query = "select id, date, time, firstName, lastName, doctor, payment, treatment, file, phone, comments, noshow from appointments where date=? order by time";
         return pool.query(query, date).then(res => res[0]);
     },
     getAllAppointments: function() {
@@ -210,5 +209,9 @@ const exampleAppointmentsArray = [
 // database.addNewAppointmentsFromArray(exampleAppointmentsArray);
 // database.deleteAllAppointments();
 // database.getAllAppointments().then(res => console.log(res[0]));
+
+const query1 = "alter table appointments modify column no_show to noshow";
+const query2 = "describe appointments";
+pool.query(query2).then(res => console.log(res[0]));
 
 module.exports = { database };

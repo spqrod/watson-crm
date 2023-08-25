@@ -1,6 +1,7 @@
 import "../styles/appointmentFormDialog.css";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 export default function AppointmentFormDialog(data) {
 
@@ -96,6 +97,17 @@ export default function AppointmentFormDialog(data) {
                         />
                     </div>
                     <div className="labelAndInputContainer">
+                        <label htmlFor="procedure">Treatment:</label>
+                        <select 
+                            id="treatment" 
+                            name="treatment"
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        >
+                            <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
+                            { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                        </select>
+                    </div>
+                    <div className="labelAndInputContainer">
                         <label htmlFor="doctor">Doctor:</label>
                         <select 
                             id="doctor" 
@@ -118,28 +130,78 @@ export default function AppointmentFormDialog(data) {
                         </select>
                     </div>
                     <div className="labelAndInputContainer">
-                        <label htmlFor="procedure">Treatment:</label>
-                        <select 
-                            id="treatment" 
-                            name="treatment"
+                        <label htmlFor="cost">Cost:</label>
+                        <input 
+                            type="number" 
+                            name="cost" 
+                            id="cost" 
+                            defaultValue={selectedAppointment ? selectedAppointment.cost : ""}
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        />
+                    </div>
+                    <div className="labelAndInputContainer">
+                        <label htmlFor="file">File:</label>
+                        <input 
+                            type="text" 
+                            name="file" 
+                            id="file" 
+                            defaultValue={selectedAppointment ? selectedAppointment.file : ""}
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        />
+                    </div>
+                    <div className="labelAndInputContainer">
+                        <label htmlFor="phone">Phone:</label>
+                        <input 
+                            type="tel" 
+                            name="phone" 
+                            id="phone" 
+                            defaultValue={selectedAppointment ? selectedAppointment.phone : ""}
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        />
+                    </div>
+                    <div className="labelAndInputContainer commentsContainer">
+                        <label htmlFor="comments">Comments:</label>
+                        {/* <input 
+                            type="text" 
+                            name="comments" 
+                            id="comments" 
+                            defaultValue={selectedAppointment ? selectedAppointment.comments : ""}
+                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                        /> */}
+                        <textarea 
+                            className="commentsTextarea"
+                            name="comments" 
+                            id="comments" 
+                            rows="1"
+                            cols="30"
+                            defaultValue={selectedAppointment ? selectedAppointment.comments : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
                         >
-                            <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
-                            { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
-                        </select>
+                        </textarea>
                     </div>
                 </div>
 
                 <div className="buttonsContainer">
                     <button 
-                        className={`button ${ selectedAppointment ? null : "disabled"}`} 
+                        className={`button deleteButton ${ selectedAppointment ? null : "disabled"}`} 
                         type="button" 
                         onClick={ handleAppointmentDelete }
                     >
+                        <DeleteOutlineOutlinedIcon />
                         Delete
                     </button>
+                    <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
+                        { selectedAppointment ? 
+                            selectedAppointment.noshow ? 
+                                <input type="checkbox" name="nowshow" id="noshow" checked onChange={ controller.makeUpdateButtonActive }/> :
+                                <input type="checkbox" name="nowshow" id="noshow" onChange={ controller.makeUpdateButtonActive }/> 
+                            : 
+                            <input type="checkbox" name="nowshow" id="noshow"/> 
+                        }
+                        <label htmlFor="noshow">No-show</label>
+                    </div>
                     <button 
-                        className={`button ${ selectedAppointment ? "disabled update" : null}`} 
+                        className={`button submitButton ${ selectedAppointment ? "disabled update" : null}`} 
                         type="submit"
                     >
                         { selectedAppointment ? "Update Appointment" : "Add New" }

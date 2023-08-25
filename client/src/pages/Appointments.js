@@ -115,7 +115,10 @@ export default function Appointments() {
                 lastName: e.target.lastName.value,
                 doctor: e.target.doctor.value,
                 treatment: e.target.treatment.value,
-                payment: e.target.payment.value
+                payment: e.target.payment.value,
+                phone: e.target.phone.value,
+                file: e.target.file.value,
+                comments: e.target.comments.value,
             }
             api.addNewAppointment(appointment).then(res => {
                 display.closeDialog();
@@ -134,7 +137,10 @@ export default function Appointments() {
                 lastName: e.target.lastName.value,
                 doctor: e.target.doctor.value,
                 treatment: e.target.treatment.value,
-                payment: e.target.payment.value
+                payment: e.target.payment.value,
+                phone: e.target.phone.value,
+                file: e.target.file.value,
+                comments: e.target.comments.value,
             };
             api.updateAppointment(appointment).then(res => {
                 display.closeDialog();

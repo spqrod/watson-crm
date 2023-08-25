@@ -35,7 +35,7 @@ p, a, span, div {
     background-color: var(--background);
 }
 
-input, select {
+input, select, textarea {
     &[type=text], &[type=tel], &[type=email], &[type=date], &[type=time], & {
         padding: var(--small-gap);
         font-size: 18px;
@@ -55,7 +55,7 @@ input, select {
 /* Button */
 
 .button {
-    min-width: 229px;
+    /* min-width: 229px; */
     height: 50px;
     padding: var(--small-gap);
     position: relative;
@@ -63,6 +63,7 @@ input, select {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: var(--small-gap);
     background: none;
     background-color: var(--primary-container);
     color: var(--on-primary-container);
@@ -71,7 +72,7 @@ input, select {
     cursor: pointer;
 
     font-family: var(--font-family-2);
-    font-size: 20px;
+    font-size: 18px;
     text-transform: uppercase;
 
     &.disabled {
@@ -80,7 +81,6 @@ input, select {
         cursor: no-drop;
         pointer-events: none;
     }
-
 
     .buttonLink {
         text-decoration: none;
