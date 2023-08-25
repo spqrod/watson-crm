@@ -67,15 +67,18 @@ app.delete("/appointments/:id", (req, res) => {
             logger.info(error);
             res.json({ success: false });
         });
-    });
+});
     
 app.put("/appointments/", (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
-        req.body[key] = sanitizeString(String(value));
+        if (typeof req.body[key] !== "boolean")
+            req.body[key] = sanitizeString(String(value));
     }
     const appointment = req.body;
     database.updateAppointment(appointment)
-        .then(() => res.json({success: true}))
+        .then(() => {
+            res.json({success: true});
+        })
         .catch(error => {
             logger.info(error);
             res.json({success: false});
@@ -84,11 +87,12 @@ app.put("/appointments/", (req, res) => {
 
 app.post("/appointments", (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
-        req.body[key] = sanitizeString(value);
-    }
+        if (typeof req.body[key] != "boolean")
+            req.body[key] = sanitizeString(String(value));    
+        }
     const appointment = req.body;
     database.addNewAppointment(appointment)
-        .then((result) => res.json({success: true}))
+        .then((result) => res.json({ success: true }))
         .catch(error => {
             logger.info(error);
             res.json({success: false});
@@ -124,7 +128,7 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
 
 
 
-app.listen(port, () => console.log(`Listening to port ${port}`));
+app.listen(port, () => logger.info(`Listening to port ${port}`));
 
 
 

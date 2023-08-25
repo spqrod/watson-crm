@@ -57,7 +57,7 @@ export default function AppointmentFormDialog(data) {
                             max={sixMonthsFromTodayForPicker}
                             onChange={() => { 
                                 getAvailableTimeSlots(controller.getSelectedDate());
-                                controller.makeUpdateButtonActive();
+                                if (selectedAppointment) controller.makeUpdateButtonActive();
                             }}
                             defaultValue={ selectedAppointment ? selectedAppointment.date : ""}
                         />

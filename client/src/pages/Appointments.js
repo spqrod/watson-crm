@@ -116,6 +116,7 @@ export default function Appointments() {
                 doctor: e.target.doctor.value,
                 treatment: e.target.treatment.value,
                 payment: e.target.payment.value,
+                cost: e.target.cost.value,
                 phone: e.target.phone.value,
                 file: e.target.file.value,
                 comments: e.target.comments.value,
@@ -138,9 +139,11 @@ export default function Appointments() {
                 doctor: e.target.doctor.value,
                 treatment: e.target.treatment.value,
                 payment: e.target.payment.value,
+                cost: e.target.cost.value,
                 phone: e.target.phone.value,
                 file: e.target.file.value,
                 comments: e.target.comments.value,
+                noshow: e.target.noshow.checked,
             };
             api.updateAppointment(appointment).then(res => {
                 display.closeDialog();
