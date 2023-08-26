@@ -108,6 +108,10 @@ export default function Appointments() {
         },
         handleDateSelect: function(dateAsString) {
             display.showFullDate(dateAsString);
+            display.highlightDateContainer(dateAsString);
+            display.highlightHeaderRowContainer();
+            display.highlightAppointmentListContainer();
+
 
 
 
@@ -185,53 +189,58 @@ export default function Appointments() {
             const dialog = document.querySelector(".dialog");
             dialog.close();
         },
-        showFullDate(which) {
+        showFullDate(dateAsString) {
             const previousActiveDate = document.querySelector(".fullDate.active");
             if (previousActiveDate)
                 previousActiveDate.classList.remove("active");
-            const fullDate = document.querySelector(`.fullDate.${which}`);
+            const fullDate = document.querySelector(`.fullDate.${dateAsString}`);
             fullDate.classList.add("active");
-
+        },
+        highlightDateContainer(dateAsString) {
             const previousActiveContainer = document.querySelector("div.active");
             if (previousActiveContainer)
                 previousActiveContainer.classList.remove("active");
-            const dateContainer = document.querySelector(`.${which}Container`);
+            const dateContainer = document.querySelector(`.${dateAsString}Container`);
             dateContainer.classList.add("active");
         },
-        highlightDateContainer() {
-
+        highlightHeaderRowContainer() {
+            const headerRow = document.querySelector(".headerRowContainer");
+            headerRow.classList.add("active");
         },
+        highlightAppointmentListContainer() {
+            const appointmentListContainer = document.querySelector(".appointmentListContainer");
+            appointmentListContainer.classList.add("active");
+        }
     };
 
     return (
         <section className="appointmentsPage section">
             <div className="contentContainer">
                 <div className="header">
+                    <div className="dateContainer">
+                        <div className="todayContainer" onClick={controller.handleTodayClick}>
+                            <p className="shortDate">Today</p>
+                            <p className="fullDate today">{ todayDate }</p>
+                        </div>
+                        <div className="tomorrowContainer" onClick={controller.handleTomorrowClick}>
+                            <p>Tomorrow</p>
+                            <p className="fullDate tomorrow">{ tomorrowDate }</p>
+                        </div>
+                        <div className="datePickerContainer">
+                            <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
+                                <CalendarMonthOutlinedIcon />
+                                <input className="datePicker input" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelectInDatePicker}/>
+                            </label>
+                            <p className="fullDate datePicker">{ datePickerDate }</p>
 
-                <div className="dateContainer">
-                    <div className="todayContainer" onClick={controller.handleTodayClick}>
-                        <p className="shortDate">Today</p>
-                        <p className="fullDate today">{ todayDate }</p>
+                        </div>
                     </div>
-                    <div className="tomorrowContainer" onClick={controller.handleTomorrowClick}>
-                        <p>Tomorrow</p>
-                        <p className="fullDate tomorrow">{ tomorrowDate }</p>
+                    <div className="addNewContainer" onClick={ controller.handleAddNew }>
+                        <AddOutlinedIcon />New Appointment
                     </div>
-                    <div className="datePickerContainer">
-                        <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
-                            <CalendarMonthOutlinedIcon />
-                            <input className="datePicker input" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelectInDatePicker}/>
-                        </label>
-                        <p className="fullDate datePicker">{ datePickerDate }</p>
-
+                    <div className="searchContainer">
+                        <SearchOutlinedIcon /><p>Search</p>
                     </div>
-                </div>
-                <div className="addNewContainer" onClick={ controller.handleAddNew }>
-                    <AddOutlinedIcon />New Appointment
-                </div>
-                <div className="searchContainer">
-                    <SearchOutlinedIcon /><p>Search</p>
-                </div>
                 </div>
 
                 <div className="headerRowContainer">
