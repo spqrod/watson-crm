@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 
 import dayjs from "dayjs";
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 export default function Appointments() {
 

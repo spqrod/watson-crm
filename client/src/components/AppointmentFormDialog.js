@@ -26,15 +26,23 @@ export default function AppointmentFormDialog(data) {
         },
         resetFormToDefault() {
             document.querySelector(".appointmentForm").reset();
+            const submitButton = document.querySelector(".button.update");
+            submitButton.classList.add("disabled");
         },
         makeUpdateButtonActive() {
             const submitButton = document.querySelector(".button.update");
             submitButton.classList.remove("disabled");
+        },
+        updateNoshowCheckbox(isNoshowCheckboxChecked) {
+            if (isNoshowCheckboxChecked)
+                document.querySelector(".noshowCheckbox").checked = true;
         }
     }
 
     useEffect(() => {
         setSelectedAppointment(data.appointment);
+        if (data.appointment)
+            controller.updateNoshowCheckbox(data.appointment.noshow);
     }, [data.appointment]);
     
     useEffect(() => {
@@ -42,7 +50,7 @@ export default function AppointmentFormDialog(data) {
     }, [data.timeSlots]);
 
     return (
-        <dialog className="dialog appointmentFormDialog">
+        <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
             <form className="formForDialogCloseButton" method="dialog">
                 <button className="closeButton" onClick={controller.resetFormToDefault} >
                     x
@@ -191,13 +199,13 @@ export default function AppointmentFormDialog(data) {
                         Delete
                     </button>
                     <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
-                        { selectedAppointment ? 
-                            selectedAppointment.noshow ? 
-                                <input type="checkbox" name="nowshow" id="noshow" checked onChange={ controller.makeUpdateButtonActive }/> :
-                                <input type="checkbox" name="nowshow" id="noshow" onChange={ controller.makeUpdateButtonActive }/> 
-                            : 
-                            <input type="checkbox" name="nowshow" id="noshow"/> 
-                        }
+                        <input 
+                            type="checkbox" 
+                            className="noshowCheckbox" 
+                            name="nowshow" 
+                            id="noshow" 
+                            onClick ={ controller.makeUpdateButtonActive }
+                        /> 
                         <label htmlFor="noshow">No-show</label>
                     </div>
                     <button 

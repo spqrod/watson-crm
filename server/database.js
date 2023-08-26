@@ -13,8 +13,7 @@ const dateFormatForDB = "YYYY-MM-DD";
 const database = {
     
     addNewAppointment: function(appointment) {
-        console.log(appointment);
-        return pool.query("insert into appointments (date, time, firstName, lastName, doctor, treatment, payment, cost, file, phone, comments) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        return pool.query("insert into appointments (date, time, firstName, lastName, doctor, treatment, payment, cost, file, phone, comments) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
             [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.file, appointment.phone, appointment.comments]);
     },
     updateAppointment: function(appointment) {
