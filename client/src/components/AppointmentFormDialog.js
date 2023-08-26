@@ -2,6 +2,8 @@ import "../styles/appointmentFormDialog.css";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 
 export default function AppointmentFormDialog(data) {
 
@@ -212,7 +214,10 @@ export default function AppointmentFormDialog(data) {
                         className={`button submitButton ${ selectedAppointment ? "disabled update" : null}`} 
                         type="submit"
                     >
-                        { selectedAppointment ? "Update Appointment" : "Add New" }
+                        { selectedAppointment ? 
+                            <><AutorenewOutlinedIcon />Update Appointment</> :
+                            <><AddOutlinedIcon />Add New Appointment</>
+                        }
                     </button>
                 </div>
             </form>
