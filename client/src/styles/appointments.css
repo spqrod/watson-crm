@@ -12,7 +12,7 @@
             grid-column: 1 / 4;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            padding: var(--medium-gap);
+            padding: var(--small-gap) var(--medium-gap);
 
             .dateContainer {
                 grid-column: 1 / 2;
@@ -26,6 +26,10 @@
                     flex-direction: column;
                     align-items: center;
                     text-align: center; 
+
+                    &.active {
+                        background-color: var(--surface-variant);
+                    }
                     
                     .fullDate {
                         flex-basis: 0px;
@@ -52,7 +56,7 @@
                     }
     
                     /* The input=date is hidden in this fashion, because the date picker is called by clicking the label. If the input=date element is display=none, then the picker appears on the top left on the screen. */
-                    .datePicker {
+                    .datePicker.input {
                         visibility: hidden;
                         position: absolute;
                         top: 50%;
@@ -96,7 +100,6 @@
                 display: flex;
                 align-items: center;
             }
-            
         }
         
         .appointmentListContainer {

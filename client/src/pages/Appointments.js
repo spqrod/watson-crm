@@ -3,6 +3,9 @@ import AppointmentList from "../components/AppointmentList";
 import AppointmentFormForDialog from "../components/AppointmentFormDialog";
 import { useState, useEffect } from "react";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+
 
 import dayjs from "dayjs";
 
@@ -85,23 +88,28 @@ export default function Appointments() {
         handleTodayClick: function() {
             const selectedDate = dayjs().format(dateFormatForDB);
             controller.getAppointments(selectedDate);
-            display.showFullDate("today");
+            controller.handleDateSelect("today");
         },
         handleTomorrowClick: function() {
             const selectedDate = dayjs().add(1, "day").format(dateFormatForDB);
             controller.getAppointments(selectedDate);
-            display.showFullDate("tomorrow");
+            controller.handleDateSelect("tomorrow");
         },
         handleDatePickerClick: function() {
-            const datePicker = document.querySelector(".datePicker");
+            const datePicker = document.querySelector(".datePickerContainer .datePicker.input");
             datePicker.showPicker();
         },
-        handleDateSelect: function() {
-            const datePicker = document.querySelector(".datePicker");
+        handleDateSelectInDatePicker: function() {
+            const datePicker = document.querySelector(".datePickerContainer .datePicker.input");
             const selectedDate = dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForDB);
             setDatePickerDate(dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForHeader));
-            display.showFullDate("datePickerDate");
+            controller.handleDateSelect("datePicker");
             controller.getAppointments(selectedDate);
+        },
+        handleDateSelect: function(dateAsString) {
+            display.showFullDate(dateAsString);
+
+
 
         },
         handleAddNew: function() {
@@ -183,7 +191,16 @@ export default function Appointments() {
                 previousActiveDate.classList.remove("active");
             const fullDate = document.querySelector(`.fullDate.${which}`);
             fullDate.classList.add("active");
-        }
+
+            const previousActiveContainer = document.querySelector("div.active");
+            if (previousActiveContainer)
+                previousActiveContainer.classList.remove("active");
+            const dateContainer = document.querySelector(`.${which}Container`);
+            dateContainer.classList.add("active");
+        },
+        highlightDateContainer() {
+
+        },
     };
 
     return (
@@ -203,17 +220,17 @@ export default function Appointments() {
                     <div className="datePickerContainer">
                         <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
                             <CalendarMonthOutlinedIcon />
-                            <input className="datePicker" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelect}/>
+                            <input className="datePicker input" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelectInDatePicker}/>
                         </label>
-                        <p className="fullDate datePickerDate">{ datePickerDate }</p>
+                        <p className="fullDate datePicker">{ datePickerDate }</p>
 
                     </div>
                 </div>
                 <div className="addNewContainer" onClick={ controller.handleAddNew }>
-                    New Appointment
+                    <AddOutlinedIcon />New Appointment
                 </div>
                 <div className="searchContainer">
-                    <p>Search</p>
+                    <SearchOutlinedIcon /><p>Search</p>
                 </div>
                 </div>
 
