@@ -28,7 +28,7 @@
                     text-align: center; 
                     height: 100%;
                     transition: var(--transition);
-                    padding: 0 var(--small-gap);
+                    padding: 0 var(--medium-gap);
                     user-select: none;
 
                     &.active {
@@ -91,7 +91,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: end;
-                padding-right: var(--small-gap);
+                padding-right: var(--medium-gap);
             }
         }
 
@@ -104,8 +104,7 @@
             gap: var(--small-gap);
             border-top: var(--border);
             border-bottom: var(--border);
-            padding-right: var(--medium-gap);
-            padding-left: var(--medium-gap);
+            padding: 0 var(--medium-gap);
             transition: var(--transition);
 
             &.active {
@@ -122,8 +121,6 @@
             grid-column: 1 / 4;
             grid-row: 3 / 4;
             overflow: scroll;
-            padding-right: var(--medium-gap);
-            padding-left: var(--medium-gap);
             padding-bottom: var(--medium-gap);
             transition: var(--transition);
 

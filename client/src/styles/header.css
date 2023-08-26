@@ -23,7 +23,7 @@ header.header {
                 text-decoration: none;
                 color: var(--on-background);
                 transition: var(--transition);
-                padding: 0 var(--small-gap);
+                padding: 0 var(--medium-gap);
 
                 &.active {
                     background-color: var(--surface-variant);

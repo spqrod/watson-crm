@@ -9,8 +9,20 @@
     &:hover {
         background-color: var(--primary-container);
     }
+    
+    &:hover p {
+        color: var(--on-primary-container);
+    }
 
     .infoContainer {
         overflow: scroll;
+
+        &.time {
+            padding-left: var(--medium-gap);
+        }
+        
+        &.insurance {
+            padding-right: var(--medium-gap);
+        }
     }
 }
