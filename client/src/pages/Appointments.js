@@ -17,6 +17,7 @@ export default function Appointments() {
     const dateFormatForHeader = "dddd, DD.MM.YYYY";
     const todayDate = dayjs().format(dateFormatForHeader);
     const tomorrowDate = dayjs().add(1, "day").format(dateFormatForHeader);
+    const [ datePickerDate, setDatePickerDate ] = useState(todayDate);
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
 
@@ -84,10 +85,12 @@ export default function Appointments() {
         handleTodayClick: function() {
             const selectedDate = dayjs().format(dateFormatForDB);
             controller.getAppointments(selectedDate);
+            display.showFullDate("today");
         },
         handleTomorrowClick: function() {
             const selectedDate = dayjs().add(1, "day").format(dateFormatForDB);
             controller.getAppointments(selectedDate);
+            display.showFullDate("tomorrow");
         },
         handleDatePickerClick: function() {
             const datePicker = document.querySelector(".datePicker");
@@ -96,7 +99,10 @@ export default function Appointments() {
         handleDateSelect: function() {
             const datePicker = document.querySelector(".datePicker");
             const selectedDate = dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForDB);
+            setDatePickerDate(dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForHeader));
+            display.showFullDate("datePickerDate");
             controller.getAppointments(selectedDate);
+
         },
         handleAddNew: function() {
             setSelectedAppointment();
@@ -171,25 +177,36 @@ export default function Appointments() {
             const dialog = document.querySelector(".dialog");
             dialog.close();
         },
+        showFullDate(which) {
+            const previousActiveDate = document.querySelector(".fullDate.active");
+            if (previousActiveDate)
+                previousActiveDate.classList.remove("active");
+            const fullDate = document.querySelector(`.fullDate.${which}`);
+            fullDate.classList.add("active");
+        }
     };
 
     return (
         <section className="appointmentsPage section">
             <div className="contentContainer">
+                <div className="header">
+
                 <div className="dateContainer">
                     <div className="todayContainer" onClick={controller.handleTodayClick}>
-                        <p>Today</p>
-                        <p>{ todayDate }</p>
+                        <p className="shortDate">Today</p>
+                        <p className="fullDate today">{ todayDate }</p>
                     </div>
                     <div className="tomorrowContainer" onClick={controller.handleTomorrowClick}>
                         <p>Tomorrow</p>
-                        <p>{ tomorrowDate }</p>
+                        <p className="fullDate tomorrow">{ tomorrowDate }</p>
                     </div>
                     <div className="datePickerContainer">
                         <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
                             <CalendarMonthOutlinedIcon />
                             <input className="datePicker" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelect}/>
                         </label>
+                        <p className="fullDate datePickerDate">{ datePickerDate }</p>
+
                     </div>
                 </div>
                 <div className="addNewContainer" onClick={ controller.handleAddNew }>
@@ -198,6 +215,8 @@ export default function Appointments() {
                 <div className="searchContainer">
                     <p>Search</p>
                 </div>
+                </div>
+
                 <div className="headerRowContainer">
                     <p>Time</p>
                     <p>First Name</p>

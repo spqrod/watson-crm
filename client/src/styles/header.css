@@ -1,4 +1,4 @@
-.header {
+header.header {
     height: var(--header-height);
     padding: var(--big-gap) var(--side-padding-for-sections);
     background-color: var(--surface);

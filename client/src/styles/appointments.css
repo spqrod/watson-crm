@@ -7,65 +7,79 @@
         grid-template-rows: 100px 50px 1fr;
         background-color: var(--surface);
         border: var(--border);
-
-        .dateContainer {
-            grid-column: 1 / 2;
-            grid-row: 1 / 2;
+        
+        .header {
+            grid-column: 1 / 4;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            align-items: center;
-            padding-left: var(--medium-gap);
-            padding-top: var(--medium-gap);
+            padding: var(--medium-gap);
 
-            .todayContainer, .tomorrowContainer, .datePickerContainer {
-                display: flex;
-                flex-direction: column;
+            .dateContainer {
+                grid-column: 1 / 2;
+                grid-row: 1 / 2;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
                 align-items: center;
-                text-align: center;
-            }
-
-            .datePickerContainer {
-                position: relative;
-                height: 100%;
-
-                .datePickerLabel {
-                    height: 100%;
+    
+                .todayContainer, .tomorrowContainer, .datePickerContainer {
                     display: flex;
+                    flex-direction: column;
                     align-items: center;
-                    text-align: center;
+                    text-align: center; 
+                    
+                    .fullDate {
+                        flex-basis: 0px;
+                        overflow: hidden;
+                        opacity: 0;
+                        transition: var(--transition);
+                    }
+                    
+                    .fullDate.active {
+                        opacity: 1;
+                        flex-basis: 55px;
+                    }
                 }
-
-                /* The input=date is hidden in this fashion, because the date picker is called by clicking the label. If the input=date element is display=none, then the picker appears on the top left on the screen. */
-                .datePicker {
-                    visibility: hidden;
-                    position: absolute;
-                    top: 50%;
-                    left: -50%;
-                    transform: scale(0.01);
-                    pointer-events: none;
+    
+                .datePickerContainer {
+                    position: relative;
+                    /* height: 100%; */
+    
+                    .datePickerLabel {
+                        /* height: 100%; */
+                        display: flex;
+                        align-items: center;
+                        text-align: center;
+                    }
+    
+                    /* The input=date is hidden in this fashion, because the date picker is called by clicking the label. If the input=date element is display=none, then the picker appears on the top left on the screen. */
+                    .datePicker {
+                        visibility: hidden;
+                        position: absolute;
+                        top: 50%;
+                        left: -50%;
+                        transform: scale(0.001);
+                        pointer-events: none;
+                    }
                 }
             }
+            
+            .addNewContainer {
+                grid-column: 2 / 3;
+                grid-row: 1 / 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .searchContainer {
+                grid-column: 3 / 4;
+                grid-row: 1 / 2;
+                display: flex;
+                align-items: center;
+                justify-content: end;
+            }
         }
-        
-        .addNewContainer {
-            grid-column: 2 / 3;
-            grid-row: 1 / 2;
-            padding-top: var(--medium-gap);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .searchContainer {
-            grid-column: 3 / 4;
-            grid-row: 1 / 2;
-            display: flex;
-            align-items: center;
-            justify-content: end;
-            padding-right: var(--medium-gap);
-            padding-top: var(--medium-gap);
-        }
-        
+
         .headerRowContainer {
             grid-column: 1 / 4;
             grid-row: 2 / 3;
