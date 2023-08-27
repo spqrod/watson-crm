@@ -82,6 +82,8 @@ input, select, textarea {
 
     border: var(--border);
 
+    transition: var(--transition);
+
     &.disabled {
         background-color: var(--inactive);
         color: var(--on-inactive);

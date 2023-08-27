@@ -22,16 +22,15 @@ export default function PatientFormDialog(data) {
 
 
     const controller = {
-
-        // resetFormToDefault() {
-        //     document.querySelector(".patientForm").reset();
-        //     const submitButton = document.querySelector(".button.update");
-        //     submitButton.classList.add("disabled");
-        // },
-        // makeUpdateButtonActive() {
-        //     const submitButton = document.querySelector(".button.update");
-        //     submitButton.classList.remove("disabled");
-        // },
+        resetFormToDefault() {
+            document.querySelector(".patientForm").reset();
+            const submitButton = document.querySelector(".button.submitButton");
+            submitButton.classList.add("disabled");
+        },
+        makeUpdateButtonActive() {
+            const submitButton = document.querySelector(".button.submitButton");
+            submitButton.classList.remove("disabled");
+        },
 
     }
 
@@ -46,8 +45,6 @@ export default function PatientFormDialog(data) {
 
     useEffect(() => {
         setDialogMode(data.dialogMode);
-        console.log(`data.dialogMode = ${data.dialogMode}`)
-        console.log(`dialogMode = ${dialogMode}`)
     }, [data.dialogMode]);
     
  
@@ -70,7 +67,7 @@ export default function PatientFormDialog(data) {
                             name="firstName" 
                             id="firstName" 
                             defaultValue={ dialogMode === "update" ? selectedPatient.firstName : null}
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
                         />
                     </div>
                     <div className="labelAndInputContainer lastName">
@@ -80,7 +77,7 @@ export default function PatientFormDialog(data) {
                             name="lastName" 
                             id="lastName" 
                             defaultValue={ dialogMode === "update" ? selectedPatient.lastName : null}
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
                         />
                     </div>
                     <div className="labelAndInputContainer file">
@@ -90,7 +87,7 @@ export default function PatientFormDialog(data) {
                             name="file" 
                             id="file" 
                             defaultValue={ dialogMode === "update" ? selectedPatient.file : ""}
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
                         />
                     </div>
                     <div className="labelAndInputContainer nrc">
@@ -100,7 +97,8 @@ export default function PatientFormDialog(data) {
                             name="nrc" 
                             id="nrc" 
                             defaultValue={ dialogMode === "update" ? selectedPatient.nrc : ""}
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
+
                         />
                     </div>
                     <div className="labelAndInputContainer insuranceId">
@@ -110,7 +108,8 @@ export default function PatientFormDialog(data) {
                             name="insuranceId" 
                             id="insuranceId" 
                             defaultValue={ dialogMode === "update" ? selectedPatient.insuranceId : null }
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
+
                             />
                     </div>
                     <div className="labelAndInputContainer phone">
@@ -120,17 +119,14 @@ export default function PatientFormDialog(data) {
                             name="phone" 
                             id="phone" 
                             defaultValue={ dialogMode === "update" ? selectedPatient.phone : null }
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
                         />
                     </div>
                     <div className="labelAndInputContainer dateOfBirth">
                         <label htmlFor="date">Date of Birth:</label>
                         <input type="date" name="dateOfBirth" id="dateOfBirth"
                             max = { display.today }
-                            // onChange={() => { 
-                            //     getAvailableTimeSlots(controller.getSelectedDate());
-                            //     if (selectedPatient) controller.makeUpdateButtonActive();
-                            // }}
+                            onChange={ controller.makeUpdateButtonActive }
                             defaultValue={ dialogMode === "update" ? dayjs(selectedPatient.dateOfBirth).format(display.dateFormatForDatePicker) : ""}
                         />
                     </div>
@@ -140,7 +136,8 @@ export default function PatientFormDialog(data) {
                             id="sex" 
                             name="sex"
                             value={ dialogMode === "update" ? "M" : "F" }
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
+
                         >
                             {/* <option hidden>{dialogMode === "addNew" ? null : ""}</option> */}
                             <option value="M">M</option>
@@ -153,7 +150,7 @@ export default function PatientFormDialog(data) {
                             type="date"
                             id="dateAdded" 
                             name="dateAdded" 
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
                             defaultValue = { dialogMode === "update" ? 
                                 dayjs(selectedPatient.dateAdded).format(display.dateFormatForDatePicker) : dialogMode === "addNew" ? 
                                 display.today : null }
@@ -167,7 +164,8 @@ export default function PatientFormDialog(data) {
                             name="marketing" 
                             id="marketing" 
                             defaultValue={ dialogMode === "update" ? selectedPatient.marketing : ""}
-                            // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
+                            onChange={ controller.makeUpdateButtonActive }
+
                         />
                     </div>
                 </div> 
@@ -181,15 +179,11 @@ export default function PatientFormDialog(data) {
                         Delete
                     </button>
                     <button 
-                        className={`button submitButton ${ dialogMode === "update" ? "disabled" : null}`} 
+                        className={`button submitButton disabled`} 
                         type="submit"
                     >
-                        { dialogMode === "search" ?
-                            <><SearchOutlinedIcon />Search</> :
-                            dialogMode === "addNew" ?
-                                <><AddOutlinedIcon />Add New Patient</> :
-                                dialogMode === "update" ?
-                                    <><AutorenewOutlinedIcon />Update Patient</> :
+                        { dialogMode === "addNew" ? <><AddOutlinedIcon />Add New Patient</> :
+                                dialogMode === "update" ? <><AutorenewOutlinedIcon />Update Patient</> :
                                     null
                         }
                     </button>
