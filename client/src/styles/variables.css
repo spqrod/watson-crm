@@ -26,10 +26,10 @@
     --primary-container: #3160ed;
     --on-primary-container: #ffffff;
 
-    --background: #f0f3ff;
+    --background: #ffffff;
     --on-background: #1f1a1c;
 
-    --surface: #ffffff;
+    --surface: #f0f3ff;
     --on-surface: #1f1a1c;
     --surface-variant: #ccd9f9;
     --on-surface-variant: #504348;
@@ -39,8 +39,10 @@
     
     --outline: #827378;
 
+    --close-button: red;
+
     --border: 1px solid var(--outline);
-    --border-radius: 4px;
+    --border-radius: 0px;
 
     --font-family-1: 'Jost';
     --font-family-2: 'Jost';

@@ -1,6 +1,6 @@
-.appointmentFormDialog {
+.patientFormDialog {
 
-    .appointmentForm {
+    .patientForm {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -18,19 +18,9 @@
     
             .labelAndInputContainer {
                 display: grid;
-                grid-template-columns: 100px 1fr;
+                grid-template-columns: 110px 1fr;
                 grid-template-rows: min-content;
                 align-items: center;
-            }
-
-            .commentsContainer {
-                justify-self: center;
-                max-width: 500px;
-                grid-column: 1 / 3;
-
-                .commentsTextarea {
-                    resize: none;
-                }
             }
         }
     

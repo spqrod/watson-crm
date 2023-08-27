@@ -5,6 +5,7 @@ header.header {
     display: flex;
     align-items: center;
     border-bottom: var(--border);
+    user-select: none;
 
     .menuContainer {
         display: flex;

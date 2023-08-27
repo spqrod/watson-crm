@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function AppointmentFormDialog(data) {
 
@@ -54,8 +55,8 @@ export default function AppointmentFormDialog(data) {
     return (
         <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
             <form className="formForDialogCloseButton" method="dialog">
-                <button className="closeButton" onClick={controller.resetFormToDefault} >
-                    x
+                <button className="closeButton" onClick={ controller.resetFormToDefault } >
+                    <CloseIcon />
                 </button>
             </form>
             <form className="appointmentForm" onSubmit={ selectedAppointment ? handleAppointmentUpdate : handleAppointmentSubmit }>
@@ -190,7 +191,6 @@ export default function AppointmentFormDialog(data) {
                         </textarea>
                     </div>
                 </div>
-
                 <div className="buttonsContainer">
                     <button 
                         className={`button deleteButton ${ selectedAppointment ? null : "disabled"}`} 

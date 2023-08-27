@@ -46,9 +46,14 @@ input, select, textarea {
     }
     &:focus {
         outline: none;
-        background-color: var(--surface);
-        color: var(--on-surface);
+        background-color: var(--surface-variant);
+        color: var(--on-surface-variant);
         border: var(--border);
+    }
+    &[disabled] {
+        background-color: var(--inactive);
+        color: var(--on-inactive);
+        cursor: not-allowed;
     }
 }
 
@@ -75,13 +80,15 @@ input, select, textarea {
     font-size: 18px;
     text-transform: uppercase;
 
+    border: var(--border);
+
     &.disabled {
         background-color: var(--inactive);
         color: var(--on-inactive);
-        cursor: no-drop;
-        pointer-events: none;
+        cursor: not-allowed;
+        /* pointer-events: none; */
     }
-
+    
     .buttonLink {
         text-decoration: none;
         font-weight: 500;
@@ -101,7 +108,7 @@ input, select, textarea {
     &[open] {
         border: var(--border);
         background-color: var(--surface);
-        padding: var(--big-gap);
+        padding: var(--medium-gap);
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -112,21 +119,19 @@ input, select, textarea {
     }
     .formForDialogCloseButton {
         position: absolute;
-        top: var(--small-gap);
-        right: var(--small-gap);
+        top: var(--medium-gap);
+        right: var(--medium-gap);
         display: flex;
 
         .closeButton {
             border: var(--border);
             border-radius: var(--border-radius);
-            background-color: var(--surface);
-            color: var(--on-surface);
-            width: var(--medium-gap);
-            height: var(--medium-gap);
+            background-color: white;
+            width: var(--big-gap);
+            height: var(--big-gap);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 12px;
         }
     }
     &::backdrop {
