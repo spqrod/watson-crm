@@ -15,12 +15,12 @@ export default function PatientFormDialog(data) {
     const today = dayjs().format(dateFormatForDB);
     // const [ selectedPatient, setSelectedPatient ] = useState(data.patient);
     // const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([data.timeSlots]);
-    // const { 
-    //     getAvailableTimeSlots, 
-    //     handlePatientSubmit, 
-    //     handlePatientUpdate, 
-    //     handlePatientDelete 
-    // } = data;
+    const { 
+        handlePatientSearch
+        // handlePatientSubmit, 
+        // handlePatientUpdate, 
+        // handlePatientDelete 
+    } = data;
 
 
     const controller = {
@@ -57,7 +57,7 @@ export default function PatientFormDialog(data) {
             </form>
             <form 
                 className="patientForm" 
-                // onSubmit={ selectedPatient ? handlePatientUpdate : handlePatientSubmit }
+                onSubmit={ dialogMode === "search" ? handlePatientSearch : null }
             >
                 <div className="infoContainer">
                     <div className="labelAndInputContainer firstName">
