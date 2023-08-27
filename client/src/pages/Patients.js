@@ -1,5 +1,5 @@
 import "../styles/patients.css";
-// import PatientList from "../components/PatientList";
+import PatientList from "../components/PatientList";
 import PatientFormForDialog from "../components/PatientFormDialog";
 import { useState, useEffect } from "react";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
@@ -16,8 +16,8 @@ export default function Patients() {
     const dateFormatForDB = "YYYY-MM-DD";
 
     const api = {
-        getPatients: function(data) {
-            const fetchURL = `/patients/${data}`;
+        getPatients: function(searchString) {
+            const fetchURL = `/patients/${searchString}`;
             return fetch(fetchURL).then(res => res.json());
         },
         // getAvailableTimeSlots(date) {
@@ -56,52 +56,32 @@ export default function Patients() {
     };
 
     const controller = {
-        handleSearchClick: function() {
-            setDialogMode("search");
-            display.showDialog();
-        },
         handleAddNew: function() {
             setDialogMode("addNew");
             display.showDialog();
         },
-        handlePatientSearch(e) {
+        handleSearchSubmit(e) {
             e.preventDefault();
-            const patient = { 
-                firstName: e.target.firstName.value,
-            //     lastName: e.target.lastName.value,
-            //     file: e.target.file.value,
-            //     nrc: e.target.doctor.value,
-            //     phone: e.target.phone.value,
-            //     dateOfBirth: e.target.date.value, 
-            };
-            api.getPatients(patient.firstName).then(res => {
-                display.closeDialog();
+            const searchString = e.target.search.value;
+            api.getPatients(searchString).then(res => {
                 console.log(res);
-            //     document.querySelector(".patientForm").reset();
-            //     const selectedDate = dayjs(patient.date).format(dateFormatForDB);
-            //     controller.getPatients(selectedDate);
+                setPatientsArray(res);
             });
         },
-        // getPatients: function(selectedDate) {
-        //     // api.getPatients(selectedDate).then(res => {
-        //     //     res.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
-        //     //     setPatientsArray(res);
-        //     // });
-        // },
-        // handlePatientClick: function(e) {
-        //     // const patientID = e.currentTarget.id;
-        //     // const patient = controller.getPatient(patientID);
-        //     // setSelectedPatient(patient);
-        //     // controller.getAvailableTimeSlots(patient.date);
-        //     // display.showDialog();
-        // },
-        // getPatient: function(id) {
-        //     // const patient = patientsArray.find(item => item.id == id);
-        //     // return patient;
-        // },
-        // getPatientData: function() {
+        handlePatientClick: function(e) {
+            // const patientID = e.currentTarget.id;
+            // const patient = controller.getPatient(patientID);
+            // setSelectedPatient(patient);
+            // controller.getAvailableTimeSlots(patient.date);
+            display.showDialog();
+        },
+    // getPatient: function(id) {
+    //     // const patient = patientsArray.find(item => item.id == id);
+    //     // return patient;
+    // },
+    // getPatientData: function() {
 
-        // },
+    // },
     //     handleTodayClick: function() {
     //         const selectedDate = dayjs().format(dateFormatForDB);
     //         controller.getPatients(selectedDate);
@@ -230,24 +210,27 @@ export default function Patients() {
                     <div className="addNewContainer" onClick={ controller.handleAddNew }>
                         <AddOutlinedIcon />New Patient
                     </div>
-                    <div className="searchContainer" onClick={ controller.handleSearchClick }>
-                        <SearchOutlinedIcon /><p>Search</p>
-                    </div>
+                <form className="searchContainer" onSubmit = { controller.handleSearchSubmit }>
+                    <label htmlFor="search" className="searchLabel">
+                        <SearchOutlinedIcon /><span>Search</span>
+                    </label>
+                    <input type="text" name="search" id="search"/>
+                </form>
                 </div>
-
                 <div className="headerRowContainer">
                     <p>First Name</p>
                     <p>Last Name</p>
                     <p>File</p>
-                    <p>Phone</p>
                     <p>NRC</p>
+                    <p>Insurance ID</p>
+                    <p>Phone</p>
                     <p>Date Added</p>
                     <p>Date of Birth</p>
                 </div>
-                {/* <PatientList 
+                <PatientList 
                     patientsArray = { patientsArray } 
                     handlePatientClick = { controller.handlePatientClick } 
-                /> */}
+                />
             </div>
             <PatientFormForDialog 
                 dialogMode = { dialogMode }

@@ -30,12 +30,15 @@ const database = {
         const query = "select time from appointments where date=?"
         return pool.query(query, date).then(res => res[0]);
     },
-
-
     addNewPatient: function(patient) {
         return pool.query("insert into patients (firstName, lastName, file, phone, sex, insuranceId, marketing) values (?, ?, ?, ?, ?, ?, ?);", 
             [patient.firstName, patient.lastName, patient.file, patient.phone, patient.sex, patient.insuranceId, patient.marketing]);
     },
+    getPatients(searchString) {
+        const query = "select * from patients where ? in (firstName, lastName, file, nrc, phone, insuranceId)";
+        return pool.query(query, [searchString])
+            .then(res => res[0])
+    }
 }
 
 module.exports = { database };
@@ -53,9 +56,10 @@ const date3 = dayjs().add(4, "day").format(dateFormatForDB);
 
 
 
-// database.addNewAppointmentsFromArray(exampleAppointmentsArray);
-// database.deleteAllAppointments();
-// database.getAllAppointments().then(res => console.log(res[0]));
+
+
+
+
 
 const query3 = "UPDATE appointments SET noshow=? WHERE id = ?";
 
@@ -236,7 +240,7 @@ const helperForPatients = {
         const query = "describe patients";
         pool.query(query).then((res) => console.log(res[0]));
     },
-    deleteAllAppointments: function() {
+    deleteAllPatients: function() {
         return pool.query("delete from patients");
     },
     getAllPatients: function() {
@@ -287,11 +291,23 @@ const helperForPatients = {
             phone: "260 9238231 12",
             sex: "M",
             dateOfBirth: "1920-02-10",
-            marketing: "Word of mouth"
+            marketing: "Word of mouth",
+            comments: "Friend of John"
+        },
+        {
+            firstName: "Gary",
+            lastName: "John",
+            file: "92754/75",
+            phone: "260 9261914 82",
+            sex: "M",
+            dateOfBirth: "1966-05-02",
+            marketing: "Word of mouth",
         },
     ],
 };
 
 // helperForPatients.alterTablePatients();
 // database.addNewPatient(helperForPatients.examplePatientsArray[0])
+// helperForPatients.addNewPatientsFromArray(helperForPatients.examplePatientsArray)
 // helperForPatients.getAllPatients();
+// database.getPatient("12");

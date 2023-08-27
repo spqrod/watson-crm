@@ -25,6 +25,12 @@
                 align-items: center;
                 justify-content: end;
                 padding-right: var(--medium-gap);
+                gap: var(--medium-gap);
+
+                .searchLabel {
+                    display: flex;
+                    align-items: center;
+                }
             }
         }
 

@@ -117,6 +117,15 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
     });
 });
 
+app.get("/patients/:searchString", (req, res) => {
+    let { searchString } = req.params;
+    searchString = sanitizeString(searchString);
+    console.log(searchString);
+    database.getPatients(searchString)
+        .then(response => res.json(response))
+        .catch(error => logger.info(error));
+});
+
 // database.getAllAppointments().then(res => console.log(res[0]));
 
 
