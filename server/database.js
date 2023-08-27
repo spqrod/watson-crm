@@ -31,8 +31,8 @@ const database = {
         return pool.query(query, date).then(res => res[0]);
     },
     addNewPatient: function(patient) {
-        return pool.query("insert into patients (firstName, lastName, file, phone, sex, insuranceId, marketing) values (?, ?, ?, ?, ?, ?, ?);", 
-            [patient.firstName, patient.lastName, patient.file, patient.phone, patient.sex, patient.insuranceId, patient.marketing]);
+        return pool.query("insert into patients (firstName, lastName, file, nrc, phone, insuranceId, dateOfBirth, sex, marketing) values (?, ?, ?, ?, ?, ?, ?, ?, ?);", 
+            [patient.firstName, patient.lastName, patient.file, patient.nrc, patient.phone, patient.insuranceId, patient.dateOfBirth, patient.sex, patient.marketing]);
     },
     getPatients(searchString) {
         const query = "select * from patients where ? in (firstName, lastName, file, nrc, phone, insuranceId)";
@@ -258,6 +258,7 @@ const helperForPatients = {
             firstName: "John",
             lastName: "Watson",
             file: "3232/22",
+            nrc: "481920/22",
             phone: "260000 98231 12",
             sex: "M",
             insuranceId: "13135719035893",
@@ -267,7 +268,8 @@ const helperForPatients = {
         {
             firstName: "Mark",
             lastName: "Brown",
-            file: "3232/22",
+            file: "9872/91",
+            nrc: "481920/78",
             phone: "260000 98231 00",
             sex: "M",
             insuranceId: "981751332123",
@@ -278,6 +280,7 @@ const helperForPatients = {
             firstName: "Leeroy",
             lastName: "Hawking",
             file: "1232/00",
+            nrc: "111111/22",
             phone: "260000 98231 86",
             sex: "M",
             insuranceId: "0927057130",
@@ -288,6 +291,7 @@ const helperForPatients = {
             firstName: "Stephen",
             lastName: "Jenkins",
             file: "32232/99",
+            nrc: "928821/22",
             phone: "260 9238231 12",
             sex: "M",
             dateOfBirth: "1920-02-10",
@@ -298,6 +302,7 @@ const helperForPatients = {
             firstName: "Gary",
             lastName: "John",
             file: "92754/75",
+            nrc: "4234920/11",
             phone: "260 9261914 82",
             sex: "M",
             dateOfBirth: "1966-05-02",
@@ -307,6 +312,7 @@ const helperForPatients = {
 };
 
 // helperForPatients.alterTablePatients();
+// helperForPatients.deleteAllPatients();
 // database.addNewPatient(helperForPatients.examplePatientsArray[0])
 // helperForPatients.addNewPatientsFromArray(helperForPatients.examplePatientsArray)
 // helperForPatients.getAllPatients();

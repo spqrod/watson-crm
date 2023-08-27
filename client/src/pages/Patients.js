@@ -222,10 +222,9 @@ export default function Patients() {
                     <p>Last Name</p>
                     <p>File</p>
                     <p>NRC</p>
-                    <p>Insurance ID</p>
                     <p>Phone</p>
-                    <p>Date Added</p>
                     <p>Date of Birth</p>
+                    <p>Date Added</p>
                 </div>
                 <PatientList 
                     patientsArray = { patientsArray } 

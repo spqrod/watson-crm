@@ -43,7 +43,11 @@ const timeSlotsForAppointments = [
 
 function convertTimeFormatFromHHMMSSToHHMM(time) {
     return time.substring(0, 5);
-}
+};
+
+function convertDateFormatToDDMMYYYY(date) {
+    return dayjs(date).format("DD.MM.YYYY");
+};
 
 app.use((req, res, next) => {
     logger.info(`Received a ${req.method} request for ${req.url}`);
@@ -120,9 +124,15 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
 app.get("/patients/:searchString", (req, res) => {
     let { searchString } = req.params;
     searchString = sanitizeString(searchString);
-    console.log(searchString);
     database.getPatients(searchString)
-        .then(response => res.json(response))
+        .then(response => {
+            const patients = response;
+            patients.forEach(patient => { 
+                patient.dateAdded = convertDateFormatToDDMMYYYY(patient.dateAdded);
+                patient.dateOfBirth = convertDateFormatToDDMMYYYY(patient.dateOfBirth);
+            });
+            res.json(patients);
+        })
         .catch(error => logger.info(error));
 });
 

@@ -15,6 +15,21 @@ export default function PatientList(data) {
                         <div className="infoContainer lastName">
                             <p>{patient.lastName}</p>
                         </div>
+                        <div className="infoContainer file">
+                            <p>{patient.file}</p>
+                        </div>
+                        <div className="infoContainer nrc">
+                            <p>{patient.nrc}</p>
+                        </div>
+                        <div className="infoContainer phone">
+                            <p>{patient.phone}</p>
+                        </div>
+                        <div className="infoContainer dateOfBirth">
+                            <p>{patient.dateOfBirth}</p>
+                        </div>
+                        <div className="infoContainer dateAdded">
+                            <p>{patient.dateAdded}</p>
+                        </div>
                     </li>
                 ))
                 : (
