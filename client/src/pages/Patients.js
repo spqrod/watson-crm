@@ -56,7 +56,7 @@ export default function Patients() {
     };
 
     const controller = {
-        handleAddNew: function() {
+        handleAddNewPatient: function() {
             setDialogMode("addNew");
             display.showDialog();
         },
@@ -64,21 +64,20 @@ export default function Patients() {
             e.preventDefault();
             const searchString = e.target.search.value;
             api.getPatients(searchString).then(res => {
-                console.log(res);
                 setPatientsArray(res);
             });
         },
         handlePatientClick: function(e) {
-            // const patientID = e.currentTarget.id;
-            // const patient = controller.getPatient(patientID);
-            // setSelectedPatient(patient);
-            // controller.getAvailableTimeSlots(patient.date);
+            const patientID = e.currentTarget.id;
+            const patient = controller.getPatient(patientID);
+            setSelectedPatient(patient);
+            setDialogMode("update");
             display.showDialog();
         },
-    // getPatient: function(id) {
-    //     // const patient = patientsArray.find(item => item.id == id);
-    //     // return patient;
-    // },
+        getPatient: function(id) {
+            const patient = patientsArray.find(item => item.id == id);
+            return patient;
+        },
     // getPatientData: function() {
 
     // },
@@ -207,7 +206,7 @@ export default function Patients() {
         <section className="patientsPage section">
             <div className="contentContainer">
                 <div className="header">
-                    <div className="addNewContainer" onClick={ controller.handleAddNew }>
+                    <div className="addNewContainer" onClick={ controller.handleAddNewPatient }>
                         <AddOutlinedIcon />New Patient
                     </div>
                 <form className="searchContainer" onSubmit = { controller.handleSearchSubmit }>
@@ -233,7 +232,7 @@ export default function Patients() {
             </div>
             <PatientFormForDialog 
                 dialogMode = { dialogMode }
-                // patient={ selectedPatient } 
+                patient={ selectedPatient } 
                 handlePatientSearch = { controller.handlePatientSearch }
                 // handlePatientSubmit = { controller.handlePatientSubmit }
                 // handlePatientUpdate = { controller.handlePatientUpdate }

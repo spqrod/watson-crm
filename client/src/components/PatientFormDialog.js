@@ -11,9 +11,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 export default function PatientFormDialog(data) {
 
     const [ dialogMode, setDialogMode ] = useState(data.dialogMode);
-    const dateFormatForDB = "YYYY-MM-DD"
-    const today = dayjs().format(dateFormatForDB);
-    // const [ selectedPatient, setSelectedPatient ] = useState(data.patient);
+    const [ selectedPatient, setSelectedPatient ] = useState(data.patient);
     // const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([data.timeSlots]);
     const { 
         handlePatientSearch
@@ -37,14 +35,19 @@ export default function PatientFormDialog(data) {
 
     }
 
-    // useEffect(() => {
-    //     setSelectedPatient(data.patient);
-    //     if (data.patient)
-    //         controller.updateNoshowCheckbox(data.patient.noshow);
-    // }, [data.patient]);
+    const display = {
+        dateFormatForDatePicker: "YYYY-MM-DD",
+        today: dayjs().format("YYYY-MM-DD"),
+    }
+
+    useEffect(() => {
+        setSelectedPatient(data.patient);
+    }, [data.patient]);
 
     useEffect(() => {
         setDialogMode(data.dialogMode);
+        console.log(`data.dialogMode = ${data.dialogMode}`)
+        console.log(`dialogMode = ${dialogMode}`)
     }, [data.dialogMode]);
     
  
@@ -57,7 +60,7 @@ export default function PatientFormDialog(data) {
             </form>
             <form 
                 className="patientForm" 
-                onSubmit={ dialogMode === "search" ? handlePatientSearch : null }
+                // onSubmit={ dialogMode === "search" ? handlePatientSearch : null }
             >
                 <div className="infoContainer">
                     <div className="labelAndInputContainer firstName">
@@ -66,7 +69,7 @@ export default function PatientFormDialog(data) {
                             type="text" 
                             name="firstName" 
                             id="firstName" 
-                            // defaultValue={selectedPatient ? selectedPatient.firstName : ""}
+                            defaultValue={ dialogMode === "update" ? selectedPatient.firstName : null}
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
@@ -76,7 +79,7 @@ export default function PatientFormDialog(data) {
                             type="text" 
                             name="lastName" 
                             id="lastName" 
-                            // defaultValue={selectedPatient ? selectedPatient.lastName : ""}
+                            defaultValue={ dialogMode === "update" ? selectedPatient.lastName : null}
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
@@ -86,7 +89,7 @@ export default function PatientFormDialog(data) {
                             type="text" 
                             name="file" 
                             id="file" 
-                            // defaultValue={selectedPatient ? selectedPatient.file : ""}
+                            defaultValue={ dialogMode === "update" ? selectedPatient.file : ""}
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
@@ -96,7 +99,7 @@ export default function PatientFormDialog(data) {
                             type="text" 
                             name="nrc" 
                             id="nrc" 
-                            // defaultValue={selectedPatient ? selectedPatient.phone : ""}
+                            defaultValue={ dialogMode === "update" ? selectedPatient.nrc : ""}
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
@@ -106,9 +109,9 @@ export default function PatientFormDialog(data) {
                             type="number" 
                             name="insuranceId" 
                             id="insuranceId" 
-                            // defaultValue={selectedPatient ? selectedPatient.phone : ""}
+                            defaultValue={ dialogMode === "update" ? selectedPatient.insuranceId : null }
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
-                        />
+                            />
                     </div>
                     <div className="labelAndInputContainer phone">
                         <label htmlFor="phone">Phone:</label>
@@ -116,20 +119,19 @@ export default function PatientFormDialog(data) {
                             type="tel" 
                             name="phone" 
                             id="phone" 
-                            // defaultValue={selectedPatient ? selectedPatient.phone : ""}
+                            defaultValue={ dialogMode === "update" ? selectedPatient.phone : null }
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
                     <div className="labelAndInputContainer dateOfBirth">
                         <label htmlFor="date">Date of Birth:</label>
                         <input type="date" name="dateOfBirth" id="dateOfBirth"
-                            // min={todayForPicker}
-                            max = { today }
+                            max = { display.today }
                             // onChange={() => { 
                             //     getAvailableTimeSlots(controller.getSelectedDate());
                             //     if (selectedPatient) controller.makeUpdateButtonActive();
                             // }}
-                            // defaultValue={ selectedPatient ? selectedPatient.date : ""}
+                            defaultValue={ dialogMode === "update" ? dayjs(selectedPatient.dateOfBirth).format(display.dateFormatForDatePicker) : ""}
                         />
                     </div>
                     <div className="labelAndInputContainer sex">
@@ -137,11 +139,12 @@ export default function PatientFormDialog(data) {
                         <select 
                             id="sex" 
                             name="sex"
+                            value={ dialogMode === "update" ? "M" : "F" }
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
                         >
-                            <option hidden>{dialogMode === "addNew" ? null : ""}</option>
-                            <option value="m">M</option>
-                            <option value="f">F</option>
+                            {/* <option hidden>{dialogMode === "addNew" ? null : ""}</option> */}
+                            <option value="M">M</option>
+                            <option value="F">F</option>
                         </select>
                     </div>
                     <div className="labelAndInputContainer dateAdded">
@@ -151,8 +154,10 @@ export default function PatientFormDialog(data) {
                             id="dateAdded" 
                             name="dateAdded" 
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
-                            defaultValue = { dialogMode === "addNew" ? today : null }
-                            disabled = { dialogMode === "addNew" ? true : false }
+                            defaultValue = { dialogMode === "update" ? 
+                                dayjs(selectedPatient.dateAdded).format(display.dateFormatForDatePicker) : dialogMode === "addNew" ? 
+                                display.today : null }
+                            disabled = { true }
                         />
                     </div>
                     <div className="labelAndInputContainer marketing">
@@ -161,7 +166,7 @@ export default function PatientFormDialog(data) {
                             type="text" 
                             name="marketing" 
                             id="marketing" 
-                            // defaultValue={selectedPatient ? selectedPatient.cost : ""}
+                            defaultValue={ dialogMode === "update" ? selectedPatient.marketing : ""}
                             // onChange={ selectedPatient ? controller.makeUpdateButtonActive : null}
                         />
                     </div>

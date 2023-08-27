@@ -127,10 +127,10 @@ app.get("/patients/:searchString", (req, res) => {
     database.getPatients(searchString)
         .then(response => {
             const patients = response;
-            patients.forEach(patient => { 
-                patient.dateAdded = convertDateFormatToDDMMYYYY(patient.dateAdded);
-                patient.dateOfBirth = convertDateFormatToDDMMYYYY(patient.dateOfBirth);
-            });
+            // patients.forEach(patient => { 
+            //     patient.dateAdded = convertDateFormatToDDMMYYYY(patient.dateAdded);
+            //     patient.dateOfBirth = convertDateFormatToDDMMYYYY(patient.dateOfBirth);
+            // });
             res.json(patients);
         })
         .catch(error => logger.info(error));

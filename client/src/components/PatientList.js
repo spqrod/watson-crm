@@ -1,8 +1,10 @@
 import "../styles/patientList.css";
+import dayjs from "dayjs";
 
 export default function PatientList(data) {
 
     const { patientsArray, handlePatientClick } = data;
+    const dateFormatForDisplay = "DD.MM.YYYY";
 
     return (
         <ul className="patientListContainer">
@@ -25,10 +27,10 @@ export default function PatientList(data) {
                             <p>{patient.phone}</p>
                         </div>
                         <div className="infoContainer dateOfBirth">
-                            <p>{patient.dateOfBirth}</p>
+                            <p>{ dayjs(patient.dateOfBirth).format(dateFormatForDisplay) }</p>
                         </div>
                         <div className="infoContainer dateAdded">
-                            <p>{patient.dateAdded}</p>
+                            <p>{ dayjs(patient.dateAdded).format(dateFormatForDisplay) }</p>
                         </div>
                     </li>
                 ))
