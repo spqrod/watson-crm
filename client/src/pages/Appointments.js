@@ -111,10 +111,6 @@ export default function Appointments() {
             display.highlightDateContainer(dateAsString);
             display.highlightHeaderRowContainer();
             display.highlightAppointmentListContainer();
-
-
-
-
         },
         handleAddNew: function() {
             setSelectedAppointment();

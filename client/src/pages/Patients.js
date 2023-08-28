@@ -62,6 +62,11 @@ export default function Patients() {
         },
         handleSearchSubmit(e) {
             e.preventDefault();
+
+            display.highlightSearchContainer();
+            display.highlightHeaderRowContainer();
+            display.highlightPatientListContainer();
+
             const searchString = e.target.search.value;
             api.getPatients(searchString).then(res => {
                 setPatientsArray(res);
@@ -96,38 +101,38 @@ export default function Patients() {
                 document.querySelector(".patientForm").reset();
             });
         },
-    // //     handlePatientUpdate: function (e) {
-    // //         e.preventDefault();
-    // //         const patient = { 
-    // //             id: selectedPatient.id,
-    // //             date: e.target.date.value, 
-    // //             time: e.target.time.value,
-    // //             firstName: e.target.firstName.value,
-    // //             lastName: e.target.lastName.value,
-    // //             doctor: e.target.doctor.value,
-    // //             treatment: e.target.treatment.value,
-    // //             payment: e.target.payment.value,
-    // //             cost: e.target.cost.value,
-    // //             phone: e.target.phone.value,
-    // //             file: e.target.file.value,
-    // //             comments: e.target.comments.value,
-    // //             noshow: e.target.noshow.checked,
-    // //         };
-    // //         api.updatePatient(patient).then(res => {
-    // //             display.closeDialog();
-    // //             document.querySelector(".patientForm").reset();
-    // //             const selectedDate = dayjs(patient.date).format(dateFormatForDB);
-    // //             controller.getPatients(selectedDate);
-    // //         });
-    // //     },
-    // //     handlePatientDelete: function(e) {
-    // //         e.preventDefault();
-    // //         api.deletePatient(selectedPatient.id).then(() => {
-    // //             display.closeDialog();
-    // //             document.querySelector(".patientForm").reset();
-    // //             controller.getPatients(selectedPatient.date);
-    // //         });
-    // //     }
+    //     handlePatientUpdate: function (e) {
+    //         e.preventDefault();
+    //         const patient = { 
+    //             id: selectedPatient.id,
+    //             date: e.target.date.value, 
+    //             time: e.target.time.value,
+    //             firstName: e.target.firstName.value,
+    //             lastName: e.target.lastName.value,
+    //             doctor: e.target.doctor.value,
+    //             treatment: e.target.treatment.value,
+    //             payment: e.target.payment.value,
+    //             cost: e.target.cost.value,
+    //             phone: e.target.phone.value,
+    //             file: e.target.file.value,
+    //             comments: e.target.comments.value,
+    //             noshow: e.target.noshow.checked,
+    //         };
+    //         api.updatePatient(patient).then(res => {
+    //             display.closeDialog();
+    //             document.querySelector(".patientForm").reset();
+    //             const selectedDate = dayjs(patient.date).format(dateFormatForDB);
+    //             controller.getPatients(selectedDate);
+    //         });
+    //     },
+    //     handlePatientDelete: function(e) {
+    //         e.preventDefault();
+    //         api.deletePatient(selectedPatient.id).then(() => {
+    //             display.closeDialog();
+    //             document.querySelector(".patientForm").reset();
+    //             controller.getPatients(selectedPatient.date);
+    //         });
+    //     }
 
     };
 
@@ -140,28 +145,18 @@ export default function Patients() {
             const dialog = document.querySelector(".dialog");
             dialog.close();
         },
-    //     showFullDate(dateAsString) {
-    //         const previousActiveDate = document.querySelector(".fullDate.active");
-    //         if (previousActiveDate)
-    //             previousActiveDate.classList.remove("active");
-    //         const fullDate = document.querySelector(`.fullDate.${dateAsString}`);
-    //         fullDate.classList.add("active");
-    //     },
-    //     highlightDateContainer(dateAsString) {
-    //         const previousActiveContainer = document.querySelector("div.active");
-    //         if (previousActiveContainer)
-    //             previousActiveContainer.classList.remove("active");
-    //         const dateContainer = document.querySelector(`.${dateAsString}Container`);
-    //         dateContainer.classList.add("active");
-    //     },
-    //     highlightHeaderRowContainer() {
-    //         const headerRow = document.querySelector(".headerRowContainer");
-    //         headerRow.classList.add("active");
-    //     },
-    //     highlightPatientListContainer() {
-    //         const patientListContainer = document.querySelector(".patientListContainer");
-    //         patientListContainer.classList.add("active");
-    //     }
+        highlightSearchContainer() {
+            const searchContainer = document.querySelector(`.searchContainer`);
+            searchContainer.classList.add("active");
+        },
+        highlightHeaderRowContainer() {
+            const headerRow = document.querySelector(".headerRowContainer");
+            headerRow.classList.add("active");
+        },
+        highlightPatientListContainer() {
+            const patientListContainer = document.querySelector(".patientListContainer");
+            patientListContainer.classList.add("active");
+        }
     };
 
     return (

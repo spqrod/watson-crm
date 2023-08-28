@@ -24,8 +24,15 @@
                 display: flex;
                 align-items: center;
                 justify-content: end;
+                padding-left: var(--medium-gap);
                 padding-right: var(--medium-gap);
                 gap: var(--medium-gap);
+                transition: var(--transition);
+
+                &.active {
+                    background-color: var(--surface-variant);
+                    border-left: var(--border);
+                }
 
                 .searchLabel {
                     display: flex;
@@ -44,10 +51,10 @@
             border-top: var(--border);
             border-bottom: var(--border);
             padding: 0 var(--medium-gap);
-            /* transition: var(--transition); */
+            transition: var(--transition);
 
             &.active {
-                /* background-color: var(--surface-variant); */
+                background-color: var(--surface-variant);
             }
             
             & p {
