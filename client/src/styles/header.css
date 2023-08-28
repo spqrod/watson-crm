@@ -9,7 +9,6 @@ header.header {
 
     .menuContainer {
         display: flex;
-        gap: var(--big-gap);
         height: 100%;
 
         .menuItem {

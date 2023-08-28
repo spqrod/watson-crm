@@ -14,8 +14,8 @@ export default function PatientFormDialog(data) {
     const [ selectedPatient, setSelectedPatient ] = useState(data.patient);
     // const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([data.timeSlots]);
     const { 
-        handlePatientSearch
-        // handlePatientSubmit, 
+        handlePatientSearch,
+        handlePatientSubmit, 
         // handlePatientUpdate, 
         // handlePatientDelete 
     } = data;
@@ -31,7 +31,6 @@ export default function PatientFormDialog(data) {
             const submitButton = document.querySelector(".button.submitButton");
             submitButton.classList.remove("disabled");
         },
-
     }
 
     const display = {
@@ -57,7 +56,9 @@ export default function PatientFormDialog(data) {
             </form>
             <form 
                 className="patientForm" 
-                // onSubmit={ dialogMode === "search" ? handlePatientSearch : null }
+                onSubmit={ dialogMode === "update" ? null :
+                    dialogMode === "addNew" ? handlePatientSubmit
+                    : null }
             >
                 <div className="infoContainer">
                     <div className="labelAndInputContainer firstName">
@@ -127,7 +128,9 @@ export default function PatientFormDialog(data) {
                         <input type="date" name="dateOfBirth" id="dateOfBirth"
                             max = { display.today }
                             onChange={ controller.makeUpdateButtonActive }
-                            defaultValue={ dialogMode === "update" ? dayjs(selectedPatient.dateOfBirth).format(display.dateFormatForDatePicker) : ""}
+                            defaultValue={ dialogMode === "update" ? 
+                                selectedPatient.dateOfBirth ? 
+                                dayjs(selectedPatient.dateOfBirth).format(display.dateFormatForDatePicker) : null : null }
                         />
                     </div>
                     <div className="labelAndInputContainer sex">
@@ -139,7 +142,10 @@ export default function PatientFormDialog(data) {
                             onChange={ controller.makeUpdateButtonActive }
 
                         >
-                            {/* <option hidden>{dialogMode === "addNew" ? null : ""}</option> */}
+                            <option hidden> { dialogMode === "addNew" ? 
+                                null : dialogMode === "update" ? 
+                                "M" : null}
+                            </option>
                             <option value="M">M</option>
                             <option value="F">F</option>
                         </select>

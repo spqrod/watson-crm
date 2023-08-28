@@ -27,7 +27,7 @@ export default function PatientList(data) {
                             <p>{patient.phone}</p>
                         </div>
                         <div className="infoContainer dateOfBirth">
-                            <p>{ dayjs(patient.dateOfBirth).format(dateFormatForDisplay) }</p>
+                            <p>{ patient.dateOfBirth ? dayjs(patient.dateOfBirth).format(dateFormatForDisplay) : null }</p>
                         </div>
                         <div className="infoContainer dateAdded">
                             <p>{ dayjs(patient.dateAdded).format(dateFormatForDisplay) }</p>

@@ -24,17 +24,17 @@ export default function Patients() {
         //     const fetchURL = `/taken-time-slots/${date}`;
         //     return fetch(fetchURL).then(res => res.json());
         // },
-        // addNewPatient(patient) {
-        //     const fetchURL = `/patients/`;
-        //     const fetchBody = {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(patient)
-        //     }
-        //     return fetch(fetchURL, fetchBody).then(res => res.json());
-        // },
+        addNewPatient(patient) {
+            const fetchURL = `/patients/`;
+            const fetchBody = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(patient)
+            }
+            return fetch(fetchURL, fetchBody).then(res => res.json());
+        },
         // updatePatient(patient) {
         //     const fetchURL = `/patients/`;
         //     const fetchBody = {
@@ -78,62 +78,24 @@ export default function Patients() {
             const patient = patientsArray.find(item => item.id == id);
             return patient;
         },
-    // getPatientData: function() {
-
-    // },
-    //     handleTodayClick: function() {
-    //         const selectedDate = dayjs().format(dateFormatForDB);
-    //         controller.getPatients(selectedDate);
-    //         controller.handleDateSelect("today");
-    // //     },
-    // //     handleTomorrowClick: function() {
-    // //         const selectedDate = dayjs().add(1, "day").format(dateFormatForDB);
-    // //         controller.getPatients(selectedDate);
-    // //         controller.handleDateSelect("tomorrow");
-    // //     },
-    // //     handleDatePickerClick: function() {
-    // //         const datePicker = document.querySelector(".datePickerContainer .datePicker.input");
-    // //         datePicker.showPicker();
-    // //     },
-    // //     handleDateSelectInDatePicker: function() {
-    // //         const datePicker = document.querySelector(".datePickerContainer .datePicker.input");
-    // //         const selectedDate = dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForDB);
-    // //         setDatePickerDate(dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForHeader));
-    // //         controller.handleDateSelect("datePicker");
-    // //         controller.getPatients(selectedDate);
-    // //     },
-    // //     handleDateSelect: function(dateAsString) {
-    // //         display.showFullDate(dateAsString);
-    // //         display.highlightDateContainer(dateAsString);
-    // //         display.highlightHeaderRowContainer();
-    // //         display.highlightPatientListContainer();
-    // //     },
-
-    // //     getAvailableTimeSlots: function(date) {
-    // //         api.getAvailableTimeSlots(date).then(res => setAvailableTimesSlotsForTimePicker(res));
-    // //     },
-    // //     handlePatientSubmit: function (e) {
-    // //         e.preventDefault();
-    // //         const patient = { 
-    // //             date: e.target.date.value, 
-    // //             time: e.target.time.value,
-    // //             firstName: e.target.firstName.value,
-    // //             lastName: e.target.lastName.value,
-    // //             doctor: e.target.doctor.value,
-    // //             treatment: e.target.treatment.value,
-    // //             payment: e.target.payment.value,
-    // //             cost: e.target.cost.value,
-    // //             phone: e.target.phone.value,
-    // //             file: e.target.file.value,
-    // //             comments: e.target.comments.value,
-    // //         }
-    // //         api.addNewPatient(patient).then(res => {
-    // //             display.closeDialog();
-    // //             document.querySelector(".patientForm").reset();
-    // //             const selectedDate = dayjs(patient.date).format(dateFormatForDB);
-    // //             controller.getPatients(selectedDate);
-    // //         });
-    // //     },
+        handlePatientSubmit: function (e) {
+            e.preventDefault();
+            const patient = { 
+                firstName: e.target.firstName.value,
+                lastName: e.target.lastName.value,
+                file: e.target.file.value ? e.target.file.value : null,
+                nrc: e.target.nrc.value ? e.target.nrc.value : null,
+                insuranceId: e.target.insuranceId.value ? e.target.insuranceId.value : null,
+                phone: e.target.phone.value ? e.target.phone.value : null,
+                dateOfBirth: e.target.dateOfBirth.value ? e.target.dateOfBirth.value : null,
+                sex: e.target.sex.value ? e.target.sex.value : null,
+                marketing: e.target.marketing.value ? e.target.marketing.value : null,
+            };
+            api.addNewPatient(patient).then(res => {
+                display.closeDialog();
+                document.querySelector(".patientForm").reset();
+            });
+        },
     // //     handlePatientUpdate: function (e) {
     // //         e.preventDefault();
     // //         const patient = { 
@@ -234,7 +196,7 @@ export default function Patients() {
                 dialogMode = { dialogMode }
                 patient={ selectedPatient } 
                 handlePatientSearch = { controller.handlePatientSearch }
-                // handlePatientSubmit = { controller.handlePatientSubmit }
+                handlePatientSubmit = { controller.handlePatientSubmit }
                 // handlePatientUpdate = { controller.handlePatientUpdate }
                 // handlePatientDelete = { controller.handlePatientDelete }
             />

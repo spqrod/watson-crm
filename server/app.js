@@ -54,6 +54,8 @@ app.use((req, res, next) => {
     next();
 });
 
+
+
 app.get("/appointments/:selectedDate", (req, res) => {
     const { selectedDate } = req.params;
     database.getAppointmentsForDate(selectedDate).then(appointments => {
@@ -103,6 +105,8 @@ app.post("/appointments", (req, res) => {
         });
 });
 
+
+
 app.get("/taken-time-slots/:selectedDate", (req, res) => {
     let { selectedDate } = req.params;
     selectedDate = dayjs(selectedDate).format(dateFormatForDB);
@@ -121,19 +125,31 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
     });
 });
 
+
+
 app.get("/patients/:searchString", (req, res) => {
     let { searchString } = req.params;
     searchString = sanitizeString(searchString);
     database.getPatients(searchString)
         .then(response => {
             const patients = response;
-            // patients.forEach(patient => { 
-            //     patient.dateAdded = convertDateFormatToDDMMYYYY(patient.dateAdded);
-            //     patient.dateOfBirth = convertDateFormatToDDMMYYYY(patient.dateOfBirth);
-            // });
             res.json(patients);
         })
         .catch(error => logger.info(error));
+});
+
+app.post("/patients", (req, res) => {
+    for (const [key, value] of Object.entries(req.body)) {
+        if ((typeof req.body[key] != "boolean") && (typeof req.body[key] != "number") && (req.body[key] != null))
+            req.body[key] = sanitizeString(String(value));    
+        }
+    const patient = req.body;
+    database.addNewPatient(patient)
+        .then((result) => res.json({ success: true }))
+        .catch(error => {
+            logger.info(error);
+            res.json({success: false});
+        });
 });
 
 // database.getAllAppointments().then(res => console.log(res[0]));
