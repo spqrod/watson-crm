@@ -31,14 +31,27 @@ const database = {
         return pool.query(query, date).then(res => res[0]);
     },
     addNewPatient: function(patient) {
-        return pool.query("insert into patients (firstName, lastName, file, nrc, phone, insuranceId, dateOfBirth, sex, marketing) values (?, ?, ?, ?, ?, ?, ?, ?, ?);", 
-            [patient.firstName, patient.lastName, patient.file, patient.nrc, patient.phone, patient.insuranceId, patient.dateOfBirth, patient.sex, patient.marketing]);
+        const query = "insert into patients (firstName, lastName, file, nrc, phone, insuranceId, dateOfBirth, sex, marketing) values (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        const array = [patient.firstName, patient.lastName, patient.file, patient.nrc, patient.phone, patient.insuranceId, patient.dateOfBirth, patient.sex, patient.marketing];
+        return pool.query(query, array);
+    },
+    getLastInsertedPatient() {
+        const query = "select * from patients where id = (select last_insert_id())";
+        return pool.query(query)
+            .then(res => res[0][0]);
+    },
+    // updatePatient: function(patient) {
+    //     return pool.query("UPDATE appointments SET date=?, time=?, firstName=?, lastName=?, doctor=?, treatment=?, payment=?, cost=?, file=?, phone=?, comments=?, noshow=? WHERE id = ?", 
+    //         [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.file, appointment.phone, appointment.comments, appointment.noshow, appointment.id]);
+    // },
+    deletePatient: function(id) {
+        return pool.query("delete from patients where id=?", id);
     },
     getPatients(searchString) {
         const query = "select * from patients where ? in (firstName, lastName, file, nrc, phone, insuranceId)";
         return pool.query(query, [searchString])
             .then(res => res[0])
-    }
+    },
 }
 
 module.exports = { database };

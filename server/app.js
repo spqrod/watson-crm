@@ -145,10 +145,22 @@ app.post("/patients", (req, res) => {
         }
     const patient = req.body;
     database.addNewPatient(patient)
-        .then((result) => res.json({ success: true }))
+        .then(() => database.getLastInsertedPatient())
+        .then((lastInsertedPatient) => res.json(lastInsertedPatient))
         .catch(error => {
             logger.info(error);
             res.json({success: false});
+        });
+});
+
+app.delete("/patients/:id", (req, res) => {
+    let id = req.params.id;
+    id = sanitizeString(id);
+    database.deletePatient(id)
+        .then(() => res.json({ success: true }))
+        .catch(error => {
+            logger.info(error);
+            res.json({ success: false });
         });
 });
 

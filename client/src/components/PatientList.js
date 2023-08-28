@@ -9,7 +9,7 @@ export default function PatientList(data) {
     return (
         <ul className="patientListContainer">
             {
-                patientsArray ? patientsArray.map((patient, index) => (
+                patientsArray.length > 0 ? patientsArray.map((patient, index) => (
                     <li id={ patient.id } className="patientListItem" onClick={handlePatientClick}>
                         <div className="infoContainer firstName">
                             <p>{patient.firstName}</p>
@@ -35,7 +35,7 @@ export default function PatientList(data) {
                     </li>
                 ))
                 : (
-                    null
+                    <p>No patients found</p>
                 )
             }
         </ul>

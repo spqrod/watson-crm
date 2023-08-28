@@ -17,7 +17,7 @@ export default function PatientFormDialog(data) {
         handlePatientSearch,
         handlePatientSubmit, 
         // handlePatientUpdate, 
-        // handlePatientDelete 
+        handlePatientDelete 
     } = data;
 
 
@@ -206,7 +206,7 @@ export default function PatientFormDialog(data) {
                     <button 
                         className={`button deleteButton ${ dialogMode === "search" || dialogMode === "addNew" ? "disabled" : null }`} 
                         type="button" 
-                        // onClick={ handlePatientDelete }
+                        onClick={ handlePatientDelete }
                     >
                         <DeleteOutlineOutlinedIcon />
                         Delete

@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 
 export default function Patients() {
 
-    const [ patientsArray, setPatientsArray ] = useState();
+    const [ patientsArray, setPatientsArray ] = useState([]);
     const [ selectedPatient, setSelectedPatient ] = useState();
     const [ dialogMode, setDialogMode ] = useState();
 
@@ -20,10 +20,6 @@ export default function Patients() {
             const fetchURL = `/patients/${searchString}`;
             return fetch(fetchURL).then(res => res.json());
         },
-        // getAvailableTimeSlots(date) {
-        //     const fetchURL = `/taken-time-slots/${date}`;
-        //     return fetch(fetchURL).then(res => res.json());
-        // },
         addNewPatient(patient) {
             const fetchURL = `/patients/`;
             const fetchBody = {
@@ -33,7 +29,8 @@ export default function Patients() {
                 },
                 body: JSON.stringify(patient)
             }
-            return fetch(fetchURL, fetchBody).then(res => res.json());
+            return fetch(fetchURL, fetchBody)
+                .then(res => res.json());
         },
         // updatePatient(patient) {
         //     const fetchURL = `/patients/`;
@@ -46,13 +43,13 @@ export default function Patients() {
         //     }
         //     return fetch(fetchURL, fetchBody).then(res => res.json());
         // },
-        // deletePatient(id) {
-        //     const fetchURL = `/patients/${id}`;
-        //     const fetchOptions = {
-        //         method: "DELETE"
-        //     }
-        //     return fetch(fetchURL, fetchOptions).then(res => res.json());
-        // }
+        deletePatient(id) {
+            const fetchURL = `/patients/${id}`;
+            const fetchOptions = {
+                method: "DELETE"
+            }
+            return fetch(fetchURL, fetchOptions).then(res => res.json());
+        }
     };
 
     const controller = {
@@ -68,10 +65,9 @@ export default function Patients() {
             display.highlightPatientListContainer();
 
             const searchString = e.target.search.value;
-            api.getPatients(searchString).then(res => {
-                setPatientsArray(res);
-            });
+            this.searchForPatient(searchString);
         },
+
         handlePatientClick: function(e) {
             const patientID = e.currentTarget.id;
             const patient = controller.getPatient(patientID);
@@ -96,10 +92,15 @@ export default function Patients() {
                 sex: e.target.sex.value ? e.target.sex.value : null,
                 marketing: e.target.marketing.value ? e.target.marketing.value : null,
             };
-            api.addNewPatient(patient).then(res => {
-                display.closeDialog();
-                document.querySelector(".patientForm").reset();
+            api.addNewPatient(patient)
+                .then(lastAddedPatient => {
+                    display.closeDialog();
+                    document.querySelector(".patientForm").reset();
+                    setPatientsArray([lastAddedPatient]);
             });
+        },
+        searchForPatient(searchString) {
+            api.getPatients(searchString).then(res => setPatientsArray(res));
         },
     //     handlePatientUpdate: function (e) {
     //         e.preventDefault();
@@ -125,15 +126,14 @@ export default function Patients() {
     //             controller.getPatients(selectedDate);
     //         });
     //     },
-    //     handlePatientDelete: function(e) {
-    //         e.preventDefault();
-    //         api.deletePatient(selectedPatient.id).then(() => {
-    //             display.closeDialog();
-    //             document.querySelector(".patientForm").reset();
-    //             controller.getPatients(selectedPatient.date);
-    //         });
-    //     }
-
+        handlePatientDelete: function(e) {
+            e.preventDefault();
+            api.deletePatient(selectedPatient.id).then(() => {
+                display.closeDialog();
+                document.querySelector(".patientForm").reset();
+                window.location.reload(true);
+            });
+        }
     };
 
     const display = {
@@ -193,7 +193,7 @@ export default function Patients() {
                 handlePatientSearch = { controller.handlePatientSearch }
                 handlePatientSubmit = { controller.handlePatientSubmit }
                 // handlePatientUpdate = { controller.handlePatientUpdate }
-                // handlePatientDelete = { controller.handlePatientDelete }
+                handlePatientDelete = { controller.handlePatientDelete }
             />
         </section>
     );
