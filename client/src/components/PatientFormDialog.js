@@ -31,6 +31,9 @@ export default function PatientFormDialog(data) {
             const submitButton = document.querySelector(".button.submitButton");
             submitButton.classList.remove("disabled");
         },
+        handleSexChange(e) {
+            console.log(e);
+        },
     }
 
     const display = {
@@ -138,16 +141,40 @@ export default function PatientFormDialog(data) {
                         <select 
                             id="sex" 
                             name="sex"
-                            value={ dialogMode === "update" ? "M" : "F" }
+                            className="sex"
                             onChange={ controller.makeUpdateButtonActive }
-
                         >
-                            <option hidden> { dialogMode === "addNew" ? 
-                                null : dialogMode === "update" ? 
-                                "M" : null}
-                            </option>
-                            <option value="M">M</option>
-                            <option value="F">F</option>
+                            {/* 
+                                This ugly condition tree is in place because:
+                                1. defaultValue on <selec> does not work for some reason.
+                                2. selected on <option> does not work for some reason.
+                                3. value on <select> works but prevents any changes to select. JS solution not found
+                            */}
+                            { dialogMode === "addNew" ?  
+                                <>
+                                    <option hidden></option>
+                                    <option value="M">M</option>
+                                    <option value="F">F</option>
+                                </> : dialogMode === "update" ?
+                                    selectedPatient ? 
+                                        selectedPatient.sex ?
+                                            selectedPatient.sex === "M" ?
+                                                <>
+                                                    <option value="M">M</option>
+                                                    <option value="F">F</option>
+                                                </> :
+                                                <>
+                                                    <option value="F">F</option>
+                                                    <option value="M">M</option>
+                                                </> :
+                                            <>
+                                                <option hidden></option>
+                                                <option value="M">M</option>
+                                                <option value="F">F</option>
+                                            </> :
+                                        "" : 
+                                    ""
+                            }
                         </select>
                     </div>
                     <div className="labelAndInputContainer dateAdded">
