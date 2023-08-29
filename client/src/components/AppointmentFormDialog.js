@@ -31,8 +31,10 @@ export default function AppointmentFormDialog(data) {
         },
         resetFormToDefault() {
             document.querySelector(".appointmentForm").reset();
-            const submitButton = document.querySelector(".button.update");
-            submitButton.classList.add("disabled");
+            if (isOnAppointmentsPage) {
+                const submitButton = document.querySelector(".button.submitButton");
+                submitButton.classList.add("disabled");
+            };
         },
         makeUpdateButtonActive() {
             const submitButton = document.querySelector(".button.update");

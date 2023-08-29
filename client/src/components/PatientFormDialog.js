@@ -40,7 +40,6 @@ export default function PatientFormDialog(data) {
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
             setSelectedAppointment(appointment);
-            console.log(appointment);
             display.showAppointmentDialog();
         }
     };
@@ -60,7 +59,6 @@ export default function PatientFormDialog(data) {
 
     useEffect(() => {
         setAppointmentsForPatient(data.appointments);
-        console.log(data.appointments);
     }, [data.appointments]);
 
     useEffect(() => {

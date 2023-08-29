@@ -49,6 +49,7 @@
 
     --transition: all .5s ease-in-out;
     --transition-slow: all 1.5s ease-in-out;
+    --transition-fast: all .25s ease-in-out;
 
     --shadow: 5px 5px 5px 5px black;
 }

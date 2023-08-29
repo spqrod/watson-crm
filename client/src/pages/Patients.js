@@ -76,18 +76,24 @@ export default function Patients() {
 
             api.getPatients(searchString).then(res => setPatientsArray(res));
         },
+        getPatient: function(id) {
+            const patient = patientsArray.find(item => item.id == id);
+            return patient;
+        },
+        getAppointments(patientFile) {
+            api.getAppointmentForPatient(patientFile)
+                .then(appointments => {
+                    appointments.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
+                    setAppointmentsForArray(appointments)
+                });
+        },
         handlePatientClick: function(e) {
             const patientID = e.currentTarget.id;
             const patient = controller.getPatient(patientID);
             setSelectedPatient(patient);
-            api.getAppointmentForPatient(patient.file)
-                .then(appointments => setAppointmentsForArray(appointments));
+            controller.getAppointments(patient.file);
             setDialogMode("update");
             display.showDialog();
-        },
-        getPatient: function(id) {
-            const patient = patientsArray.find(item => item.id == id);
-            return patient;
         },
         handlePatientSubmit: function (e) {
             e.preventDefault();

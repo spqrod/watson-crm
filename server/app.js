@@ -71,7 +71,7 @@ app.get("/appointments/", (req, res) => {
             .then(appointments => {
                 appointments.forEach(appointment => {
                     appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time);
-                    appointment.date = convertDateFormatToDDMMYYYY(appointment.date);
+                    // appointment.date = convertDateFormatToDDMMYYYY(appointment.date);
                 });
                 res.json(appointments);
             });

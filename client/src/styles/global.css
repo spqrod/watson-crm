@@ -40,19 +40,22 @@ input, select, textarea {
         padding: var(--small-gap);
         font-size: 18px;
         font-family: var(--font-family-2);
-        color: var(--on-background);
-        border: var(--border);
+        /* color: var(--on-background); */
+        background-color: var(--surface);
+        border: 1px solid var(--surface);
+        border-bottom: var(--border);
         outline: none;
+        transition: var(--transition-fast);
     }
     &:focus {
         outline: none;
-        background-color: var(--surface-variant);
-        color: var(--on-surface-variant);
+        background-color: white;
+        color: black;
         border: var(--border);
     }
     &[disabled] {
-        background-color: var(--inactive);
-        color: var(--on-inactive);
+        /* background-color: white; */
+        color: black;
         cursor: not-allowed;
     }
 }
@@ -146,7 +149,7 @@ input, select, textarea {
         background-color: rgba(255, 255, 255, 0);
     }
     100% {
-        background-color: rgba(55, 49, 55, 0.587);
+        background-color: rgba(46, 46, 46, 0.587);
     }
 } 
 

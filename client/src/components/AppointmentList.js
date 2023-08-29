@@ -1,4 +1,5 @@
 import "../styles/appointmentList.css";
+import dayjs from "dayjs";
 
 export default function AppointmentList(data) {
 
@@ -16,7 +17,7 @@ export default function AppointmentList(data) {
                     <li id={ appointment.id } className="appointmentListItem" onClick={ handleAppointmentClick }>
                         { isInPatientsFormDialog ? 
                             <div className="infoContainer date">
-                                <p>{appointment.date}</p>
+                                <p>{ dayjs(appointment.date).format("DD.MM.YYYY") }</p>
                             </div> : null 
                         }
                         <div className="infoContainer time">
