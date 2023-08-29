@@ -61,6 +61,7 @@ export default function Patients() {
         handleSearchSubmit(e) {
             e.preventDefault();
 
+            display.removeHighlightFromAddNewContainer();
             display.highlightSearchContainer();
             display.highlightHeaderRowContainer();
             display.highlightPatientListContainer();
@@ -82,6 +83,11 @@ export default function Patients() {
         },
         handlePatientSubmit: function (e) {
             e.preventDefault();
+            display.removeHighlightFromSearchContainer();
+            display.resetSearchInput();
+            display.highlightAddNewContainer();
+            display.highlightHeaderRowContainer();
+            display.highlightPatientListContainer();
             const patient = { 
                 firstName: e.target.firstName.value,
                 lastName: e.target.lastName.value,
@@ -128,7 +134,16 @@ export default function Patients() {
             api.deletePatient(selectedPatient.id).then(() => {
                 display.closeDialog();
                 document.querySelector(".patientForm").reset();
-                setPatientsArray([]);
+                const searchInput = document.querySelector(".searchInput");
+
+                if (searchInput.value !== "") {
+                    api.getPatients(searchInput.value).then(res => setPatientsArray(res));
+                } else {
+                    display.removeHighlightFromAddNewContainer();
+                    display.removeHighlightFromRowContainer();
+                    display.removeHighlightFromPatientListContainer();
+                    setPatientsArray([]);
+                }
             });
         },
     };
@@ -142,6 +157,10 @@ export default function Patients() {
             const dialog = document.querySelector(".dialog");
             dialog.close();
         },
+        highlightAddNewContainer() {
+            const searchContainer = document.querySelector(`.addNewContainer`);
+            searchContainer.classList.add("active");
+        },
         highlightSearchContainer() {
             const searchContainer = document.querySelector(`.searchContainer`);
             searchContainer.classList.add("active");
@@ -153,6 +172,26 @@ export default function Patients() {
         highlightPatientListContainer() {
             const patientListContainer = document.querySelector(".patientListContainer");
             patientListContainer.classList.add("active");
+        },
+        removeHighlightFromSearchContainer() {
+            const searchContainer = document.querySelector(`.searchContainer`);
+            searchContainer.classList.remove("active");
+        },
+        removeHighlightFromRowContainer() {
+            const rowContainer = document.querySelector(`.headerRowContainer`);
+            rowContainer.classList.remove("active");
+        },
+        removeHighlightFromPatientListContainer() {
+            const patientListContainer = document.querySelector(`.patientListContainer`);
+            patientListContainer.classList.remove("active");
+        },
+        removeHighlightFromAddNewContainer() {
+            const addNewContainer = document.querySelector(`.addNewContainer`);
+            addNewContainer.classList.remove("active");
+        },
+        resetSearchInput() {
+            const searchInput = document.querySelector(".searchInput");
+            searchInput.value = "";
         }
     };
 

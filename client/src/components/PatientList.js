@@ -35,7 +35,7 @@ export default function PatientList(data) {
                     </li>
                 ))
                 : (
-                    <p>No patients found</p>
+                    <p className="patientListItem">No patients found</p>
                 )
             }
         </ul>

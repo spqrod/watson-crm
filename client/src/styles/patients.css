@@ -18,6 +18,13 @@
                 display: flex;
                 align-items: center;
                 padding-left: var(--medium-gap);
+                padding-right: var(--medium-gap);
+                transition: var(--transition);
+
+                &.active {
+                    background-color: var(--surface-variant);
+                    border-right: var(--border);
+                }
             }
             
             .searchContainer {
