@@ -61,7 +61,11 @@ export default function Appointments() {
                 method: "DELETE"
             }
             return fetch(fetchURL, fetchOptions).then(res => res.json());
-        }
+        },
+        searchAppointments: function(searchString) {
+            const fetchURL = `/appointments?searchString=${searchString}`;
+            return fetch(fetchURL).then(res => res.json());
+        },
     };
 
     const controller = {
@@ -111,6 +115,8 @@ export default function Appointments() {
             display.highlightDateContainer(dateAsString);
             display.highlightHeaderRowContainer();
             display.highlightAppointmentListContainer();
+            display.removeHighlightFromSearchContainer();
+            display.resetSearchInput();
         },
         handleAddNew: function() {
             setSelectedAppointment();
@@ -172,7 +178,19 @@ export default function Appointments() {
                 document.querySelector(".appointmentForm").reset();
                 controller.getAppointments(selectedAppointment.date);
             });
-        }
+        },
+        handleSearchSubmit(e) {
+            e.preventDefault();
+
+            display.highlightSearchContainer();
+            display.highlightHeaderRowContainer();
+            display.highlightAppointmentListContainer();
+            display.removeHighlightFromDateContainer();
+
+            const searchString = e.target.search.value;
+
+            api.searchAppointments(searchString).then(res => console.log(res));
+        },
 
     };
 
@@ -206,7 +224,27 @@ export default function Appointments() {
         highlightAppointmentListContainer() {
             const appointmentListContainer = document.querySelector(".appointmentListContainer");
             appointmentListContainer.classList.add("active");
+        },
+        highlightSearchContainer() {
+            const searchContainer = document.querySelector(".searchContainer");
+            searchContainer.classList.add("active");
+        },
+        removeHighlightFromDateContainer() {
+            if (document.querySelector(`.dateContainer .active`)) {
+                const activeDateContainer = document.querySelector(`.dateContainer .active`);
+                activeDateContainer.classList.remove("active");
+            }
+        },
+        removeHighlightFromSearchContainer() {
+            const searchContainer = document.querySelector(".searchContainer");
+            searchContainer.classList.remove("active");
+        },
+        resetSearchInput() {
+            const searchInput = document.querySelector(".searchInput");
+            searchInput.value = "";
         }
+
+
     };
 
     return (
@@ -234,9 +272,12 @@ export default function Appointments() {
                     <div className="addNewContainer" onClick={ controller.handleAddNew }>
                         <AddOutlinedIcon />New Appointment
                     </div>
-                    <div className="searchContainer">
-                        <SearchOutlinedIcon /><p>Search</p>
-                    </div>
+                    <form className="searchContainer" onSubmit = { controller.handleSearchSubmit }>
+                        <label htmlFor="search" className="searchLabel">
+                            <SearchOutlinedIcon /><span>Search</span>
+                        </label>
+                        <input type="text" name="search" id="search" className="searchInput"/>
+                    </form>
                 </div>
 
                 <div className="headerRowContainer">

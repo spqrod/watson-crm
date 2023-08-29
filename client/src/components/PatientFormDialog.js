@@ -67,6 +67,7 @@ export default function PatientFormDialog(data) {
     
     return (
         <dialog className="dialog patientFormDialog" onClose={ controller.resetFormToDefault } >
+            <h3 className="dialogHeader">Patient</h3>
             <form className="formForDialogCloseButton" method="dialog">
                 <button className="closeButton" onClick={ controller.resetFormToDefault } >
                     <CloseIcon />
@@ -216,7 +217,7 @@ export default function PatientFormDialog(data) {
 
                         />
                     </div>
-                    <div className="buttonsContainer">
+                    <div className="buttonsContainer" id="buttonsContainer">
                         <button 
                             className={`button deleteButton ${ dialogMode === "search" || dialogMode === "addNew" ? "disabled" : "" }`} 
                             type="button" 
@@ -238,7 +239,6 @@ export default function PatientFormDialog(data) {
                 </div> 
             </form>
             <div className="appointmentsListAndHeaderContainer">
-                {/* <h3>Appointments:</h3> */}
                 <div className="headerRowContainer">
                     <p>Date</p>
                     <p>Time</p>

@@ -24,6 +24,11 @@ h2 {
     font-family: var(--font-family-1);
 }
 
+h3 {
+    font-size: 24px;
+    font-family: var(--font-family-1);
+}
+
 p, a, span, div {
     font-size: 18px;
     font-family: var(--font-family-2);
@@ -119,6 +124,13 @@ input, select, textarea {
         transform: translate(-50%, -50%);
         z-index: 2;
         position: relative;
+    }
+    .dialogHeader {
+        position: absolute;
+        top: var(--medium-gap);
+        left: var(--medium-gap);
+        font-style: italic;
+        letter-spacing: 1px;
     }
     .formForDialogCloseButton {
         position: absolute;

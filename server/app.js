@@ -74,8 +74,11 @@ app.get("/appointments/", (req, res) => {
                     // appointment.date = convertDateFormatToDDMMYYYY(appointment.date);
                 });
                 res.json(appointments);
-            });
-    };   
+            });        
+    }
+    else {
+        res.json(req.query.searchString);
+    }
 });
 
 app.post("/appointments", (req, res) => {

@@ -58,6 +58,9 @@ export default function AppointmentFormDialog(data) {
 
     return (
         <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
+            <h3 className="dialogHeader">
+                Appointment
+            </h3>
             <form className="formForDialogCloseButton" method="dialog">
                 <button className="closeButton" onClick={ controller.resetFormToDefault } >
                     <CloseIcon />
