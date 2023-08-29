@@ -257,6 +257,7 @@ export default function Appointments() {
                 appointment={ selectedAppointment } 
                 getAvailableTimeSlots={ controller.getAvailableTimeSlots } 
                 timeSlots={ availableTimesSlotsForTimePicker } 
+                isOnAppointmentsPage = { true }
                 handleAppointmentSubmit = { controller.handleAppointmentSubmit }
                 handleAppointmentUpdate = { controller.handleAppointmentUpdate }
                 handleAppointmentDelete = { controller.handleAppointmentDelete }

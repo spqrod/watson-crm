@@ -1,4 +1,6 @@
 .patientFormDialog {
+    width: 90vw;
+    height: 90vh;
 
     &[open] {
         display: flex;
@@ -70,5 +72,14 @@
         }
         
 
+    }
+
+    .appointmentFormDialog {
+        width: 70vw;
+        height: 70vh;
+
+        .infoContainer {
+            align-self: center;
+        }
     }
 }

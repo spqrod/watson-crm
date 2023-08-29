@@ -37,10 +37,10 @@ export default function PatientFormDialog(data) {
             return appointment;
         },
         handleAppointmentClick(e) {
-            console.log("clicled");
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
             setSelectedAppointment(appointment);
+            console.log(appointment);
             display.showAppointmentDialog();
         }
     };
@@ -67,7 +67,6 @@ export default function PatientFormDialog(data) {
         setDialogMode(data.dialogMode);
     }, [data.dialogMode]);
     
- 
     return (
         <dialog className="dialog patientFormDialog" onClose={ controller.resetFormToDefault } >
             <form className="formForDialogCloseButton" method="dialog">
@@ -257,6 +256,7 @@ export default function PatientFormDialog(data) {
             </div>
             <AppointmentFormDialog 
                 appointment={ selectedAppointment } 
+                isInPatientFormDialog = { true }
                 getAvailableTimeSlots={ null } 
                 timeSlots={ null } 
                 handleAppointmentSubmit = { null }

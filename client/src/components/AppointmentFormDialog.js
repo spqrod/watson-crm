@@ -16,7 +16,9 @@ export default function AppointmentFormDialog(data) {
         getAvailableTimeSlots, 
         handleAppointmentSubmit, 
         handleAppointmentUpdate, 
-        handleAppointmentDelete 
+        handleAppointmentDelete,
+        isInPatientFormDialog,
+        isOnAppointmentsPage
     } = data;
     const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
     const paymentsList = ["Nhima", "Cash", "Swipe", "SES", "Liberty", "Medlink"];
@@ -54,12 +56,16 @@ export default function AppointmentFormDialog(data) {
 
     return (
         <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
-            {/* <form className="formForDialogCloseButton" method="dialog">
+            <form className="formForDialogCloseButton" method="dialog">
                 <button className="closeButton" onClick={ controller.resetFormToDefault } >
                     <CloseIcon />
                 </button>
             </form>
-            <form className="appointmentForm" onSubmit={ selectedAppointment ? handleAppointmentUpdate : handleAppointmentSubmit }>
+            <form className="appointmentForm" 
+                onSubmit = { isOnAppointmentsPage ? 
+                    selectedAppointment ? 
+                        handleAppointmentUpdate : handleAppointmentSubmit 
+                            : null }>
                 <div className="infoContainer">
                     <div className="labelAndInputContainer date">
                         <label htmlFor="date">Date:</label>
@@ -71,6 +77,7 @@ export default function AppointmentFormDialog(data) {
                                 if (selectedAppointment) controller.makeUpdateButtonActive();
                             }}
                             defaultValue={ selectedAppointment ? selectedAppointment.date : ""}
+                            readOnly = { isInPatientFormDialog ? true : false}
                         />
                     </div>
                     <div className="labelAndInputContainer time">
@@ -82,10 +89,15 @@ export default function AppointmentFormDialog(data) {
                             defaultValue={selectedAppointment ? selectedAppointment.time : ""}
                             list="availableTimesDatalist"
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         />
-                        <datalist id="availableTimesDatalist">
-                            {availableTimesSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
-                        </datalist>
+                        { isOnAppointmentsPage ?
+                            <datalist id="availableTimesDatalist">
+                                {availableTimesSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
+                            </datalist> 
+                            : null
+                        }
                     </div>
                     <div className="labelAndInputContainer firstName">
                         <label htmlFor="firstName">First Name:</label>
@@ -95,6 +107,8 @@ export default function AppointmentFormDialog(data) {
                             id="firstName" 
                             defaultValue={selectedAppointment ? selectedAppointment.firstName : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         />
                     </div>
                     <div className="labelAndInputContainer lastName">
@@ -105,40 +119,88 @@ export default function AppointmentFormDialog(data) {
                             id="lastName" 
                             defaultValue={selectedAppointment ? selectedAppointment.lastName : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         />
                     </div>
                     <div className="labelAndInputContainer treatment">
-                        <label htmlFor="procedure">Treatment:</label>
-                        <select 
-                            id="treatment" 
-                            name="treatment"
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
-                        >
-                            <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
-                            { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
-                        </select>
+                        <label htmlFor="treatment">Treatment:</label>
+                        { 
+                        isOnAppointmentsPage ? 
+                            <select 
+                                id="treatment" 
+                                name="treatment"
+                                onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            >
+                                <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
+                                { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                            </select> : null
+                        }
+                        { 
+                        isInPatientFormDialog ? 
+                            <input 
+                                type="text" 
+                                name="treatment" 
+                                id="treatment" 
+                                readOnly = { isInPatientFormDialog ? true : false}
+                                defaultValue={ selectedAppointment ? selectedAppointment.treatment : ""}
+                            /> : null
+                        }
+
                     </div>
                     <div className="labelAndInputContainer doctor">
                         <label htmlFor="doctor">Doctor:</label>
+                        { 
+                        isOnAppointmentsPage ? 
                         <select 
                             id="doctor" 
                             name="doctor" 
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
                         >
                             <option hidden>{selectedAppointment ? selectedAppointment.doctor : ""}</option>
                             { doctorsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
-                        </select>
+                        </select> : null 
+                        }
+
+                        { 
+                        isInPatientFormDialog ? 
+                            <input 
+                                type="text" 
+                                name="doctor" 
+                                id="doctor" 
+                                readOnly = { isInPatientFormDialog ? true : false}
+                                defaultValue={ selectedAppointment ? selectedAppointment.doctor : ""}
+                            /> : null
+                        }
+
                     </div>
                     <div className="labelAndInputContainer payment">
                         <label htmlFor="payment">Payment:</label>
+                        { 
+                        isOnAppointmentsPage ? 
                         <select 
                             id="payment" 
                             name="payment"
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         >
                             <option hidden>{selectedAppointment ? selectedAppointment.payment : ""}</option>
                             { paymentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
-                        </select>
+                        </select> : null
+                        }
+
+                        { 
+                        isInPatientFormDialog ? 
+                            <input 
+                                type="text" 
+                                name="doctor" 
+                                id="doctor" 
+                                readOnly = { isInPatientFormDialog ? true : false}
+                                defaultValue={ selectedAppointment ? selectedAppointment.doctor : ""}
+                            /> : null
+                        }
                     </div>
                     <div className="labelAndInputContainer cost">
                         <label htmlFor="cost">Cost:</label>
@@ -146,8 +208,10 @@ export default function AppointmentFormDialog(data) {
                             type="number" 
                             name="cost" 
                             id="cost" 
-                            defaultValue={selectedAppointment ? selectedAppointment.cost : ""}
+                            defaultValue={ selectedAppointment ? selectedAppointment.cost : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         />
                     </div>
                     <div className="labelAndInputContainer patientFile">
@@ -158,6 +222,8 @@ export default function AppointmentFormDialog(data) {
                             id="patientFile" 
                             defaultValue={selectedAppointment ? selectedAppointment.patientFile : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         />
                     </div>
                     <div className="labelAndInputContainer phone">
@@ -168,6 +234,8 @@ export default function AppointmentFormDialog(data) {
                             id="phone" 
                             defaultValue={selectedAppointment ? selectedAppointment.phone : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         />
                     </div>
                     <div className="labelAndInputContainer commentsContainer">
@@ -180,40 +248,45 @@ export default function AppointmentFormDialog(data) {
                             cols="30"
                             defaultValue={selectedAppointment ? selectedAppointment.comments : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            readOnly = { isInPatientFormDialog ? true : false}
+
                         >
                         </textarea>
                     </div>
                 </div>
-                <div className="buttonsContainer">
-                    <button 
-                        className={`button deleteButton ${ selectedAppointment ? null : "disabled"}`} 
-                        type="button" 
-                        onClick={ handleAppointmentDelete }
-                    >
-                        <DeleteOutlineOutlinedIcon />
-                        Delete
-                    </button>
-                    <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
-                        <input 
-                            type="checkbox" 
-                            className="noshowCheckbox" 
-                            name="nowshow" 
-                            id="noshow" 
-                            onClick ={ controller.makeUpdateButtonActive }
-                        /> 
-                        <label htmlFor="noshow">No-show</label>
-                    </div>
-                    <button 
-                        className={`button submitButton ${ selectedAppointment ? "disabled update" : null}`} 
-                        type="submit"
-                    >
-                        { selectedAppointment ? 
-                            <><AutorenewOutlinedIcon />Update Appointment</> :
-                            <><AddOutlinedIcon />Add New Appointment</>
-                        }
-                    </button>
-                </div>
-            </form> */}
+                { isOnAppointmentsPage ? 
+                    <div className="buttonsContainer">
+                        <button 
+                            className={`button deleteButton ${ selectedAppointment ? null : "disabled"}`} 
+                            type="button" 
+                            onClick={ handleAppointmentDelete }
+                        >
+                            <DeleteOutlineOutlinedIcon />
+                            Delete
+                        </button>
+                        <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
+                            <input 
+                                type="checkbox" 
+                                className="noshowCheckbox" 
+                                name="nowshow" 
+                                id="noshow" 
+                                onClick ={ controller.makeUpdateButtonActive }
+                            /> 
+                            <label htmlFor="noshow">No-show</label>
+                        </div>
+                        <button 
+                            className={`button submitButton ${ selectedAppointment ? "disabled update" : null}`} 
+                            type="submit"
+                        >
+                            { selectedAppointment ? 
+                                <><AutorenewOutlinedIcon />Update Appointment</> :
+                                <><AddOutlinedIcon />Add New Appointment</>
+                            }
+                        </button>
+                    </div> 
+                    : null
+                }
+            </form>
         </dialog>
 
     );
