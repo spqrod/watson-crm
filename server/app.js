@@ -64,17 +64,20 @@ app.get("/appointments/:selectedDate", (req, res) => {
     });
 });
 
-app.delete("/appointments/:id", (req, res) => {
-    let { id } = req.params;
-    id = sanitizeString(id);
-    database.deleteAppointment(id)
-        .then(() => res.json({ success: true }))
-        .catch((error) => {
+app.post("/appointments", (req, res) => {
+    for (const [key, value] of Object.entries(req.body)) {
+        if (typeof req.body[key] != "boolean")
+            req.body[key] = sanitizeString(String(value));    
+        }
+    const appointment = req.body;
+    database.addNewAppointment(appointment)
+        .then((result) => res.json({ success: true }))
+        .catch(error => {
             logger.info(error);
-            res.json({ success: false });
+            res.json({success: false});
         });
 });
-    
+
 app.put("/appointments/", (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
         if (typeof req.body[key] !== "boolean")
@@ -91,19 +94,19 @@ app.put("/appointments/", (req, res) => {
         });
 });
 
-app.post("/appointments", (req, res) => {
-    for (const [key, value] of Object.entries(req.body)) {
-        if (typeof req.body[key] != "boolean")
-            req.body[key] = sanitizeString(String(value));    
-        }
-    const appointment = req.body;
-    database.addNewAppointment(appointment)
-        .then((result) => res.json({ success: true }))
-        .catch(error => {
+app.delete("/appointments/:id", (req, res) => {
+    let { id } = req.params;
+    id = sanitizeString(id);
+    database.deleteAppointment(id)
+        .then(() => res.json({ success: true }))
+        .catch((error) => {
             logger.info(error);
-            res.json({success: false});
+            res.json({ success: false });
         });
 });
+    
+
+
 
 
 
@@ -153,6 +156,22 @@ app.post("/patients", (req, res) => {
         });
 });
 
+app.put("/patients/", (req, res) => {
+    for (const [key, value] of Object.entries(req.body)) {
+        if (value !== null)
+            req.body[key] = sanitizeString(String(value));
+    }
+    const patient = req.body;
+    database.updatePatient(patient)
+        .then(() => {
+            res.json({success: true});
+        })
+        .catch(error => {
+            logger.info(error);
+            res.json({success: false});
+        });
+});
+
 app.delete("/patients/:id", (req, res) => {
     let id = req.params.id;
     id = sanitizeString(id);
@@ -163,8 +182,6 @@ app.delete("/patients/:id", (req, res) => {
             res.json({ success: false });
         });
 });
-
-// database.getAllAppointments().then(res => console.log(res[0]));
 
 
 

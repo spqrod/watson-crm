@@ -32,17 +32,18 @@ export default function Patients() {
             return fetch(fetchURL, fetchBody)
                 .then(res => res.json());
         },
-        // updatePatient(patient) {
-        //     const fetchURL = `/patients/`;
-        //     const fetchBody = {
-        //         method: "PUT",
-        //         headers: {
-        //             "Content-Type": "application/json"
-        //         },
-        //         body: JSON.stringify(patient)
-        //     }
-        //     return fetch(fetchURL, fetchBody).then(res => res.json());
-        // },
+        updatePatient(patient) {
+            const fetchURL = `/patients/`;
+            const fetchBody = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(patient)
+            }
+            return fetch(fetchURL, fetchBody)
+                .then(res => res.json());
+        },
         deletePatient(id) {
             const fetchURL = `/patients/${id}`;
             const fetchOptions = {
@@ -65,9 +66,9 @@ export default function Patients() {
             display.highlightPatientListContainer();
 
             const searchString = e.target.search.value;
-            this.searchForPatient(searchString);
-        },
 
+            api.getPatients(searchString).then(res => setPatientsArray(res));
+        },
         handlePatientClick: function(e) {
             const patientID = e.currentTarget.id;
             const patient = controller.getPatient(patientID);
@@ -99,41 +100,37 @@ export default function Patients() {
                     setPatientsArray([lastAddedPatient]);
             });
         },
-        searchForPatient(searchString) {
-            api.getPatients(searchString).then(res => setPatientsArray(res));
+        handlePatientUpdate: function (e) {
+            e.preventDefault();
+            const patient = { 
+                id: selectedPatient.id,
+                firstName: e.target.firstName.value,
+                lastName: e.target.lastName.value,
+                file: e.target.file.value,
+                nrc: e.target.nrc.value,
+                insuranceId: e.target.insuranceId.value,
+                phone: e.target.phone.value,
+                dateOfBirth: e.target.dateOfBirth.value ? e.target.dateOfBirth.value : null,
+                sex: e.target.sex.value,
+                marketing: e.target.marketing.value,
+            };
+            api.updatePatient(patient)
+                .then(() => {
+                    display.closeDialog();
+                    document.querySelector(".patientForm").reset();
+                    const searchString = document.querySelector(".searchInput").value;
+                    return api.getPatients(searchString);
+                })
+                .then(res => setPatientsArray(res));
         },
-    //     handlePatientUpdate: function (e) {
-    //         e.preventDefault();
-    //         const patient = { 
-    //             id: selectedPatient.id,
-    //             date: e.target.date.value, 
-    //             time: e.target.time.value,
-    //             firstName: e.target.firstName.value,
-    //             lastName: e.target.lastName.value,
-    //             doctor: e.target.doctor.value,
-    //             treatment: e.target.treatment.value,
-    //             payment: e.target.payment.value,
-    //             cost: e.target.cost.value,
-    //             phone: e.target.phone.value,
-    //             file: e.target.file.value,
-    //             comments: e.target.comments.value,
-    //             noshow: e.target.noshow.checked,
-    //         };
-    //         api.updatePatient(patient).then(res => {
-    //             display.closeDialog();
-    //             document.querySelector(".patientForm").reset();
-    //             const selectedDate = dayjs(patient.date).format(dateFormatForDB);
-    //             controller.getPatients(selectedDate);
-    //         });
-    //     },
         handlePatientDelete: function(e) {
             e.preventDefault();
             api.deletePatient(selectedPatient.id).then(() => {
                 display.closeDialog();
                 document.querySelector(".patientForm").reset();
-                window.location.reload(true);
+                setPatientsArray([]);
             });
-        }
+        },
     };
 
     const display = {
@@ -170,7 +167,7 @@ export default function Patients() {
                     <label htmlFor="search" className="searchLabel">
                         <SearchOutlinedIcon /><span>Search</span>
                     </label>
-                    <input type="text" name="search" id="search"/>
+                    <input type="text" name="search" id="search" className="searchInput"/>
                 </form>
                 </div>
                 <div className="headerRowContainer">
@@ -192,7 +189,7 @@ export default function Patients() {
                 patient={ selectedPatient } 
                 handlePatientSearch = { controller.handlePatientSearch }
                 handlePatientSubmit = { controller.handlePatientSubmit }
-                // handlePatientUpdate = { controller.handlePatientUpdate }
+                handlePatientUpdate = { controller.handlePatientUpdate }
                 handlePatientDelete = { controller.handlePatientDelete }
             />
         </section>
