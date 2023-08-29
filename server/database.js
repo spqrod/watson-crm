@@ -12,19 +12,23 @@ const dateFormatForDB = "YYYY-MM-DD";
 
 const database = {
     getAppointmentsForDate: function(date) {
-        const query = "select id, date, time, firstName, lastName, doctor, treatment, payment, cost, file, phone, comments, noshow from appointments where date=? order by time";
+        const query = "select id, date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments, noshow from appointments where date=? order by time";
         return pool.query(query, date).then(res => res[0]);
     },
     addNewAppointment: function(appointment) {
-        return pool.query("insert into appointments (date, time, firstName, lastName, doctor, treatment, payment, cost, file, phone, comments) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
-            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.file, appointment.phone, appointment.comments]);
+        return pool.query("insert into appointments (date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
+            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.patientFile, appointment.phone, appointment.comments]);
     },
     updateAppointment: function(appointment) {
-        return pool.query("UPDATE appointments SET date=?, time=?, firstName=?, lastName=?, doctor=?, treatment=?, payment=?, cost=?, file=?, phone=?, comments=?, noshow=? WHERE id = ?", 
-            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.file, appointment.phone, appointment.comments, appointment.noshow, appointment.id]);
+        return pool.query("UPDATE appointments SET date=?, time=?, firstName=?, lastName=?, doctor=?, treatment=?, payment=?, cost=?, patientFile=?, phone=?, comments=?, noshow=? WHERE id = ?", 
+            [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.patientFile, appointment.phone, appointment.comments, appointment.noshow, appointment.id]);
     },
     deleteAppointment: function(id) {
         return pool.query("delete from appointments where id=?", id);
+    },
+    getAppointmentsForPatient(patientFile) {
+        const query  = "select date, firstName from appointments where patientFile = ?";
+        return pool.query(query, [patientFile]).then(res => res[0]);
     },
 
     getTakenTimeSlotsForDate: function(date) {
@@ -55,7 +59,7 @@ const database = {
         const query = "select * from patients where id = (select last_insert_id())";
         return pool.query(query)
             .then(res => res[0][0]);
-        },
+    },
 }
 
 module.exports = { database };
@@ -80,177 +84,240 @@ const date3 = dayjs().add(4, "day").format(dateFormatForDB);
 
 
 const helperForAppointments = {
+    createTable() {
+        const query = "create table appointments (id mediumint auto_increment not null primary key, date date, time time, firstName varchar(255), lastName varchar(255), doctor varchar(255), treatment varchar(255), payment varchar(255), cost varchar(255), patientFile varchar(255), phone varchar(255), comments varchar(255), noshow boolean, dateAdded datetime default now())";
+        pool.query(query);
+    },
     describeAppointmentsTable() {
         const query = "describe appointments";
-        pool.query(query).then((res) => console.log(res));
+        pool.query(query).then((res) => console.log(res[0]));
+    },
+    alterTableAppointments() {
+        const query = "alter table appointments drop foreign key appointments_ibfk_1";
+        // const query = "alter table appointments add column patientFile varchar(255)";
+        pool.query(query);
     },
     deleteAllAppointments: function() {
         return pool.query("delete from appointments");
     },
     getAllAppointments: function() {
-        return pool.query("select * from appointments");
+        pool.query("select * from appointments").then(res => console.log(res[0]));
     },
     addNewAppointmentsFromArray: function(appointmentsArray) {
         appointmentsArray.forEach(appointment => database.addNewAppointment(appointment));
     },
     exampleAppointmentsArray: [
         {
-            id: 0,
             date: dateToday,
             time: "10:30",
             firstName: "John",
             lastName: "Watson",
+            patientFile: "3232/22",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Nhima"
         },
         {
-            id: 1,
+            date: dateToday,
+            time: "11:30",
+            firstName: "John",
+            lastName: "Watson",
+            patientFile: "3232/22",
+            doctor: "Dr Watson",
+            treatment: "Scaling",
+            payment: "Nhima"
+        },
+        {
+            date: dateTomorrow,
+            time: "08:30",
+            firstName: "John",
+            lastName: "Watson",
+            patientFile: "3232/22",
+            doctor: "Dr Watson",
+            treatment: "Scaling",
+            payment: "Nhima"
+        },
+        {
+            date: dateTomorrow,
+            time: "18:30",
+            firstName: "John",
+            lastName: "Watson",
+            patientFile: "3232/22",
+            doctor: "Dr Watson",
+            treatment: "Scaling",
+            payment: "Cash"
+        },
+        {
             date: dateToday,
             time: "11:30",
             firstName: "Mark",
             lastName: "Brown",
+            patientFile: "9872/91",
             doctor: "Dr Watson",
             treatment: "Extraction",
             payment: "Cash"
         },
         {
-            id: 2,
             date: dateToday,
             time: "12:30",
             firstName: "Leeroy",
             lastName: "Hawking",
+            patientFile: "0002/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 3,
             date: dateTomorrow,
             time: "13:30",
             firstName: "Stephen",
             lastName: "Jenkins",
+            patientFile: "0003/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 4,
             date: dateTomorrow,
             time: "14:00",
             firstName: "Lark",
             lastName: "Hawking",
+            patientFile: "0004/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 5,
             date: dateTomorrow,
             time: "15:00",
             firstName: "Stephen",
             lastName: "Downing",
+            patientFile: "0005/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 6,
             date: date1,
             time: "15:30",
             firstName: "Jessica",
             lastName: "Hawking",
+            patientFile: "0006/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 7,
             date: date1,
             time: "16:00",
             firstName: "Chris",
             lastName: "Brown",
+            patientFile: "0007/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 8,
             date: date1,
             time: "16:30",
             firstName: "Mark",
             lastName: "Hawking",
+            patientFile: "0008/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 9,
             date: date2,
             time: "16:30",
             firstName: "Stephen",
             lastName: "Hawking",
+            patientFile: "0009/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 10,
             date: date2,
             time: "16:30",
             firstName: "Facundo",
             lastName: "Montana",
+            patientFile: "0010/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Nhima"
         },
         {
-            id: 11,
             date: date2,
             time: "16:30",
             firstName: "Sergey",
             lastName: "Brin",
+            patientFile: "0011/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
         {
-            id: 12,
             date: date3,
             time: "16:30",
             firstName: "Nikola",
             lastName: "Tesla",
+            patientFile: "0012/00",
             doctor: "Dr Watson",
             treatment: "Whitening",
             payment: "Cash"
         },
         {
-            id: 13,
             date: date3,
             time: "16:30",
             firstName: "John",
             lastName: "Kennedy",
+            patientFile: "0013/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Nhima"
         },
         {
-            id: 14,
             date: date3,
             time: "16:30",
             firstName: "Donald",
             lastName: "Ceasar",
+            patientFile: "0014/00",
             doctor: "Dr Watson",
             treatment: "Scaling",
             payment: "Cash"
         },
-    ]
+    ],
+    dropTable() {
+        const query = "drop table appointments";
+        pool.query(query);
+    }
 };
+
+
+// helperForAppointments.createTable();
+// helperForAppointments.dropTable();
+// helperForAppointments.addNewAppointmentsFromArray(helperForAppointments.exampleAppointmentsArray);
+// helperForAppointments.getAllAppointments();
+// helperForAppointments.deleteAllAppointments();
+// helperForAppointments.describeAppointmentsTable();
+// helperForAppointments.alterTableAppointments();
+// database.getAppointmentsForPatient("3232/22").then(res => console.log(res));
+
+
+
+
+
+
 
 const helperForPatients = {
     createTablePatients() {
-        const query = 'create table patients (id mediumint primary key not null auto_increment, firstName varchar(255), lastName varchar(255), file varchar(255), nrc varchar(255), insuranceId integer, phone varchar(255), dateOfBirth date, sex char, dateAdded datetime default now(), marketing varchar(255));';
+        const query = 'create table patients (id mediumint primary key not null auto_increment, firstName varchar(255), lastName varchar(255), file varchar(255), nrc varchar(255), insuranceId varchar(255), phone varchar(255), dateOfBirth date, sex char, dateAdded datetime default now(), marketing varchar(255));';
         pool.query(query).then((res) => console.log(res));
+    },
+    dropTable() {
+        const query = "drop table patients";
+        pool.query(query);
     },
     describePatientsTable() {
         const query = "describe patients";
@@ -263,7 +330,8 @@ const helperForPatients = {
         return pool.query("select * from patients").then(res => console.log(res[0]));
     },
     alterTablePatients() {
-        const query = "alter table patients modify column insuranceId varchar(255)";
+        // const query = "alter table patients modify column id varchar(255) primary key not null default '9999/99'";
+        // const query = "alter table patients drop primary key;";
         pool.query(query).then(res => console.log(res[0]));
     },
     addNewPatientsFromArray: function(patientsArray) {
@@ -327,9 +395,11 @@ const helperForPatients = {
     ],
 };
 
+
+// helperForPatients.createTablePatients();
+// helperForPatients.dropTable();
 // helperForPatients.alterTablePatients();
 // helperForPatients.deleteAllPatients();
-// database.addNewPatient(helperForPatients.examplePatientsArray[0])
 // helperForPatients.addNewPatientsFromArray(helperForPatients.examplePatientsArray)
 // helperForPatients.getAllPatients();
 // helperForPatients.describePatientsTable()

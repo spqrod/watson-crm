@@ -12,13 +12,13 @@ export default function PatientFormDialog(data) {
 
     const [ dialogMode, setDialogMode ] = useState(data.dialogMode);
     const [ selectedPatient, setSelectedPatient ] = useState(data.patient);
+    const [ appointmentsForPatient, setAppointmentsForPatient ] = useState(data.appointments);
     const { 
         handlePatientSearch,
         handlePatientSubmit, 
         handlePatientUpdate, 
         handlePatientDelete 
     } = data;
-
 
     const controller = {
         resetFormToDefault() {
@@ -30,16 +30,21 @@ export default function PatientFormDialog(data) {
             const submitButton = document.querySelector(".button.submitButton");
             submitButton.classList.remove("disabled");
         },
-    }
+    };
 
     const display = {
         dateFormatForDatePicker: "YYYY-MM-DD",
         today: dayjs().format("YYYY-MM-DD"),
-    }
+    };
 
     useEffect(() => {
         setSelectedPatient(data.patient);
     }, [data.patient]);
+
+    useEffect(() => {
+        setAppointmentsForPatient(data.appointments);
+        console.log(data.appointments);
+    }, [data.appointments]);
 
     useEffect(() => {
         setDialogMode(data.dialogMode);

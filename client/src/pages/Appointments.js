@@ -25,8 +25,8 @@ export default function Appointments() {
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
 
     const api = {
-        getAppointments: function(data) {
-            const fetchURL = `/appointments/${data}`;
+        getAppointments: function(date) {
+            const fetchURL = `/appointments?date=${date}`;
             return fetch(fetchURL).then(res => res.json());
         },
         getAvailableTimeSlots(date) {

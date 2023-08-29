@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 export default function Patients() {
 
     const [ patientsArray, setPatientsArray ] = useState([]);
+    const [ appointmentsForArray, setAppointmentsForArray ] = useState([]);
     const [ selectedPatient, setSelectedPatient ] = useState();
     const [ dialogMode, setDialogMode ] = useState();
 
@@ -50,6 +51,11 @@ export default function Patients() {
                 method: "DELETE"
             }
             return fetch(fetchURL, fetchOptions).then(res => res.json());
+        },
+        getAppointmentForPatient(patientFile) {
+            patientFile = encodeURIComponent(patientFile);
+            const fetchURL = `/appointments?patientFile=${patientFile}`;
+            return fetch(fetchURL).then(res => res.json());
         }
     };
 
@@ -74,6 +80,8 @@ export default function Patients() {
             const patientID = e.currentTarget.id;
             const patient = controller.getPatient(patientID);
             setSelectedPatient(patient);
+            api.getAppointmentForPatient(patient.file)
+                .then(appointments => setAppointmentsForArray(appointments));
             setDialogMode("update");
             display.showDialog();
         },
@@ -225,7 +233,8 @@ export default function Patients() {
             </div>
             <PatientFormForDialog 
                 dialogMode = { dialogMode }
-                patient={ selectedPatient } 
+                patient = { selectedPatient } 
+                appointments = { appointmentsForArray }
                 handlePatientSearch = { controller.handlePatientSearch }
                 handlePatientSubmit = { controller.handlePatientSubmit }
                 handlePatientUpdate = { controller.handlePatientUpdate }

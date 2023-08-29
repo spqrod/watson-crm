@@ -56,12 +56,23 @@ app.use((req, res, next) => {
 
 
 
-app.get("/appointments/:selectedDate", (req, res) => {
-    const { selectedDate } = req.params;
-    database.getAppointmentsForDate(selectedDate).then(appointments => {
-        appointments.forEach(appointment => appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time));
-        res.json(appointments);
-    });
+
+app.get("/appointments/", (req, res) => {
+    if (req.query.date) {
+        const date = sanitizeString(req.query.date);
+        database.getAppointmentsForDate(date)
+            .then(appointments => {
+                appointments.forEach(appointment => appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time));
+                res.json(appointments);
+            });
+    } else if (req.query.patientFile) {
+        const patientFile = decodeURIComponent(req.query.patientFile);
+        database.getAppointmentsForPatient(patientFile)
+            .then(appointments => {
+                // appointments.forEach(appointment => appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time));
+                res.json(appointments);
+            });
+    };   
 });
 
 app.post("/appointments", (req, res) => {
