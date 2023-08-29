@@ -131,7 +131,7 @@ export default function Appointments() {
                 payment: e.target.payment.value,
                 cost: e.target.cost.value,
                 phone: e.target.phone.value,
-                file: e.target.file.value,
+                patientFile: e.target.patientFile.value,
                 comments: e.target.comments.value,
             }
             api.addNewAppointment(appointment).then(res => {
@@ -154,7 +154,7 @@ export default function Appointments() {
                 payment: e.target.payment.value,
                 cost: e.target.cost.value,
                 phone: e.target.phone.value,
-                file: e.target.file.value,
+                patientFile: e.target.patientFile.value,
                 comments: e.target.comments.value,
                 noshow: e.target.noshow.checked,
             };
@@ -250,6 +250,7 @@ export default function Appointments() {
                 <AppointmentList 
                     appointmentsArray = { appointmentsArray } 
                     handleAppointmentClick = { controller.handleAppointmentClick } 
+                    isOnAppointmentsPage = { true }
                 />
             </div>
             <AppointmentFormForDialog 

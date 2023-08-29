@@ -16,6 +16,7 @@ const database = {
         return pool.query(query, date).then(res => res[0]);
     },
     addNewAppointment: function(appointment) {
+        console.log(appointment.patientFile)
         return pool.query("insert into appointments (date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
             [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.patientFile, appointment.phone, appointment.comments]);
     },
@@ -27,7 +28,7 @@ const database = {
         return pool.query("delete from appointments where id=?", id);
     },
     getAppointmentsForPatient(patientFile) {
-        const query  = "select date, firstName from appointments where patientFile = ?";
+        const query  = "select id, date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments, noshow from appointments where patientFile = ?";
         return pool.query(query, [patientFile]).then(res => res[0]);
     },
 

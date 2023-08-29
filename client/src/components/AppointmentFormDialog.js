@@ -54,14 +54,14 @@ export default function AppointmentFormDialog(data) {
 
     return (
         <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
-            <form className="formForDialogCloseButton" method="dialog">
+            {/* <form className="formForDialogCloseButton" method="dialog">
                 <button className="closeButton" onClick={ controller.resetFormToDefault } >
                     <CloseIcon />
                 </button>
             </form>
             <form className="appointmentForm" onSubmit={ selectedAppointment ? handleAppointmentUpdate : handleAppointmentSubmit }>
                 <div className="infoContainer">
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer date">
                         <label htmlFor="date">Date:</label>
                         <input type="date" name="date" id="date" className="datePicker"
                             min={todayForPicker}
@@ -73,7 +73,7 @@ export default function AppointmentFormDialog(data) {
                             defaultValue={ selectedAppointment ? selectedAppointment.date : ""}
                         />
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer time">
                         <label htmlFor="time">Time:</label>
                         <input 
                             type="time" 
@@ -87,7 +87,7 @@ export default function AppointmentFormDialog(data) {
                             {availableTimesSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
                         </datalist>
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer firstName">
                         <label htmlFor="firstName">First Name:</label>
                         <input 
                             type="text" 
@@ -97,7 +97,7 @@ export default function AppointmentFormDialog(data) {
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer lastName">
                         <label htmlFor="lastName">Last Name:</label>
                         <input 
                             type="text" 
@@ -107,7 +107,7 @@ export default function AppointmentFormDialog(data) {
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer treatment">
                         <label htmlFor="procedure">Treatment:</label>
                         <select 
                             id="treatment" 
@@ -118,7 +118,7 @@ export default function AppointmentFormDialog(data) {
                             { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer doctor">
                         <label htmlFor="doctor">Doctor:</label>
                         <select 
                             id="doctor" 
@@ -129,7 +129,7 @@ export default function AppointmentFormDialog(data) {
                             { doctorsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer payment">
                         <label htmlFor="payment">Payment:</label>
                         <select 
                             id="payment" 
@@ -140,7 +140,7 @@ export default function AppointmentFormDialog(data) {
                             { paymentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select>
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer cost">
                         <label htmlFor="cost">Cost:</label>
                         <input 
                             type="number" 
@@ -150,17 +150,17 @@ export default function AppointmentFormDialog(data) {
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
-                    <div className="labelAndInputContainer">
-                        <label htmlFor="file">File:</label>
+                    <div className="labelAndInputContainer patientFile">
+                        <label htmlFor="patientFile">Patient File:</label>
                         <input 
                             type="text" 
-                            name="file" 
-                            id="file" 
-                            defaultValue={selectedAppointment ? selectedAppointment.file : ""}
+                            name="patientFile" 
+                            id="patientFile" 
+                            defaultValue={selectedAppointment ? selectedAppointment.patientFile : ""}
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
                         />
                     </div>
-                    <div className="labelAndInputContainer">
+                    <div className="labelAndInputContainer phone">
                         <label htmlFor="phone">Phone:</label>
                         <input 
                             type="tel" 
@@ -172,13 +172,6 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer commentsContainer">
                         <label htmlFor="comments">Comments:</label>
-                        {/* <input 
-                            type="text" 
-                            name="comments" 
-                            id="comments" 
-                            defaultValue={selectedAppointment ? selectedAppointment.comments : ""}
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
-                        /> */}
                         <textarea 
                             className="commentsTextarea"
                             name="comments" 
@@ -220,7 +213,7 @@ export default function AppointmentFormDialog(data) {
                         }
                     </button>
                 </div>
-            </form>
+            </form> */}
         </dialog>
 
     );

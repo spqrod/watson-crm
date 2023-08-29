@@ -1,6 +1,5 @@
 .appointmentListItem {
     display: grid;
-    gap: var(--small-gap);
     grid-auto-columns: 1fr;
     grid-auto-flow: column;
     grid-template-rows: 30px;
@@ -17,11 +16,11 @@
     .infoContainer {
         overflow: scroll;
 
-        &.time {
+        &:first-of-type {
             padding-left: var(--medium-gap);
         }
         
-        &.insurance {
+        &:last-of-type {
             padding-right: var(--medium-gap);
         }
     }

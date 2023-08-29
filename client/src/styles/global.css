@@ -115,8 +115,8 @@ input, select, textarea {
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 2;
-        min-width: 80vw;
-        height: 80vh;
+        min-width: 90vw;
+        min-height: 90vh;
         position: relative;
     }
     .formForDialogCloseButton {

@@ -101,10 +101,8 @@
             display: grid;
             grid-auto-columns: 1fr;
             grid-auto-flow: column;
-            gap: var(--small-gap);
             border-top: var(--border);
             border-bottom: var(--border);
-            padding: 0 var(--medium-gap);
             transition: var(--transition);
 
             &.active {
@@ -114,6 +112,14 @@
             & p {
                 display: flex;
                 align-items: center;
+            }
+
+            & p:first-of-type {
+                padding-left: var(--medium-gap);
+            }
+            
+            & p:last-of-type {
+                padding-right: var(--medium-gap);
             }
         }
         

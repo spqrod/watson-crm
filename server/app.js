@@ -69,7 +69,10 @@ app.get("/appointments/", (req, res) => {
         const patientFile = decodeURIComponent(req.query.patientFile);
         database.getAppointmentsForPatient(patientFile)
             .then(appointments => {
-                // appointments.forEach(appointment => appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time));
+                appointments.forEach(appointment => {
+                    appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time);
+                    appointment.date = convertDateFormatToDDMMYYYY(appointment.date);
+                });
                 res.json(appointments);
             });
     };   

@@ -6,13 +6,15 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
+import AppointmentList from "./AppointmentList";
+import AppointmentFormDialog from "./AppointmentFormDialog";
 
 export default function PatientFormDialog(data) {
 
     const [ dialogMode, setDialogMode ] = useState(data.dialogMode);
     const [ selectedPatient, setSelectedPatient ] = useState(data.patient);
     const [ appointmentsForPatient, setAppointmentsForPatient ] = useState(data.appointments);
+    const [ selectedAppointment, setSelectedAppointment ] = useState();
     const { 
         handlePatientSearch,
         handlePatientSubmit, 
@@ -30,11 +32,26 @@ export default function PatientFormDialog(data) {
             const submitButton = document.querySelector(".button.submitButton");
             submitButton.classList.remove("disabled");
         },
+        getAppointment: function(id) {
+            const appointment = appointmentsForPatient.find(item => item.id == id);
+            return appointment;
+        },
+        handleAppointmentClick(e) {
+            console.log("clicled");
+            const appointmentID = e.currentTarget.id;
+            const appointment = controller.getAppointment(appointmentID);
+            setSelectedAppointment(appointment);
+            display.showAppointmentDialog();
+        }
     };
 
     const display = {
         dateFormatForDatePicker: "YYYY-MM-DD",
         today: dayjs().format("YYYY-MM-DD"),
+        showAppointmentDialog() {
+            const dialog = document.querySelector(".appointmentFormDialog");
+            dialog.showModal();
+        }
     };
 
     useEffect(() => {
@@ -202,27 +219,50 @@ export default function PatientFormDialog(data) {
 
                         />
                     </div>
+                    <div className="buttonsContainer">
+                        <button 
+                            className={`button deleteButton ${ dialogMode === "search" || dialogMode === "addNew" ? "disabled" : "" }`} 
+                            type="button" 
+                            onClick={ handlePatientDelete }
+                        >
+                            <DeleteOutlineOutlinedIcon />
+                            Delete
+                        </button>
+                        <button 
+                            className={`button submitButton disabled`} 
+                            type="submit"
+                        >
+                            { dialogMode === "addNew" ? <><AddOutlinedIcon />Add New Patient</> :
+                                    dialogMode === "update" ? <><AutorenewOutlinedIcon />Update Patient</> :
+                                        ""
+                            }
+                        </button>
+                    </div>
                 </div> 
-                <div className="buttonsContainer">
-                    <button 
-                        className={`button deleteButton ${ dialogMode === "search" || dialogMode === "addNew" ? "disabled" : "" }`} 
-                        type="button" 
-                        onClick={ handlePatientDelete }
-                    >
-                        <DeleteOutlineOutlinedIcon />
-                        Delete
-                    </button>
-                    <button 
-                        className={`button submitButton disabled`} 
-                        type="submit"
-                    >
-                        { dialogMode === "addNew" ? <><AddOutlinedIcon />Add New Patient</> :
-                                dialogMode === "update" ? <><AutorenewOutlinedIcon />Update Patient</> :
-                                    ""
-                        }
-                    </button>
-                </div>
             </form>
+            <div className="appointmentsListAndHeaderContainer">
+                {/* <h3>Appointments:</h3> */}
+                <div className="headerRowContainer">
+                    <p>Date</p>
+                    <p>Time</p>
+                    <p>Doctor</p>
+                    <p>Treatment</p>
+                    <p>Payment</p>
+                </div>
+                <AppointmentList 
+                    appointmentsArray = { appointmentsForPatient } 
+                    handleAppointmentClick = { controller.handleAppointmentClick }
+                    isInPatientsFormDialog = { true }
+                />
+            </div>
+            <AppointmentFormDialog 
+                appointment={ selectedAppointment } 
+                getAvailableTimeSlots={ null } 
+                timeSlots={ null } 
+                handleAppointmentSubmit = { null }
+                handleAppointmentUpdate = { null }
+                handleAppointmentDelete = { null }
+            />
         </dialog>
 
     );
