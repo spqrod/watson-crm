@@ -16,9 +16,13 @@ const database = {
         return pool.query(query, date).then(res => res[0]);
     },
     searchAppointments(searchString) {
-        const query = "select * from appointments where ? in (firstName, lastName, patientFile, doctor, treatment, phone)";
+        const query = "select * from appointments where ? in (firstName, lastName, patientFile, doctor, treatment, phone) order by date, time";
         return pool.query(query, [searchString])
             .then(res => res[0])
+    },
+    getAppointmentsForPatient(patientFile) {
+        const query  = "select id, date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments, noshow from appointments where patientFile = ? order by date, time";
+        return pool.query(query, [patientFile]).then(res => res[0]);
     },
     addNewAppointment: function(appointment) {
         console.log(appointment.patientFile)
@@ -32,10 +36,7 @@ const database = {
     deleteAppointment: function(id) {
         return pool.query("delete from appointments where id=?", id);
     },
-    getAppointmentsForPatient(patientFile) {
-        const query  = "select id, date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments, noshow from appointments where patientFile = ?";
-        return pool.query(query, [patientFile]).then(res => res[0]);
-    },
+
 
     getTakenTimeSlotsForDate: function(date) {
         const query = "select time from appointments where date=?"

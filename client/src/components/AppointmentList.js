@@ -15,11 +15,9 @@ export default function AppointmentList(data) {
             {   
                 appointmentsArray ? appointmentsArray.length > 0 ? appointmentsArray.map((appointment, index) => (
                     <li id={ appointment.id } className="appointmentListItem" onClick={ handleAppointmentClick }>
-                        { isInPatientsFormDialog ? 
                             <div className="infoContainer date">
                                 <p>{ dayjs(appointment.date).format("DD.MM.YYYY") }</p>
-                            </div> : null 
-                        }
+                            </div> 
                         <div className="infoContainer time">
                             <p>{appointment.time}</p>
                         </div>

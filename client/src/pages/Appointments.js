@@ -193,7 +193,6 @@ export default function Appointments() {
 
             api.searchAppointments(searchString).then(res => setAppointmentsArray(res));
         },
-
     };
 
     const display = {
@@ -283,6 +282,7 @@ export default function Appointments() {
                 </div>
 
                 <div className="headerRowContainer">
+                    <p>Date</p>
                     <p>Time</p>
                     <p>First Name</p>
                     <p>Last Name</p>
