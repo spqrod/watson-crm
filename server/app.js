@@ -147,7 +147,7 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
             const index = availableTimeSlots.findIndex((availableTimeSlot) => availableTimeSlot == takenTimeSlot);
             availableTimeSlots.splice(index, 1);
         });
-
+        console.log(availableTimeSlots);
         res.json(availableTimeSlots);
     });
 });
@@ -155,7 +155,8 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
 
 
 app.get("/patients/:searchString", (req, res) => {
-    let { searchString } = req.params;
+    let searchString = req.params.searchString;
+    searchString = decodeURIComponent(searchString);
     searchString = sanitizeString(searchString);
     database.getPatients(searchString)
         .then(response => {

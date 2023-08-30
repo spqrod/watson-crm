@@ -1,7 +1,7 @@
 import "../styles/patients.css";
 import PatientList from "../components/PatientList";
 import PatientFormForDialog from "../components/PatientFormDialog";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
@@ -18,6 +18,7 @@ export default function Patients() {
 
     const api = {
         getPatients: function(searchString) {
+            searchString = encodeURIComponent(searchString);
             const fetchURL = `/patients/${searchString}`;
             return fetch(fetchURL).then(res => res.json());
         },

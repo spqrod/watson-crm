@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
 const dayjs = require("dayjs");
+const csvtojson = require("csvtojson");
 
 const pool = mysql.createPool({
     host: process.env.DATABASE_HOST,
@@ -16,7 +17,7 @@ const database = {
         return pool.query(query, date).then(res => res[0]);
     },
     searchAppointments(searchString) {
-        const query = "select * from appointments where ? in (firstName, lastName, patientFile, doctor, treatment, phone) order by date, time";
+        const query = `select * from appointments where concat(firstName, lastName, patientFile, doctor, treatment, phone) like "%${searchString}%" order by date, time`;
         return pool.query(query, [searchString])
             .then(res => res[0])
     },
@@ -25,7 +26,6 @@ const database = {
         return pool.query(query, [patientFile]).then(res => res[0]);
     },
     addNewAppointment: function(appointment) {
-        console.log(appointment.patientFile)
         return pool.query("insert into appointments (date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 
             [appointment.date, appointment.time, appointment.firstName, appointment.lastName, appointment.doctor, appointment.treatment, appointment.payment, appointment.cost, appointment.patientFile, appointment.phone, appointment.comments]);
     },
@@ -44,8 +44,8 @@ const database = {
     },
 
     getPatients(searchString) {
-        const query = "select * from patients where ? in (firstName, lastName, file, nrc, phone, insuranceId)";
-        return pool.query(query, [searchString])
+        const query = `select * from patients where concat(firstName, lastName, file, nrc, phone, insuranceId) like "%${searchString}%"`;
+        return pool.query(query)
             .then(res => res[0])
     },
     addNewPatient: function(patient) {
@@ -76,11 +76,6 @@ module.exports = { database };
 
 
 
-const dateToday = dayjs().format(dateFormatForDB);
-const dateTomorrow = dayjs().add(1, "day").format(dateFormatForDB);
-const date1 = dayjs().add(2, "day").format(dateFormatForDB);
-const date2 = dayjs().add(3, "day").format(dateFormatForDB);
-const date3 = dayjs().add(4, "day").format(dateFormatForDB);
 
 
 
@@ -89,6 +84,7 @@ const date3 = dayjs().add(4, "day").format(dateFormatForDB);
 
 
 
+let importedAppointmentsArray = [];
 
 const helperForAppointments = {
     createTable() {
@@ -110,206 +106,28 @@ const helperForAppointments = {
     getAllAppointments: function() {
         pool.query("select * from appointments").then(res => console.log(res[0]));
     },
-    addNewAppointmentsFromArray: function(appointmentsArray) {
-        appointmentsArray.forEach(appointment => database.addNewAppointment(appointment));
-    },
-    exampleAppointmentsArray: [
-        {
-            date: dateToday,
-            time: "10:30",
-            firstName: "John",
-            lastName: "Watson",
-            patientFile: "3232/22",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Nhima"
-        },
-        {
-            date: dateToday,
-            time: "11:30",
-            firstName: "John",
-            lastName: "Watson",
-            patientFile: "3232/22",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Nhima"
-        },
-        {
-            date: dateTomorrow,
-            time: "08:30",
-            firstName: "John",
-            lastName: "Watson",
-            patientFile: "3232/22",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Nhima"
-        },
-        {
-            date: dateTomorrow,
-            time: "18:30",
-            firstName: "John",
-            lastName: "Watson",
-            patientFile: "3232/22",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: dateToday,
-            time: "11:30",
-            firstName: "Mark",
-            lastName: "Brown",
-            patientFile: "9872/91",
-            doctor: "Dr Watson",
-            treatment: "Extraction",
-            payment: "Cash"
-        },
-        {
-            date: dateToday,
-            time: "12:30",
-            firstName: "Leeroy",
-            lastName: "Hawking",
-            patientFile: "0002/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: dateTomorrow,
-            time: "13:30",
-            firstName: "Stephen",
-            lastName: "Jenkins",
-            patientFile: "0003/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: dateTomorrow,
-            time: "14:00",
-            firstName: "Lark",
-            lastName: "Hawking",
-            patientFile: "0004/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: dateTomorrow,
-            time: "15:00",
-            firstName: "Stephen",
-            lastName: "Downing",
-            patientFile: "0005/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: date1,
-            time: "15:30",
-            firstName: "Jessica",
-            lastName: "Hawking",
-            patientFile: "0006/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: date1,
-            time: "16:00",
-            firstName: "Chris",
-            lastName: "Brown",
-            patientFile: "0007/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: date1,
-            time: "16:30",
-            firstName: "Mark",
-            lastName: "Hawking",
-            patientFile: "0008/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: date2,
-            time: "16:30",
-            firstName: "Stephen",
-            lastName: "Hawking",
-            patientFile: "0009/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: date2,
-            time: "16:30",
-            firstName: "Facundo",
-            lastName: "Montana",
-            patientFile: "0010/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Nhima"
-        },
-        {
-            date: date2,
-            time: "16:30",
-            firstName: "Sergey",
-            lastName: "Brin",
-            patientFile: "0011/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-        {
-            date: date3,
-            time: "16:30",
-            firstName: "Nikola",
-            lastName: "Tesla",
-            patientFile: "0012/00",
-            doctor: "Dr Watson",
-            treatment: "Whitening",
-            payment: "Cash"
-        },
-        {
-            date: date3,
-            time: "16:30",
-            firstName: "John",
-            lastName: "Kennedy",
-            patientFile: "0013/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Nhima"
-        },
-        {
-            date: date3,
-            time: "16:30",
-            firstName: "Donald",
-            lastName: "Ceasar",
-            patientFile: "0014/00",
-            doctor: "Dr Watson",
-            treatment: "Scaling",
-            payment: "Cash"
-        },
-    ],
     dropTable() {
         const query = "drop table appointments";
         pool.query(query);
+    },
+    importAppointmentsFromCSVFile() {
+        const csvFilePath = "appointments.csv";
+        csvtojson()
+            .fromFile(csvFilePath)
+            .then(appointmentsArray => appointmentsArray.forEach(appointment => {
+                if (appointment.date)
+                    database.addNewAppointment(appointment);
+            }));
     }
 };
 
-
+// helperForAppointments.importAppointmentsFromCSVFile()
 // helperForAppointments.createTable();
 // helperForAppointments.dropTable();
-// helperForAppointments.addNewAppointmentsFromArray(helperForAppointments.exampleAppointmentsArray);
 // helperForAppointments.getAllAppointments();
 // helperForAppointments.deleteAllAppointments();
 // helperForAppointments.describeAppointmentsTable();
 // helperForAppointments.alterTableAppointments();
-// database.getAppointmentsForPatient("3232/22").then(res => console.log(res));
 
 
 
@@ -341,73 +159,26 @@ const helperForPatients = {
         // const query = "alter table patients drop primary key;";
         pool.query(query).then(res => console.log(res[0]));
     },
-    addNewPatientsFromArray: function(patientsArray) {
-        patientsArray.forEach(patient => database.addNewPatient(patient));
-    },
-    examplePatientsArray: [
-        {
-            firstName: "John",
-            lastName: "Watson",
-            file: "3232/22",
-            nrc: "481920/22",
-            phone: "260000 98231 12",
-            sex: "M",
-            insuranceId: "13135719035893",
-            dateOfBirth: "1990-02-10",
-            marketing: "Word of mouth"
-        },
-        {
-            firstName: "Mark",
-            lastName: "Brown",
-            file: "9872/91",
-            nrc: "481920/78",
-            phone: "260000 98231 00",
-            sex: "M",
-            insuranceId: "981751332123",
-            dateOfBirth: "1939-02-09",
-            marketing: "Word of mouth"
-        },
-        {
-            firstName: "Leeroy",
-            lastName: "Hawking",
-            file: "1232/00",
-            nrc: "111111/22",
-            phone: "260000 98231 86",
-            sex: "M",
-            insuranceId: "0927057130",
-            dateOfBirth: "1992-06-11",
-            marketing: "Word of mouth"
-        },
-        {
-            firstName: "Stephen",
-            lastName: "Jenkins",
-            file: "32232/99",
-            nrc: "928821/22",
-            phone: "260 9238231 12",
-            sex: "M",
-            dateOfBirth: "1920-02-10",
-            marketing: "Word of mouth",
-            comments: "Friend of John"
-        },
-        {
-            firstName: "Gary",
-            lastName: "John",
-            file: "92754/75",
-            nrc: "4234920/11",
-            phone: "260 9261914 82",
-            sex: "M",
-            dateOfBirth: "1966-05-02",
-            marketing: "Word of mouth",
-        },
-    ],
+    importPatientsFromCSVFile() {
+        const csvFilePath = "patients.csv";
+        csvtojson()
+            .fromFile(csvFilePath)
+            .then(patientsArray => patientsArray.forEach(patient => {
+                if (patient.firstName)
+                    if ((patient.dateOfBirth == "") || !dayjs(patient.dateOfBirth).isValid())
+                        patient.dateOfBirth = "1000-01-01";
+                    patient.dateOfBirth = dayjs(patient.dateOfBirth).format(dateFormatForDB);
+                    database.addNewPatient(patient);
+            }));
+    }
 };
-
 
 // helperForPatients.createTablePatients();
 // helperForPatients.dropTable();
 // helperForPatients.alterTablePatients();
 // helperForPatients.deleteAllPatients();
-// helperForPatients.addNewPatientsFromArray(helperForPatients.examplePatientsArray)
 // helperForPatients.getAllPatients();
 // helperForPatients.describePatientsTable()
+// helperForPatients.importPatientsFromCSVFile();
+
 
