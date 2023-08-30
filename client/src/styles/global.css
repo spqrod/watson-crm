@@ -40,7 +40,7 @@ p, a, span, div {
     background-color: var(--background);
 }
 
-input, select, textarea {
+.inputField {
     &[type=text], &[type=tel], &[type=email], &[type=date], &[type=time], & {
         padding: var(--small-gap);
         font-size: 18px;
@@ -166,5 +166,5 @@ input, select, textarea {
 } 
 
 body:has(.dialog[open]) {
-    overflow: auto;
+    overflow: none;
 }

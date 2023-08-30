@@ -5,15 +5,17 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import CloseIcon from '@mui/icons-material/Close';
+import ReactDatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css'
 
-export default function AppointmentFormDialog(data) {
+    export default function AppointmentFormDialog(data) {
 
     const [ selectedAppointment, setSelectedAppointment ] = useState(data.appointment);
-    const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([data.timeSlots]);
+    const [ takenTimeSlotsForTimePicker, setTakenTimeSlotsForTimePicker ] = useState([data.timeSlots]);
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
     const { 
-        getAvailableTimeSlots, 
+        getTakenTimeSlots, 
         handleAppointmentSubmit, 
         handleAppointmentUpdate, 
         handleAppointmentDelete,
@@ -23,6 +25,8 @@ export default function AppointmentFormDialog(data) {
     const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
     const paymentsList = ["Nhima", "Cash", "Swipe", "TT", "SES", "Liberty", "Medlink"];
     const treatmentsList = ["Con", "XR", "TF", "PF", "RCT", "XLA", "SXLA"];
+    const startHour = "07:00";
+    const finishHour = "17:00";
 
     const controller = {
         getSelectedDate: function() {
@@ -43,7 +47,27 @@ export default function AppointmentFormDialog(data) {
         updateNoshowCheckbox(isNoshowCheckboxChecked) {
             if (isNoshowCheckboxChecked)
                 document.querySelector(".noshowCheckbox").checked = true;
+        },
+        convertTakenTimeSlotsToDateObjects(timeSlotsArray) {
+            const dateObjectsArray = [];
+            timeSlotsArray.forEach(timeSlot => {
+                const hours = timeSlot.split(":")[0];
+                const minutes = timeSlot.split(":")[1];
+                const date = dayjs().hour(hours).minute(minutes).second(0).toDate();
+                dateObjectsArray.push(date);
+            });
+            return dateObjectsArray;
         }
+    }
+
+    const display = {
+        removeTimesOutOfWorkingHoursFromDatePicker() {
+            const items = document.querySelectorAll(".react-datepicker__time-list-item");
+            items.forEach(item => {
+                if ((item.innerHTML < startHour) || (item.innerHTML > finishHour))
+                    item.style.display = "none";
+            });
+        },
     }
 
     useEffect(() => {
@@ -53,8 +77,11 @@ export default function AppointmentFormDialog(data) {
     }, [data.appointment]);
     
     useEffect(() => {
-        setAvailableTimesSlotsForTimePicker(data.timeSlots)
+        console.log(data.timeSlots);
+        const takenTimeSlotsAsDateObjectsArray = controller.convertTakenTimeSlotsToDateObjects(data.timeSlots);
+        setTakenTimeSlotsForTimePicker(takenTimeSlotsAsDateObjectsArray)
     }, [data.timeSlots]);
+
 
     return (
         <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
@@ -74,11 +101,12 @@ export default function AppointmentFormDialog(data) {
                 <div className="infoContainer">
                     <div className="labelAndInputContainer date">
                         <label htmlFor="date">Date:</label>
-                        <input type="date" name="date" id="date" className="datePicker"
+                        <input
+                            className="inputField datePicker" type="date" name="date" id="date" 
                             min={todayForPicker}
                             max={sixMonthsFromTodayForPicker}
                             onChange={() => { 
-                                getAvailableTimeSlots(controller.getSelectedDate());
+                                getTakenTimeSlots(controller.getSelectedDate());
                                 if (selectedAppointment) controller.makeUpdateButtonActive();
                             }}
                             defaultValue={ selectedAppointment ? dayjs(selectedAppointment.date).format("YYYY-MM-DD") : ""}
@@ -87,7 +115,8 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer time">
                         <label htmlFor="time">Time:</label>
-                        <input 
+                        {/* <input
+                            className="inputField" 
                             type="time" 
                             name="time" 
                             id="time" 
@@ -100,14 +129,23 @@ export default function AppointmentFormDialog(data) {
                         { isOnAppointmentsPage ?
                             <datalist id="availableTimesDatalist">
                                 <option value="select"></option>
-                                {availableTimesSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
+                                {takenTimeSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
                             </datalist> 
                             : null
-                        }
+                        } */}
+                        <ReactDatePicker
+                            onCalendarOpen={ display.removeTimesOutOfWorkingHoursFromDatePicker }
+                            showTimeSelect
+                            showTimeSelectOnly
+                            excludeTimes={takenTimeSlotsForTimePicker}
+                            timeIntervals={ 30 }
+                            timeFormat="HH:mm"
+                        />
                     </div>
                     <div className="labelAndInputContainer firstName">
                         <label htmlFor="firstName">First Name:</label>
-                        <input 
+                        <input
+                            className="inputField" 
                             type="text" 
                             name="firstName" 
                             id="firstName" 
@@ -119,7 +157,8 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer lastName">
                         <label htmlFor="lastName">Last Name:</label>
-                        <input 
+                        <input
+                            className="inputField" 
                             type="text" 
                             name="lastName" 
                             id="lastName" 
@@ -133,7 +172,8 @@ export default function AppointmentFormDialog(data) {
                         <label htmlFor="treatment">Treatment:</label>
                         { 
                         isOnAppointmentsPage ? 
-                            <select 
+                            <select
+                                className="inputField" 
                                 id="treatment" 
                                 name="treatment"
                                 onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
@@ -144,7 +184,8 @@ export default function AppointmentFormDialog(data) {
                         }
                         { 
                         isInPatientFormDialog ? 
-                            <input 
+                            <input
+                                className="inputField" 
                                 type="text" 
                                 name="treatment" 
                                 id="treatment" 
@@ -158,7 +199,8 @@ export default function AppointmentFormDialog(data) {
                         <label htmlFor="doctor">Doctor:</label>
                         { 
                         isOnAppointmentsPage ? 
-                        <select 
+                        <select
+                            className="inputField"
                             id="doctor" 
                             name="doctor" 
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
@@ -171,7 +213,8 @@ export default function AppointmentFormDialog(data) {
 
                         { 
                         isInPatientFormDialog ? 
-                            <input 
+                            <input
+                                className="inputField" 
                                 type="text" 
                                 name="doctor" 
                                 id="doctor" 
@@ -185,7 +228,8 @@ export default function AppointmentFormDialog(data) {
                         <label htmlFor="payment">Payment:</label>
                         { 
                         isOnAppointmentsPage ? 
-                        <select 
+                        <select
+                            className="inputField"
                             id="payment" 
                             name="payment"
                             onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
@@ -199,7 +243,8 @@ export default function AppointmentFormDialog(data) {
 
                         { 
                         isInPatientFormDialog ? 
-                            <input 
+                            <input
+                                className="inputField" 
                                 type="text" 
                                 name="doctor" 
                                 id="doctor" 
@@ -210,7 +255,8 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer cost">
                         <label htmlFor="cost">Cost:</label>
-                        <input 
+                        <input
+                            className="inputField" 
                             type="number" 
                             name="cost" 
                             id="cost" 
@@ -222,7 +268,8 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer patientFile">
                         <label htmlFor="patientFile">Patient File:</label>
-                        <input 
+                        <input
+                            className="inputField" 
                             type="text" 
                             name="patientFile" 
                             id="patientFile" 
@@ -234,7 +281,8 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer phone">
                         <label htmlFor="phone">Phone:</label>
-                        <input 
+                        <input
+                            className="inputField" 
                             type="tel" 
                             name="phone" 
                             id="phone" 
@@ -271,9 +319,10 @@ export default function AppointmentFormDialog(data) {
                             Delete
                         </button>
                         <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
-                            <input 
+                            <input
+                                className="inputField" 
                                 type="checkbox" 
-                                className="noshowCheckbox" 
+                                // className="noshowCheckbox" 
                                 name="nowshow" 
                                 id="noshow" 
                                 onClick ={ controller.makeUpdateButtonActive }

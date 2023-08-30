@@ -140,15 +140,8 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
     let takenTimeSlots = [];
 
     database.getTakenTimeSlotsForDate(selectedDate).then(timeSlots => {
-        timeSlots.forEach(item => takenTimeSlots.push(convertTimeFormatFromHHMMSSToHHMM(item.time)))
-        let availableTimeSlots = [...timeSlotsForAppointments];
-
-        takenTimeSlots.forEach(takenTimeSlot => {
-            const index = availableTimeSlots.findIndex((availableTimeSlot) => availableTimeSlot == takenTimeSlot);
-            availableTimeSlots.splice(index, 1);
-        });
-        console.log(availableTimeSlots);
-        res.json(availableTimeSlots);
+        timeSlots.forEach(item => takenTimeSlots.push(convertTimeFormatFromHHMMSSToHHMM(item.time)));
+        res.json(takenTimeSlots);
     });
 });
 

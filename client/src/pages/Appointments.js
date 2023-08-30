@@ -11,10 +11,9 @@ import dayjs from "dayjs";
 
 export default function Appointments() {
 
-    // const [ selectedDate, setSelectedDate ] = useState(dayjs().format("DD-MM-YYYY"));
     const [ appointmentsArray, setAppointmentsArray ] = useState();
     const [ selectedAppointment, setSelectedAppointment ] = useState();
-    const [ availableTimesSlotsForTimePicker, setAvailableTimesSlotsForTimePicker ] = useState([]);
+    const [ takenTimeSlotsForTimePicker, setTakenTimeSlotsForTimePicker ] = useState([]);
 
     const dateFormatForDB = "YYYY-MM-DD";
     const dateFormatForHeader = "dddd, DD.MM.YYYY";
@@ -29,7 +28,7 @@ export default function Appointments() {
             const fetchURL = `/appointments?date=${date}`;
             return fetch(fetchURL).then(res => res.json());
         },
-        getAvailableTimeSlots(date) {
+        getTakenTimeSlots(date) {
             const fetchURL = `/taken-time-slots/${date}`;
             return fetch(fetchURL).then(res => res.json());
         },
@@ -79,7 +78,7 @@ export default function Appointments() {
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
             setSelectedAppointment(appointment);
-            controller.getAvailableTimeSlots(appointment.date);
+            controller.getTakenTimeSlots(appointment.date);
             display.showDialog();
         },
         getAppointment: function(id) {
@@ -123,8 +122,8 @@ export default function Appointments() {
             setSelectedAppointment();
             display.showDialog();
         },
-        getAvailableTimeSlots: function(date) {
-            api.getAvailableTimeSlots(date).then(res => setAvailableTimesSlotsForTimePicker(res));
+        getTakenTimeSlots: function(date) {
+            api.getTakenTimeSlots(date).then(res => setTakenTimeSlotsForTimePicker(res));
         },
         handleAppointmentSubmit: function (e) {
             e.preventDefault();
@@ -264,7 +263,7 @@ export default function Appointments() {
                         <div className="datePickerContainer">
                             <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
                                 <CalendarMonthOutlinedIcon />
-                                <input className="datePicker input" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelectInDatePicker}/>
+                                <input className="datePicker inputField" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelectInDatePicker}/>
                             </label>
                             <p className="fullDate datePicker">{ datePickerDate }</p>
 
@@ -277,7 +276,7 @@ export default function Appointments() {
                         <label htmlFor="search" className="searchLabel">
                             <SearchOutlinedIcon /><span>Search</span>
                         </label>
-                        <input type="text" name="search" id="search" className="searchInput"/>
+                        <input type="text" name="search" id="search" className="searchInput inputField"/>
                     </form>
                 </div>
 
@@ -298,8 +297,8 @@ export default function Appointments() {
             </div>
             <AppointmentFormForDialog 
                 appointment={ selectedAppointment } 
-                getAvailableTimeSlots={ controller.getAvailableTimeSlots } 
-                timeSlots={ availableTimesSlotsForTimePicker } 
+                getTakenTimeSlots={ controller.getTakenTimeSlots } 
+                timeSlots={ takenTimeSlotsForTimePicker } 
                 isOnAppointmentsPage = { true }
                 handleAppointmentSubmit = { controller.handleAppointmentSubmit }
                 handleAppointmentUpdate = { controller.handleAppointmentUpdate }
