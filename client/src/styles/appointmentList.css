@@ -24,4 +24,8 @@
             padding-right: var(--medium-gap);
         }
     }
+
+    .noAppointmentsFoundLine {
+        padding-left: var(--medium-gap);
+    }
 }

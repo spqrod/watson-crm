@@ -111,6 +111,7 @@ export default function Appointments() {
             controller.getAppointments(selectedDate);
         },
         handleDateSelect: function(dateAsString) {
+            display.hidePreviousFullDate();
             display.showFullDate(dateAsString);
             display.highlightDateContainer(dateAsString);
             display.highlightHeaderRowContainer();
@@ -186,10 +187,11 @@ export default function Appointments() {
             display.highlightHeaderRowContainer();
             display.highlightAppointmentListContainer();
             display.removeHighlightFromDateContainer();
+            display.hidePreviousFullDate();
 
             const searchString = e.target.search.value;
 
-            api.searchAppointments(searchString).then(res => console.log(res));
+            api.searchAppointments(searchString).then(res => setAppointmentsArray(res));
         },
 
     };
@@ -203,10 +205,12 @@ export default function Appointments() {
             const dialog = document.querySelector(".dialog");
             dialog.close();
         },
-        showFullDate(dateAsString) {
+        hidePreviousFullDate() {
             const previousActiveDate = document.querySelector(".fullDate.active");
             if (previousActiveDate)
                 previousActiveDate.classList.remove("active");
+        },
+        showFullDate(dateAsString) {
             const fullDate = document.querySelector(`.fullDate.${dateAsString}`);
             fullDate.classList.add("active");
         },
@@ -243,8 +247,6 @@ export default function Appointments() {
             const searchInput = document.querySelector(".searchInput");
             searchInput.value = "";
         }
-
-
     };
 
     return (

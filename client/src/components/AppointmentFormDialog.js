@@ -81,7 +81,7 @@ export default function AppointmentFormDialog(data) {
                                 getAvailableTimeSlots(controller.getSelectedDate());
                                 if (selectedAppointment) controller.makeUpdateButtonActive();
                             }}
-                            defaultValue={ selectedAppointment ? selectedAppointment.date : ""}
+                            defaultValue={ selectedAppointment ? dayjs(selectedAppointment.date).format("YYYY-MM-DD") : ""}
                             readOnly = { isInPatientFormDialog ? true : false}
                         />
                     </div>

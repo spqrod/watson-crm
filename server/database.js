@@ -15,6 +15,11 @@ const database = {
         const query = "select id, date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments, noshow from appointments where date=? order by time";
         return pool.query(query, date).then(res => res[0]);
     },
+    searchAppointments(searchString) {
+        const query = "select * from appointments where ? in (firstName, lastName, patientFile, doctor, treatment, phone)";
+        return pool.query(query, [searchString])
+            .then(res => res[0])
+    },
     addNewAppointment: function(appointment) {
         console.log(appointment.patientFile)
         return pool.query("insert into appointments (date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", 

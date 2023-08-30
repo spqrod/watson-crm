@@ -71,13 +71,20 @@ app.get("/appointments/", (req, res) => {
             .then(appointments => {
                 appointments.forEach(appointment => {
                     appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time);
-                    // appointment.date = convertDateFormatToDDMMYYYY(appointment.date);
                 });
                 res.json(appointments);
             });        
     }
     else {
-        res.json(req.query.searchString);
+        const searchString = sanitizeString(req.query.searchString);
+        database.searchAppointments(searchString)
+            .then(appointments => {
+                appointments.forEach(appointment => {
+                    appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time);
+                });
+                res.json(appointments)
+            })
+            .catch(error => logger.info(error));
     }
 });
 
