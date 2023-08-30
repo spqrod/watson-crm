@@ -21,7 +21,7 @@ export default function AppointmentFormDialog(data) {
         isOnAppointmentsPage
     } = data;
     const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
-    const paymentsList = ["Nhima", "Cash", "Swipe", "SES", "Liberty", "Medlink"];
+    const paymentsList = ["Nhima", "Cash", "Swipe", "TT", "SES", "Liberty", "Medlink"];
     const treatmentsList = ["Con", "XR", "TF", "PF", "RCT", "XLA", "SXLA"];
 
     const controller = {
@@ -99,6 +99,7 @@ export default function AppointmentFormDialog(data) {
                         />
                         { isOnAppointmentsPage ?
                             <datalist id="availableTimesDatalist">
+                                <option value="select"></option>
                                 {availableTimesSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
                             </datalist> 
                             : null

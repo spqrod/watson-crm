@@ -166,5 +166,5 @@ input, select, textarea {
 } 
 
 body:has(.dialog[open]) {
-    /* overflow: hidden; */
+    overflow: auto;
 }
