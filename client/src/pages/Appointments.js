@@ -99,11 +99,11 @@ export default function Appointments() {
             controller.handleDateSelect("tomorrow");
         },
         handleDatePickerClick: function() {
-            const datePicker = document.querySelector(".datePickerContainer .datePicker.input");
+            const datePicker = document.querySelector(".datePickerContainer .datePicker.inputField");
             datePicker.showPicker();
         },
         handleDateSelectInDatePicker: function() {
-            const datePicker = document.querySelector(".datePickerContainer .datePicker.input");
+            const datePicker = document.querySelector(".datePickerContainer .datePicker.inputField");
             const selectedDate = dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForDB);
             setDatePickerDate(dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForHeader));
             controller.handleDateSelect("datePicker");
@@ -263,10 +263,16 @@ export default function Appointments() {
                         <div className="datePickerContainer">
                             <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
                                 <CalendarMonthOutlinedIcon />
-                                <input className="datePicker inputField" type="date" id="datePicker" name="datePicker" min={ todayForPicker } max={ sixMonthsFromTodayForPicker } onChange={controller.handleDateSelectInDatePicker}/>
+                                <input 
+                                    className="datePicker inputField" 
+                                    type="date" 
+                                    id="datePicker" 
+                                    name="datePicker" 
+                                    min={ todayForPicker } 
+                                    max={ sixMonthsFromTodayForPicker } 
+                                    onChange={controller.handleDateSelectInDatePicker}/>
                             </label>
                             <p className="fullDate datePicker">{ datePickerDate }</p>
-
                         </div>
                     </div>
                     <div className="addNewContainer" onClick={ controller.handleAddNew }>

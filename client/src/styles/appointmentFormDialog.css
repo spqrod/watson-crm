@@ -25,6 +25,9 @@
                 grid-template-rows: min-content;
                 align-items: center;
 
+                .react-datepicker__input-container {
+                    
+                }
                 
             }
 

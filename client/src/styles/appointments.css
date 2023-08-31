@@ -66,7 +66,7 @@
                     }
     
                     /* The input=date is hidden in this fashion, because the date picker is called by clicking the label. If the input=date element is display=none, then the picker appears on the top left on the screen. */
-                    .datePicker.input {
+                    .datePicker.inputField {
                         visibility: hidden;
                         position: absolute;
                         top: 50%;

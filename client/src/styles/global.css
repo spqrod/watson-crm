@@ -40,7 +40,7 @@ p, a, span, div {
     background-color: var(--background);
 }
 
-.inputField {
+input, textarea, select {
     &[type=text], &[type=tel], &[type=email], &[type=date], &[type=time], & {
         padding: var(--small-gap);
         font-size: 18px;

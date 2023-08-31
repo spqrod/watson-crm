@@ -8,10 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import ReactDatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css'
 
-    export default function AppointmentFormDialog(data) {
+export default function AppointmentFormDialog(data) {
 
     const [ selectedAppointment, setSelectedAppointment ] = useState(data.appointment);
     const [ takenTimeSlotsForTimePicker, setTakenTimeSlotsForTimePicker ] = useState([data.timeSlots]);
+    const [ selectedTime, setSelectedTime ] = useState();
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
     const { 
@@ -49,14 +50,18 @@ import 'react-datepicker/dist/react-datepicker.css'
                 document.querySelector(".noshowCheckbox").checked = true;
         },
         convertTakenTimeSlotsToDateObjects(timeSlotsArray) {
-            const dateObjectsArray = [];
-            timeSlotsArray.forEach(timeSlot => {
-                const hours = timeSlot.split(":")[0];
-                const minutes = timeSlot.split(":")[1];
-                const date = dayjs().hour(hours).minute(minutes).second(0).toDate();
-                dateObjectsArray.push(date);
-            });
-            return dateObjectsArray;
+            if (timeSlotsArray) {
+                const dateObjectsArray = [];
+                timeSlotsArray.forEach(timeSlot => 
+                    dateObjectsArray.push(controller.convertTimeSlotToDateObject(timeSlot)));
+                return dateObjectsArray;
+            }
+        },
+        convertTimeSlotToDateObject(timeSlot) {
+            const hours = timeSlot.split(":")[0];
+            const minutes = timeSlot.split(":")[1];
+            const date = dayjs().hour(hours).minute(minutes).second(0).toDate();
+            return date;
         }
     }
 
@@ -68,16 +73,22 @@ import 'react-datepicker/dist/react-datepicker.css'
                     item.style.display = "none";
             });
         },
+        convertToDateObject(time) {
+
+            const date = dayjs().hour;
+        }
     }
 
     useEffect(() => {
         setSelectedAppointment(data.appointment);
-        if (data.appointment)
+        if (data.appointment) {
             controller.updateNoshowCheckbox(data.appointment.noshow);
+            setSelectedTime(controller.convertTimeSlotToDateObject(data.appointment.time));
+        } else 
+            setSelectedTime();
     }, [data.appointment]);
     
     useEffect(() => {
-        console.log(data.timeSlots);
         const takenTimeSlotsAsDateObjectsArray = controller.convertTakenTimeSlotsToDateObjects(data.timeSlots);
         setTakenTimeSlotsForTimePicker(takenTimeSlotsAsDateObjectsArray)
     }, [data.timeSlots]);
@@ -135,10 +146,13 @@ import 'react-datepicker/dist/react-datepicker.css'
                         } */}
                         <ReactDatePicker
                             onCalendarOpen={ display.removeTimesOutOfWorkingHoursFromDatePicker }
+                            selected={ selectedTime }
+                            onChange={ time => setSelectedTime(time) }
                             showTimeSelect
                             showTimeSelectOnly
                             excludeTimes={takenTimeSlotsForTimePicker}
                             timeIntervals={ 30 }
+                            dateFormat="HH:mm"
                             timeFormat="HH:mm"
                         />
                     </div>
@@ -295,7 +309,7 @@ import 'react-datepicker/dist/react-datepicker.css'
                     <div className="labelAndInputContainer commentsContainer">
                         <label htmlFor="comments">Comments:</label>
                         <textarea 
-                            className="commentsTextarea"
+                            className="commentsTextarea inputField"
                             name="comments" 
                             id="comments" 
                             rows="1"

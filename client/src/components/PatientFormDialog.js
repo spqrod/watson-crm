@@ -255,8 +255,8 @@ export default function PatientFormDialog(data) {
             <AppointmentFormDialog 
                 appointment={ selectedAppointment } 
                 isInPatientFormDialog = { true }
-                getAvailableTimeSlots={ null } 
-                timeSlots={ null } 
+                getTakenTimeSlots={ null } 
+                timeSlots = { null } 
                 handleAppointmentSubmit = { null }
                 handleAppointmentUpdate = { null }
                 handleAppointmentDelete = { null }
