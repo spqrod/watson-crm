@@ -41,8 +41,8 @@ export default function AppointmentFormDialog(data) {
                 submitButton.classList.add("disabled");
             };
         },
-        makeUpdateButtonActive() {
-            const submitButton = document.querySelector(".button.update");
+        makeSubmitButtonActive() {
+            const submitButton = document.querySelector(".button.submitButton");
             submitButton.classList.remove("disabled");
         },
         updateNoshowCheckbox(isNoshowCheckboxChecked) {
@@ -73,10 +73,6 @@ export default function AppointmentFormDialog(data) {
                     item.style.display = "none";
             });
         },
-        convertToDateObject(time) {
-
-            const date = dayjs().hour;
-        }
     }
 
     useEffect(() => {
@@ -93,6 +89,10 @@ export default function AppointmentFormDialog(data) {
         setTakenTimeSlotsForTimePicker(takenTimeSlotsAsDateObjectsArray)
     }, [data.timeSlots]);
 
+    useEffect(() => {
+        console.log(selectedTime);
+    }, [selectedTime]);
+
 
     return (
         <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
@@ -105,10 +105,11 @@ export default function AppointmentFormDialog(data) {
                 </button>
             </form>
             <form className="appointmentForm" 
-                onSubmit = { isOnAppointmentsPage ? 
-                    selectedAppointment ? 
-                        handleAppointmentUpdate : handleAppointmentSubmit 
-                            : null }>
+                 onSubmit = { 
+                    isOnAppointmentsPage ? 
+                        selectedAppointment ? 
+                            handleAppointmentUpdate : handleAppointmentSubmit 
+                            : null }> 
                 <div className="infoContainer">
                     <div className="labelAndInputContainer date">
                         <label htmlFor="date">Date:</label>
@@ -118,7 +119,7 @@ export default function AppointmentFormDialog(data) {
                             max={sixMonthsFromTodayForPicker}
                             onChange={() => { 
                                 getTakenTimeSlots(controller.getSelectedDate());
-                                if (selectedAppointment) controller.makeUpdateButtonActive();
+                                if (selectedAppointment) controller.makeSubmitButtonActive();
                             }}
                             defaultValue={ selectedAppointment ? dayjs(selectedAppointment.date).format("YYYY-MM-DD") : ""}
                             readOnly = { isInPatientFormDialog ? true : false}
@@ -133,7 +134,7 @@ export default function AppointmentFormDialog(data) {
                             id="time" 
                             defaultValue={selectedAppointment ? selectedAppointment.time : ""}
                             list="availableTimesDatalist"
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         />
@@ -147,14 +148,19 @@ export default function AppointmentFormDialog(data) {
                         <ReactDatePicker
                             onCalendarOpen={ display.removeTimesOutOfWorkingHoursFromDatePicker }
                             selected={ selectedTime }
-                            onChange={ time => setSelectedTime(time) }
+                            onChange={ time => { 
+                                setSelectedTime(time);
+                                controller.makeSubmitButtonActive();
+                            }}
                             showTimeSelect
                             showTimeSelectOnly
-                            excludeTimes={takenTimeSlotsForTimePicker}
+                            excludeTimes={ takenTimeSlotsForTimePicker }
                             timeIntervals={ 30 }
                             dateFormat="HH:mm"
                             timeFormat="HH:mm"
+                            readOnly = { isInPatientFormDialog ? true : false }
                         />
+                        <input type="text" name="time" id="time" className="timeHiddenInputField" value = { selectedTime }/>
                     </div>
                     <div className="labelAndInputContainer firstName">
                         <label htmlFor="firstName">First Name:</label>
@@ -164,7 +170,7 @@ export default function AppointmentFormDialog(data) {
                             name="firstName" 
                             id="firstName" 
                             defaultValue={selectedAppointment ? selectedAppointment.firstName : ""}
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         />
@@ -177,7 +183,7 @@ export default function AppointmentFormDialog(data) {
                             name="lastName" 
                             id="lastName" 
                             defaultValue={selectedAppointment ? selectedAppointment.lastName : ""}
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         />
@@ -190,7 +196,7 @@ export default function AppointmentFormDialog(data) {
                                 className="inputField" 
                                 id="treatment" 
                                 name="treatment"
-                                onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                                onChange = { controller.makeSubmitButtonActive }
                             >
                                 <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
                                 { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
@@ -217,7 +223,7 @@ export default function AppointmentFormDialog(data) {
                             className="inputField"
                             id="doctor" 
                             name="doctor" 
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
                         >
                             <option hidden>{selectedAppointment ? selectedAppointment.doctor : ""}</option>
@@ -246,7 +252,7 @@ export default function AppointmentFormDialog(data) {
                             className="inputField"
                             id="payment" 
                             name="payment"
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         >
@@ -275,7 +281,7 @@ export default function AppointmentFormDialog(data) {
                             name="cost" 
                             id="cost" 
                             defaultValue={ selectedAppointment ? selectedAppointment.cost : ""}
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         />
@@ -288,7 +294,7 @@ export default function AppointmentFormDialog(data) {
                             name="patientFile" 
                             id="patientFile" 
                             defaultValue={selectedAppointment ? selectedAppointment.patientFile : ""}
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         />
@@ -301,7 +307,7 @@ export default function AppointmentFormDialog(data) {
                             name="phone" 
                             id="phone" 
                             defaultValue={selectedAppointment ? selectedAppointment.phone : ""}
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         />
@@ -315,7 +321,7 @@ export default function AppointmentFormDialog(data) {
                             rows="1"
                             cols="30"
                             defaultValue={selectedAppointment ? selectedAppointment.comments : ""}
-                            onChange={ selectedAppointment ? controller.makeUpdateButtonActive : null}
+                            onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
 
                         >
@@ -339,12 +345,12 @@ export default function AppointmentFormDialog(data) {
                                 // className="noshowCheckbox" 
                                 name="nowshow" 
                                 id="noshow" 
-                                onClick ={ controller.makeUpdateButtonActive }
+                                onClick ={ controller.makeSubmitButtonActive }
                             /> 
                             <label htmlFor="noshow">No-show</label>
                         </div>
                         <button 
-                            className={`button submitButton ${ selectedAppointment ? "disabled update" : null}`} 
+                            className={`button submitButton disabled`} 
                             type="submit"
                         >
                             { selectedAppointment ? 

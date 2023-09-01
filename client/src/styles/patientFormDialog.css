@@ -41,6 +41,12 @@
         }
     }
 
+    .appointmentsLine {
+        font-style: italic;
+        align-self: start;
+        font-weight: 700;
+    }
+
     .appointmentsListAndHeaderContainer {
         flex-shrink: 1;
         border: var(--border);

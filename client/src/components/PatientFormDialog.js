@@ -238,6 +238,7 @@ export default function PatientFormDialog(data) {
                     </div>
                 </div> 
             </form>
+            <p className="appointmentsLine">Appointments:</p>
             <div className="appointmentsListAndHeaderContainer">
                 <div className="headerRowContainer">
                     <p>Date</p>

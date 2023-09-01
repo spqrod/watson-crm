@@ -85,9 +85,6 @@ export default function Appointments() {
             const appointment = appointmentsArray.find(item => item.id == id);
             return appointment;
         },
-        getPatientData: function() {
-
-        },
         handleTodayClick: function() {
             const selectedDate = dayjs().format(dateFormatForDB);
             controller.getAppointments(selectedDate);
