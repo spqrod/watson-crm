@@ -54,20 +54,17 @@ app.use((req, res, next) => {
     next();
 });
 
-
-
-
 app.get("/appointments/", (req, res) => {
     if (req.query.date) {
         const date = sanitizeString(req.query.date);
-        database.getAppointmentsForDate(date)
+        database.appointments.getForDate(date)
             .then(appointments => {
                 appointments.forEach(appointment => appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time));
                 res.json(appointments);
             });
     } else if (req.query.patientFile) {
         const patientFile = decodeURIComponent(req.query.patientFile);
-        database.getAppointmentsForPatient(patientFile)
+        database.appointments.getForPatient(patientFile)
             .then(appointments => {
                 appointments.forEach(appointment => {
                     appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time);
@@ -77,7 +74,7 @@ app.get("/appointments/", (req, res) => {
     }
     else {
         const searchString = sanitizeString(req.query.searchString);
-        database.searchAppointments(searchString)
+        database.appointments.search(searchString)
             .then(appointments => {
                 appointments.forEach(appointment => {
                     appointment.time = convertTimeFormatFromHHMMSSToHHMM(appointment.time);
@@ -94,7 +91,7 @@ app.post("/appointments", (req, res) => {
             req.body[key] = sanitizeString(String(value));    
         }
     const appointment = req.body;
-    database.addNewAppointment(appointment)
+    database.appointments.addNew(appointment)
         .then((result) => res.json({ success: true }))
         .catch(error => {
             logger.info(error);
@@ -108,7 +105,7 @@ app.put("/appointments/", (req, res) => {
             req.body[key] = sanitizeString(String(value));
     }
     const appointment = req.body;
-    database.updateAppointment(appointment)
+    database.appointments.update(appointment)
         .then(() => {
             res.json({success: true});
         })
@@ -121,7 +118,7 @@ app.put("/appointments/", (req, res) => {
 app.delete("/appointments/:id", (req, res) => {
     let { id } = req.params;
     id = sanitizeString(id);
-    database.deleteAppointment(id)
+    database.appointments.delete(id)
         .then(() => res.json({ success: true }))
         .catch((error) => {
             logger.info(error);
@@ -151,7 +148,7 @@ app.get("/patients/:searchString", (req, res) => {
     let searchString = req.params.searchString;
     searchString = decodeURIComponent(searchString);
     searchString = sanitizeString(searchString);
-    database.getPatients(searchString)
+    database.patients.search(searchString)
         .then(response => {
             const patients = response;
             res.json(patients);
@@ -166,7 +163,7 @@ app.post("/patients", (req, res) => {
         }
     const patient = req.body;
     database.addNewPatient(patient)
-        .then(() => database.getLastInsertedPatient())
+        .then(() => database.patients.getLastInserted())
         .then((lastInsertedPatient) => res.json(lastInsertedPatient))
         .catch(error => {
             logger.info(error);
@@ -180,7 +177,7 @@ app.put("/patients/", (req, res) => {
             req.body[key] = sanitizeString(String(value));
     }
     const patient = req.body;
-    database.updatePatient(patient)
+    database.patients.update(patient)
         .then(() => {
             res.json({success: true});
         })
@@ -193,7 +190,7 @@ app.put("/patients/", (req, res) => {
 app.delete("/patients/:id", (req, res) => {
     let id = req.params.id;
     id = sanitizeString(id);
-    database.deletePatient(id)
+    database.patients.delete(id)
         .then(() => res.json({ success: true }))
         .catch(error => {
             logger.info(error);

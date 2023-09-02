@@ -318,9 +318,8 @@ export default function AppointmentFormDialog(data) {
                         </button>
                         <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
                             <input
-                                className="inputField" 
+                                className="inputField noshowCheckbox" 
                                 type="checkbox" 
-                                // className="noshowCheckbox" 
                                 name="nowshow" 
                                 id="noshow" 
                                 onClick ={ controller.makeSubmitButtonActive }
