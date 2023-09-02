@@ -36,6 +36,7 @@ export default function AppointmentFormDialog(data) {
         },
         resetFormToDefault() {
             document.querySelector(".appointmentForm").reset();
+            setSelectedTime();
             if (isOnAppointmentsPage) {
                 const submitButton = document.querySelector(".button.submitButton");
                 submitButton.classList.add("disabled");
@@ -62,8 +63,8 @@ export default function AppointmentFormDialog(data) {
             const minutes = timeSlot.split(":")[1];
             const date = dayjs().hour(hours).minute(minutes).second(0).toDate();
             return date;
-        }
-    }
+        },
+    };
 
     const display = {
         removeTimesOutOfWorkingHoursFromDatePicker() {
@@ -73,7 +74,7 @@ export default function AppointmentFormDialog(data) {
                     item.style.display = "none";
             });
         },
-    }
+    };
 
     useEffect(() => {
         setSelectedAppointment(data.appointment);
@@ -86,13 +87,8 @@ export default function AppointmentFormDialog(data) {
     
     useEffect(() => {
         const takenTimeSlotsAsDateObjectsArray = controller.convertTakenTimeSlotsToDateObjects(data.timeSlots);
-        setTakenTimeSlotsForTimePicker(takenTimeSlotsAsDateObjectsArray)
+        setTakenTimeSlotsForTimePicker(takenTimeSlotsAsDateObjectsArray);
     }, [data.timeSlots]);
-
-    useEffect(() => {
-        console.log(selectedTime);
-    }, [selectedTime]);
-
 
     return (
         <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
@@ -117,8 +113,8 @@ export default function AppointmentFormDialog(data) {
                             className="inputField datePicker" type="date" name="date" id="date" 
                             min={todayForPicker}
                             max={sixMonthsFromTodayForPicker}
-                            onChange={() => { 
-                                getTakenTimeSlots(controller.getSelectedDate());
+                            onInput={(e) => { 
+                                getTakenTimeSlots(e.target.value);
                                 if (selectedAppointment) controller.makeSubmitButtonActive();
                             }}
                             defaultValue={ selectedAppointment ? dayjs(selectedAppointment.date).format("YYYY-MM-DD") : ""}
@@ -127,24 +123,6 @@ export default function AppointmentFormDialog(data) {
                     </div>
                     <div className="labelAndInputContainer time">
                         <label htmlFor="time">Time:</label>
-                        {/* <input
-                            className="inputField" 
-                            type="time" 
-                            name="time" 
-                            id="time" 
-                            defaultValue={selectedAppointment ? selectedAppointment.time : ""}
-                            list="availableTimesDatalist"
-                            onChange = { controller.makeSubmitButtonActive }
-                            readOnly = { isInPatientFormDialog ? true : false}
-
-                        />
-                        { isOnAppointmentsPage ?
-                            <datalist id="availableTimesDatalist">
-                                <option value="select"></option>
-                                {takenTimeSlotsForTimePicker.map((item) => (<option key={item} value={item}></option>))}
-                            </datalist> 
-                            : null
-                        } */}
                         <ReactDatePicker
                             onCalendarOpen={ display.removeTimesOutOfWorkingHoursFromDatePicker }
                             selected={ selectedTime }
@@ -160,7 +138,7 @@ export default function AppointmentFormDialog(data) {
                             timeFormat="HH:mm"
                             readOnly = { isInPatientFormDialog ? true : false }
                         />
-                        <input type="text" name="time" id="time" className="timeHiddenInputField" value = { selectedTime }/>
+                        <input type="text" name="time" id="time" className="timeHiddenInputField" value={ dayjs(selectedTime).format("HH:mm") }/>
                     </div>
                     <div className="labelAndInputContainer firstName">
                         <label htmlFor="firstName">First Name:</label>
