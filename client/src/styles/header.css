@@ -10,6 +10,7 @@ header.header {
     .menuContainer {
         display: flex;
         height: 100%;
+        width: 100%;
 
         .menuItem {
             list-style: none;
@@ -22,6 +23,8 @@ header.header {
                 align-items: center;
                 text-decoration: none;
                 color: var(--on-background);
+                border-left: 1px solid rgba(255, 255, 255, 0);
+                border-right: 1px solid rgba(255, 255, 255, 0);
                 transition: var(--transition);
                 padding: 0 var(--medium-gap);
 
@@ -30,6 +33,10 @@ header.header {
                     border-left: var(--border);
                     border-right: var(--border);
                 }
+            }
+
+            &:last-of-type {
+                margin-left: auto;
             }
         }
     }

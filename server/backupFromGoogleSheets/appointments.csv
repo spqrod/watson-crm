@@ -10906,7 +10906,7 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 2023-08-08,13:00:00,Banda,Sophia,3295/23,0977834336,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
 2023-08-08,13:30:00,Kasanda,Chomba,3267/23,0972979851,Nhima,Mrs Moshoka,Filling,0.00,,TRUE
 2023-08-08,14:00:00,Mwansa,Lukaki,3268/23,0960969537,Nhima,Dr Watson,S XLA,1650.00,AUTH #300626,FALSE
-2023-08-08,14:30:00,X,X,,,,,X,,PND,FALSE
+2023-08-08,14:30:00,X,X,,,,,X,,,FALSE
 2023-08-08,15:00:00,Mwangala,Namukolo,3277/23,0971037181,Nhima,Mrs Moshoka,Filling,1327.08,,FALSE
 2023-08-08,15:30:00,Bwalya,Marjorie,2590/23,0978476318,Nhima,Mrs Moshoka,Filling,0.00,,TRUE
 2023-08-08,16:00:00,Mwale,Lubona,3310/23,0978018228,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
@@ -11182,7 +11182,7 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 2023-08-18,13:00:00,Banda,Beatrice,0721/22,0976387979,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
 2023-08-18,13:30:00,Phiri,Josephat,3110/23,0777790437,Nhima,Dr Watson,Bridge Fitting,1327.08,,FALSE
 2023-08-18,14:00:00,Muhongo,Mufalali,3284/23,0776749870,Nhima,Dr Watson,RCT 2nd Visit,1327.08,,FALSE
-2023-08-18,14:30:00,Dizomba,Kenious,3233/23,0977214578,Swipe,Dr Watson,RCT,0.00,,FALSE
+2023-08-18,14:30:00,Dizomba,Kenious,3233/23,0977214578,Swipe,Dr Watson,RCT,0.00,Paid,FALSE
 2023-08-18,15:00:00,Chituta,Musonda,3363/23,0977761196,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-18,15:30:00,Zyambo,Zoole,3365/23,0978061523,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-18,16:00:00,Shamabuwa,Joyness,3364/23,0971458308,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
@@ -11214,7 +11214,7 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 2023-08-19,15:00:00,Chituta,Musonda,3363/23,0977761196,Nhima,Dr Watson,Filling,663.54,,FALSE
 2023-08-19,15:30:00,Chibuye,Mwape,3368/23,0978522794,Nhima,Dr Watson,Consultation,600.00,,FALSE
 2023-08-19,16:00:00,Ngoma,Agnes,3278/23,0975315305,Nhima,Dr Watson,Irrigation,500.00,,FALSE
-2023-08-19,16:30:00,Dizomba,Kenious,3233/23,0977214578,Nhima,Dr Watson,RCT 2nd Visit,0.00,,FALSE
+2023-08-19,16:30:00,Dizomba,Kenious,3233/23,0977214578,Nhima,Dr Watson,RCT 2nd Visit,0.00,paid,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
@@ -11278,7 +11278,7 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 2023-08-22,11:25:00,Kangwa,Mary,3387/23,0977981090,Nhima,Dr Watson,Consultation,600.00,,FALSE
 2023-08-22,09:30:00,Mwananshimba,Jeremano,3386/23,0970196588,Nhima,Dr Watson,Consultation,600.00,,FALSE
 2023-08-22,09:15:00,Siame,Ruth,3385/23,0963145390,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
-2023-08-22,07:30:00,Kalisilira,Vanessa,2670/23,0971732344,Cash,Dr Watson,Bridge fitting,0.00,,FALSE
+2023-08-22,07:30:00,Kalisilira,Vanessa,2670/23,0971732344,Cash,Dr Watson,Bridge fitting,0.00,paid,FALSE
 2023-08-22,08:00:00,Kasonde,Dorothy,3321/23,0977634346,Nhima,Dr Watson, RCT + X-Ray,1725.00,AUTH #302971,FALSE
 2023-08-22,08:30:00,Kambukwe,Dorothy,3389/23,0978800771,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-22,09:00:00,Chola,Bernadette,3306/23,0979229569,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
@@ -11513,21 +11513,21 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 2023-08-30,08:00:00,Katongo,Memory,2715/23,0974875672,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
 2023-08-30,08:30:00,Phiri,Godfriedah,0414/21,0976760792,Swipe,Dr Watson,XLA,1300.00,,FALSE
 2023-08-30,09:00:00,Machiya,Catherine,2762/23,0977886099,Nhima,Mrs Moshoka,Crown prep 4 units,10000.00,AUTH #308776,FALSE
-2023-08-30,09:30:00,Mwami,Clarence,3441/23,0977859415,Nhima,Mrs Moshoka,Consultaton,600.00,,FALSE
+2023-08-30,09:30:00,Mwami,Clarence,3441/23,0977859415,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-30,10:00:00,Tembo,Kutemwa,3438/23,0963808303,SES,Mrs Moshoka,Consultation,250.00,,FALSE
 2023-08-30,10:30:00,Kooma,Rebecca,3440/23,0977811363,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-30,11:00:00,Simooya,Taylor,0813/22,0977377015,Nhima,Mrs Moshoka,Visit,550.00,,FALSE
-2023-08-30,11:30:00,Munyenyemba,Joy,3445/23,0972593883,Nhima,Mrs Moshoka,Consulation,600.00,,FALSE
+2023-08-30,11:30:00,Munyenyembe,Joy,3445/23,0972593883,Nhima,Mrs Moshoka,Consulation,600.00,,FALSE
 2023-08-30,12:00:00,Tembo,Kondwani,3437/23,0975574246,SES,Mrs Moshoka,Consultation,250.00,,FALSE
 2023-08-30,12:30:00,Banda,Elizabeth,3436/23,0979300018,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-30,13:00:00,Siabusu,Lweendo,3446/23,0977121068,Nhima,Mrs Moshoka,Consultaton,600.00,,FALSE
 2023-08-30,13:30:00,Litia,Inonge,3435/23,0977726564,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
 2023-08-30,14:00:00,Ndhlovu,Samson,3345/23,0965947514,Nhima,Mrs Moshoka,S XLA,1650.00,AUTH #304870,FALSE
-2023-08-30,14:30:00,Kabesha,Sally-rose,1202/22,0977762974,Nhima,Dr Watson,Crown prep,,AUTH #306819,FALSE
-2023-08-30,15:00:00,X,X,,,,,X,,,FALSE
-2023-08-30,15:30:00,X,X,,,,,X,,,FALSE
-2023-08-30,16:00:00,Chinjenge,Yvonne,3410/23,0977411056,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-08-30,16:30:00,Mtalama,Chawanangwa,3353/23,0978980342,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-08-30,14:30:00,Kabesha,Sally-rose,1202/22,0977762974,Nhima,Dr Watson,Crown prep,10000.00,AUTH #306819,FALSE
+2023-08-30,15:00:00,Imasiku,Wakunyambo,3190/23,0977874588,Nhima,Mrs Moshoka,Visit,550.00,,FALSE
+2023-08-30,15:30:00,Mtalama,James,3462/23,0776282266,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-30,16:00:00,Chinjenge,Yvonne,3410/23,0977411056,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
+2023-08-30,16:30:00,Mtalama,Chawanangwa,3353/23,0978980342,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
 2023-08-30,07:40:00,Sinyangwe,Niza,3407/23,0966672000,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
 2023-08-30,07:45:00,Mwiinga,Ellen,3449/23,0979813322,Nhima,Dr Watson,Consultation,600.00,,FALSE
 2023-08-30,08:25:00,Mwinda,Lucy,3451/23,0973745669,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
@@ -11536,143 +11536,157 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 2023-08-30,13:20:00,Musonda,Mutale,3444/23,0976809333,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-30,14:00:00,Chisulo,Taizya,3448/23,0976150111,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
 2023-08-30,14:20:00,Chisulo,Thabo,3447/23,0977871964,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
-2023-08-30,14:35:00,Imasiku,Wakunyambo,3190/23,0977874588,Nhima,Mrs Moshoka,Visit,550.00,,FALSE
-,,,,,,,,,,,FALSE
-2023-08-31,15:00:00,Musonda,Ilunga,,0975791039,Nhima,,Consultation,,,FALSE
-2023-08-31,07:45:00,Sinyangwe,Niza,3407/23,0966672000,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-08-31,08:00:00,Sakala,Kalusha,3351/23,0975858920,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-08-31,08:30:00,Chimbinde,Sandra,3320/23,0971588013,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-08-31,09:00:00,Kombe,Ruth,2923/23,0966769036,Nhima,Mrs Moshoka,XLA,,,FALSE
-2023-08-31,09:30:00,Musonda,Memory,3403/23,0973515181,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-08-31,10:00:00,Chilufya,Patricia,3415/23,0979488309,Nhima,Mrs Moshoka,XLA,,,FALSE
-2023-08-31,10:30:00,Ndoricimpa,Angel,3416/23,0979488309,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-08-31,11:00:00,Weijmer,Hans,1241/22,0974257089,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-08-31,11:30:00,Kagalwala,Tasneem,2831/23,0956945890,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-08-31,12:00:00,Mpundu,Chishala,3150/23,0966770084,Nhima,Dr Watson,Crown prep x6 units,,AUTH #308024,FALSE
-2023-08-31,12:30:00,Mpundu,Chishala,3150/23,0966770084,Cash,Dr Watson,Crowns,,,FALSE
-2023-08-31,13:00:00,X,X,,,,,X,,,FALSE
-2023-08-31,13:30:00,X,X,,,,,X,,,FALSE
-2023-08-31,14:00:00,Kruger,Jennifer,2951/23,0965231960,Nhima,Dr Watson,Crown prep,,AUTH #308934,FALSE
-2023-08-31,14:30:00,X,X,,,,,X,,,FALSE
-2023-08-31,15:00:00,X,X,,,,,,,,FALSE
-2023-08-31,15:30:00,X,X,,,,,,,,FALSE
-2023-08-31,16:00:00,Wilson,Crispen ,2462/23,0771777114,Nhima,Dr Watson,RCT,,,FALSE
-2023-08-31,16:30:00,x,x,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
+2023-08-31,08:45:00,Siabusu,Lweendo,3446/23,0977121068,Nhima,Mrs Moshoka,XLA,580.00,,FALSE
+2023-08-31,07:45:00,Sinyangwe,Niza,3407/23,0966672000,Nhima,Mrs Moshoka,Filling,1327.08,,FALSE
+2023-08-31,08:00:00,Mwananga,Johnny,3459/23,0977842855,Nhima,Mrs Moshoka,CXonsultation,600.00,,FALSE
+2023-08-31,08:30:00,Chimbinde,Sandra,3320/23,0971588013,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
+2023-08-31,09:00:00,Mvula,Juvensio,3461/23,0977849642,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-31,09:30:00,Musonda,Memory,3403/23,0973515181,Nhima,Mrs Moshoka,Filling,1327.08,,FALSE
+2023-08-31,10:00:00,Chibaza,Lazarous,3460/23,0973566239,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-31,10:30:00,Ndoricimpa,Angel,3416/23,0979488309,Nhima,Mrs Moshoka,XLA,580.00,,FALSE
+2023-08-31,11:00:00,Weijmer,Hans,1241/22,0974257089,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
+2023-08-31,11:30:00,Mulota,Meki,3458/23,0977313544,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-31,12:00:00,Musukwa,Tamara,3391/23,0974554444,Nhima,Mrs Moshoka,Visit,900.00,,FALSE
+2023-08-31,12:30:00,Dingani,John,3466/23,0966771938,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-31,13:00:00,Haambote,Tafika,2748/23,0977746953,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
+2023-08-31,13:30:00,Kalengo,Emmanuel,3457/23,0770546954,Nhima,Mrs Moshoka,Consultation + Xray,775.00,,FALSE
+2023-08-31,14:00:00,Kruger,Jennifer,2951/23,0965231960,Nhima,Dr Watson,Crown prep,10000.00,AUTH #308934,FALSE
+2023-08-31,14:30:00,Phiri,Albert,1185/22,0973389618,Nhima,Mrs Moshoka,Denture Fitting,1000.00,,FALSE
+2023-08-31,15:00:00,Moyo,Tapiwa,3464/23,0971960767,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-31,15:30:00,Monze,Maluba,3463/23,0976912055,Nhima,Mrs Moshoka,Consultation + Xray,950.00,,FALSE
+2023-08-31,16:00:00,Wilson,Crispen ,2462/23,0771777114,Swipe,Dr Watson,RCT,4000.00,,FALSE
+2023-08-31,16:30:00,Phiri,Chewe,1057/22,0973629686,Nhima,Mrs Moshoka,Visit + Xray,725.00,,FALSE
+2023-08-31,14:20:00,Machiya,Catherine,2762/23,0977886099,Nhima,Dr Watson,Filling,1990.62,,FALSE
+2023-08-31,15:15:00,Musonda,Ilunga,3467/23,0975791039,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-31,16:20:00,Zimba,Masauso,3465/23,0976966077,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-08-31,16:45:00,Chizinga,Musonda,3468/23,0770748391,Nhima,Mrs Moshoka,Consultation + Xray,775.00,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
-2023-09-01,08:40:00,Lungu,Lengani,3338/23,0977766588,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,11:20:00,Chilila,Peter,1460/22,0977762053,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-01,09:30:00,Siame,Ngosa,3432/23,0969628494,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,07:00:00,Sichinga,Sangwani,3434/23,0977132898,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,07:30:00,Nanjela,Sarah,3453/23,0977775657,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-01,08:00:00,Mkwanazi,Sophie,3424/23,0977395511,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,08:30:00,Bwalya,Janet,3402/23,0974939827,Nhima,Mrs Moshoka,Sp,,,FALSE
-2023-09-01,09:00:00,Msadabwe,Christine,2514/23,0966740083,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,09:30:00,Siame,Ruth,3385/23,0963145390,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,10:00:00,Chibwe,Mildred,3429/23,0975788078,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-01,10:30:00,Mtalama,Chawanangwa,3353/23,0978980342,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,11:00:00,Nawa,Precious,3454/23,0979840389,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-01,11:30:00,Mwaka,Emmanuel,3455/23,0979840389,Nhima,Mrs Moshoka,XLA,,,FALSE
-2023-09-01,12:00:00,Kalande,Angela,3425/23,0979874610,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-01,12:30:00,,,,,,,,,,FALSE
-2023-09-01,13:00:00,Mkwanazi,Theophilius,3430/23,0977395511,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-01,13:30:00,,,,,,,,,,FALSE
-2023-09-01,14:00:00,Chibumba,Muntambwa,3235/23,0977845568,Nhima,Dr Watson,Crown prep,,,FALSE
-2023-09-01,14:30:00,X,X,,,,,X,,,FALSE
-2023-09-01,15:00:00,X,X,,,,,X,,,FALSE
-2023-09-01,15:30:00,Leck,Gustouv,0996/22,0761255266,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-01,11:10:00,Kaira,Mirriam,3476/23,0967596148,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-09-01,10:40:00,Sokoni,Dickson,3473/23,0979344299,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-09-01,09:10:00,Tembo,Monde,3472/23,0975574246,SES,Mrs Moshoka,Consultation,250.00,,FALSE
+2023-09-01,08:50:00,Tembo,Kondwani,3437/23,0975574246,SES,Mrs Moshoka,SP + Filling,2000.00,,FALSE
+2023-09-01,08:45:00,Muhau,Martin,3456/23,0977696020,Nhima,Mrs Moshoka,Filling,1327.08,,FALSE
+2023-09-01,08:35:00,Chasaya,Mwelwa,3471/23,0971539821,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-09-01,08:25:00,Haketa,Milimo,3470/23,0961715845,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-09-01,07:40:00,Chilonda,Joseph,3469/23,0973602284,Nhima,Mrs Moshoka,Visit,550.00,,FALSE
+2023-09-01,07:15:00,Chizinga,Musonda,3468/23,0770748391,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,13:10:00,Mulota,Meki,3458/23,0977313544,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,13:25:00,Haambote,Tafika,2748/23,0977746953,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,10:45:00,Mataa,Liseli,3475/23,0967596148,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-09-01,11:15:00,Chilila,Peter,1460/22,0977762053,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
+2023-09-01,09:45:00,Mwansa,Mukuka,3474/23,0977926301,Nhima,Mrs Moshoka,Consultation,600.00,,FALSE
+2023-09-01,07:00:00,Sichinga,Sangwani,3434/23,0977132898,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,07:30:00,Nanjela,Sarah,3453/23,0977775657,Nhima,Mrs Moshoka,SXLA,1650.00,AUTH #309721,FALSE
+2023-09-01,08:00:00,Mkwanazi,Sophie,3424/23,0977395511,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,08:30:00,Kalengo,Emmanuel,3457/23,0770546954,Nhima,Mrs Moshoka,Visit,550.00,,FALSE
+2023-09-01,09:00:00,Msadabwe,Christine,2514/23,0966740083,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,09:30:00,Siame,Ruth,3385/23,0963145390,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,10:00:00,Chibwe,Mildred,3429/23,0975788078,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,10:30:00,Mtalama,Chawanangwa,3353/23,0978980342,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,11:00:00,Nawa,Precious,3454/23,0979840389,Nhima,Mrs Moshoka,Filling,1327.08,,FALSE
+2023-09-01,11:30:00,Mwaka,Emmanuel,3455/23,0979840389,Nhima,Mrs Moshoka,XLA,580.00,,FALSE
+2023-09-01,12:00:00,Kalande,Angela,3425/23,0979874610,Nhima,Mrs Moshoka,SP,1000.00,,FALSE
+2023-09-01,12:30:00,Mwananga,Johnny,3459/23,0977842855,Nhima,Mrs Moshoka,Filling,663.54,,FALSE
+2023-09-01,13:00:00,Chibuye,Mwape,3368/23,0978522794,Nhima,Mrs Moshoka,Filling,1327.08,,FALSE
+2023-09-01,13:30:00,Landing,Peyton Paige,3477/23,0973331888,SES,Dr Watson,Consultation,250.00,,FALSE
+2023-09-01,14:00:00,Chibumba,Muntambwa,3235/23,0977845568,Nhima,Dr Watson,Crown prep,1990.62,,FALSE
+2023-09-01,14:30:00,Sanyikosa,Wana,3479/23,0978104332,Nhima,Dr Watson,Consultation,600.00,,FALSE
+2023-09-01,15:00:00,Simwanza,Chilufya,3478/23,0978481456,Nhima,Dr Watson,Cons + Filling,1250.00,,FALSE
+2023-09-01,15:30:00,X,X,,,,Dr Watson,X,,,FALSE
 2023-09-01,16:00:00,Dizomba,Kenious,3233/23,0977214578,Swipe,Dr Watson,Crown prep,0.00,Paid,FALSE
-2023-09-01,16:30:00,Dizomba,Kenious,3233/23,0977214578,Nhima,Dr Watson,Crown prep,,AUTH #308811,FALSE
-2023-09-01,17:00:00,X,,,,,,,,,FALSE
-2023-09-01,17:30:00,X,,,,,,,,,FALSE
-2023-09-01,18:00:00,X,,,,,,,,,FALSE
-2023-09-01,18:30:00,X,,,,,,,,,FALSE
-2023-09-01,19:00:00,X,,,,,,,,,FALSE
-2023-09-01,19:30:00,Mutale,Mpundu,3347/23,0970410880,Nhima,Dr Watson,Filling,,,FALSE
+2023-09-01,16:30:00,Dizomba,Kenious,3233/23,0977214578,Nhima,Dr Watson,Crown prep,10000.00,AUTH #308811,FALSE
+2023-09-01,17:00:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-01,17:30:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-01,18:00:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-01,18:30:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-01,19:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-01,19:30:00,,,,,,Dr Watson,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
+2023-09-02,12:45:00,Munukayumbwa,Muyunda,3482/23,0976624290,Nhima,Dr Watson,Consultation,600.00,,FALSE
+2023-09-02,10:45:00,Kalata,Twafula,3480/23,0979552683,Cash,Dr Watson,Consultation,250.00,,FALSE
+2023-09-02,13:25:00,Sakala,Shelly,3354/23,0974808716,Nhima,Dr Watson,Wax Bite,1000.00,,FALSE
+2023-09-02,13:15:00,Horn,Henri,2585/23,0978894452,Nhima,Dr Watson,Visit,663.54,,FALSE
+2023-09-02,08:00:00,Weijmer,Hans,1241/23,0974257089,Nhima,Dr Watson,XLA,1160.00,,FALSE
+2023-09-02,08:30:00,Mkwanazi,Sophie,3424/23,0977395511,Nhima,Dr Watson,XLA,1500.00,,FALSE
+2023-09-02,09:00:00,Bwalya,Violet,1616/22,0977465600,Nhima,Dr Watson,RCT,2000.00,AUTH #309849,FALSE
+2023-09-02,09:30:00,Zulu,Emily,3130/23,0977690167,Nhima,Dr Watson,Filling,1000.00,,FALSE
+2023-09-02,10:00:00,Phiri,Beauty,3401/23,0974142510,Nhima,Dr Watson,S XLA,1650.00,AUTH #309252,FALSE
+2023-09-02,10:30:00,Nkonjera,Loveness,3411/23,0966250457,Nhima,Dr Watson,S XLA,1650.00,AUTH #310612,FALSE
+2023-09-02,11:00:00,Artan,Ahmed,3323/23,0774063170,Nhima,Dr Watson,Filling,663.54,,FALSE
+2023-09-02,11:30:00,Mhone,Wezi,3258/23,0972969627,Nhima,Dr Watson,S XLA,1975.00,,FALSE
+2023-09-02,12:00:00,Zyambo,Asante,3481/23,0965596566,Swipe,Dr Watson,Cons + XLA,1400.00,,FALSE
+2023-09-02,12:30:00,Kayumba,Mwaka,3439/23,0979100700,Nhima,Dr Watson,XLA,580.00,,FALSE
+2023-09-02,13:00:00,Mtalama,Chawanangwa,3353/23,0978980342,Nhima,Dr Watson,Filling,663.54,,FALSE
+2023-09-02,13:30:00,Sanyikosa,Wana,3479/23,0978109332,Nhima,Dr Watson,Filling,663.54,,FALSE
+2023-09-02,14:00:00,Chanda,Paul,3452/23,0975776123,Nhima,Dr Watson,Filling,663.54,,FALSE
+2023-09-02,14:30:00,Dullabh,Atish,0582/21,0764169712,Nhima,Dr Watson,Crown fitting,663.54,,FALSE
+2023-09-02,15:00:00,Nanjela,Sarah,3453/23,0977775657,Nhima,Dr Watson,S XLA,0.00,AUTH #309721,TRUE
+2023-09-02,15:30:00,Mubandi,Nosiku,1915/22,0978823998,Nhima,Dr Watson, S XLA,2000.00,AUTH #311690,FALSE
+2023-09-02,16:00:00,Chasaya,Mwelwa,3471/23,0971539821,Nhima,Dr Watson,XLA + XRAY,930.00,,FALSE
+2023-09-02,16:30:00,Zimba,Sepiso,,,Swipe,Dr Watson,Cons/Proce,250.00,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-2023-09-02,08:00:00,Kasonde,Dorothy,3321/23,0977634346,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-02,08:30:00,Mkwanazi,Sophie,3424/23,0977395511,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-02,09:00:00,Bwalya,Violet,1616/22,0977465600,Nhima,Dr Watson,S XLA,,AUTH #,FALSE
-2023-09-02,09:30:00,Nkonjera,Loveness,3411/23,0966250457,Nhima,Dr Watson,S XLA,,AUTH #,FALSE
-2023-09-02,10:00:00,Phiri,Beauty,3401/23,0974142510,Nhima,Dr Watson,S XLA,,AUTH #309252,FALSE
-2023-09-02,10:30:00,Horn,Henri,2585/23,0978894452,Nhima,Dr Watson,Bite,,,FALSE
-2023-09-02,11:00:00,Nanjela,Sarah,3453/23,0977775657,Nhima,Dr Watson,XLA,,,FALSE
-2023-09-02,11:30:00,Muhone,,,,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-02,12:00:00,Musonda,Peter,2003/22,0972875250,Nhima,Dr Watson,XLA,,,FALSE
-2023-09-02,12:30:00,Kayumba,Mwaka,3439/23,0979100700,Nhima,Dr Watson,XLA,,,FALSE
-2023-09-02,13:00:00,Mtalama,Chawanangwa,3353/23,0978980342,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-02,13:30:00,Kakoma,Zaara,3443/23,0976809333,Nhima,Dr Watson,XLA,,,FALSE
-2023-09-02,14:00:00,kakoma,Christine,3442/23,0976809333,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-02,14:30:00,Musonda,Mutale,3444/23,0976809333,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-02,15:00:00,,,,,,Dr Watson,,,,FALSE
-2023-09-02,15:30:00,,,,,,Dr Watson,,,,FALSE
-2023-09-02,16:00:00,,,,,,Dr Watson,,,,FALSE
-2023-09-02,16:30:00,,,,,,Dr Watson,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
+2023-09-03,12:05:00,Masuku,Esther,,,Nhima,Mrs Moshoka,Denture fitting,,,FALSE
+2023-09-03,11:45:00,Chilepa,Dorothy,3329/23,0977829854,Nhima,Mrs Moshoka,Impressions,,AUTH #310315,FALSE
+2023-09-03,11:55:00,Artan,Ahmed,3323/23,0774063170,Nhima,Mrs Moshoka,SP,,,FALSE
+2023-09-03,14:10:00,Musonda,Ilunga,3467/23,0975791039,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-03,14:45:00,Moyo,Tapiwa,3464/23,0971960767,Nhima,Mrs Moshoka,SP,,,FALSE
 2023-09-03,08:00:00,Zandonda,Bridget,3397/23,0964646813,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-03,08:30:00,Mkwanazi,Sofie,,,Nhima,,,,,FALSE
+2023-09-03,08:30:00,Musonda,Lilia,2391/23,0977924226,Nhima,Mrs Moshoka,Denture fitting,,,FALSE
 2023-09-03,09:00:00,Munangandu,Arthur,3417/23,0971953396,Nhima,Mrs Moshoka,SP,,,FALSE
 2023-09-03,09:30:00,Hicimi,Pele,3422/23,0978588071,Nhima,Mrs Moshoka,Filling,,,FALSE
 2023-09-03,10:00:00,Manjolo,Danny,3450/23,0979020020,Nhima,Mrs Moshoka,Filling,,,FALSE
 2023-09-03,10:30:00,Litia,Inonge,3435/23,0977726564,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-03,11:00:00,Chola,Marjorie,1374/22,0977433906,Nhima,Mrs Moshoka,,,,FALSE
-2023-09-03,11:30:00,Chaipa,Namiya,0968/22,0976772059,Nhima,Mrs Moshoka,Impressions,,,FALSE
+2023-09-03,11:00:00,Chola,Marjorie,1374/22,0977433906,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-03,11:30:00,Chaipa,Namiya,0968/22,0976772059,Nhima,Mrs Moshoka,Impressions,,AUTH #308765,FALSE
 2023-09-03,12:00:00,Mutelo,Rosemary,3175/23,0973278216,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-03,12:30:00,,,,,,,,,,FALSE
-2023-09-03,13:00:00,,,,,,,,,,FALSE
-2023-09-03,13:30:00,,,,,,,,,,FALSE
-2023-09-03,14:00:00,Chisulo,Taizya,3448/23,0976150111,,,,,,FALSE
-2023-09-03,14:30:00,Chisulo,Thabo,3447/23,0977871964,,,,,,FALSE
-2023-09-03,15:00:00,Zulu,Masiye,3428/23,0967001696,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-03,15:30:00,,,,,,,,,,FALSE
+2023-09-03,12:30:00,Siabusu,Lweendo,3446/23,0977121068,Nhima,Mrs Moshoka,XLA,,,FALSE
+2023-09-03,13:00:00,Nsefu,Lavenda,2778/23,0765052704,Nhima,Mrs Moshoka,SP,,,FALSE
+2023-09-03,13:30:00,Zimba,Masauso,3465/23,0976966077,Nhima,Mrs Moshoka,SP,,,FALSE
+2023-09-03,14:00:00,Chisulo,Taizya,3448/23,0976150111,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-03,14:30:00,Chisulo,Thabo,3447/23,0977871964,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-03,15:00:00,Zulu,Masiye,3424/23,0967001696,Nhima,Mrs Moshoka,SP,,,FALSE
+2023-09-03,15:30:00,Musonda,Memory,3417/23,0973515181,Nhima,Mrs Moshoka,Filling,,,FALSE
 2023-09-03,16:00:00,Kwalombota,Namakau,3197/23,0979540925,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-03,16:30:00,,,,,,,,,,FALSE
+2023-09-03,16:30:00,Sichinga,Sangwani,3434/23,0977132898,Nhima,Mrs Moshoka,Filling,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
-,,,,,,,,,,,
-,,,,,,,,,,,
-2023-09-04,07:00:00,,,,,,,,,,
-2023-09-04,07:30:00,,,,,,,,,,
-2023-09-04,08:00:00,Mkwanazi,Sophie,3424/23,0977395511,Nhima,Mrs Moshoka,Filling,,,
-2023-09-04,08:30:00,Siame,Natasha,1851/22,0975792354,Nhima,Mrs Moshoka,Filling,,,
-2023-09-04,09:00:00,,,,,,,,,,
-2023-09-04,09:30:00,,,,,,,,,,AUTH #308765
-2023-09-04,10:00:00,,,,,,,,,,
-2023-09-04,10:30:00,,,,,,,,,,
-2023-09-04,11:00:00,,,,,,,,,,
-2023-09-04,11:30:00,,,,,,,,,,
-2023-09-04,12:00:00,,,,,,,,,,
-2023-09-04,12:30:00,,,,,,,,,,
-2023-09-04,13:00:00,Mutale,Mpundu,3347/23,0970410880,Nhima,Mrs Moshoka,Filling,,,
-2023-09-04,13:30:00,Majula,Betty,0317/21,0977849570,Nhima,Dr Watson,Crown Prep,,,
-2023-09-04,14:00:00,x,x,,,,,x,,,
-2023-09-04,14:30:00,x,x,,,,,x,,,
-2023-09-04,15:00:00,x,x,,,,,x,,,FALSE
-2023-09-04,15:30:00,,,,,,,,,,FALSE
-2023-09-04,16:00:00,,,,,,,,,,FALSE
-2023-09-04,16:30:00,,,,,,,,,,FALSE
-2023-09-04,17:00:00,,,,,,,,,,FALSE
-2023-09-04,18:00:00,,,,,,,,,,FALSE
+,,,,,,,,,,,FALSE
+,,,,,,,,,,,FALSE
+2023-09-04,07:00:00,Phiri,Esther,,,Cash,Mrs Moshoka,Cons/Proce,,,FALSE
+2023-09-04,07:30:00,Sokoni,Dickson,3473/23,0979344299,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,08:00:00,Mkwanazi,Sophie,3424/23,0977395511,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,08:30:00,Siame,Natasha,1851/22,0975792354,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,09:00:00,Monze,Maluba,3463/23,0976912055,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,09:30:00,Lungu,Lengani,3338/23,0977766588,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,10:00:00,Kayumba,Mwaka,,,,Mrs Moshoka,S XLA,,AUTH #,FALSE
+2023-09-04,10:30:00,Mwananga,Johnny,3459/23,0977842855,Nhima,Mrs Moshoka,SP,,,FALSE
+2023-09-04,11:00:00,Siame,Ruth,3385/23,0963145390,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,11:30:00,Tembo,Monde,3472/23,0975574246,SES,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,12:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-04,12:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-04,13:00:00,Mutale,Mpundu,3347/23,0970410880,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-04,13:30:00,Majula,Betty,0317/21,0977849570,Liberty,Dr Watson,Crown prep,,,FALSE
+2023-09-04,14:00:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-04,14:30:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-04,15:00:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-04,15:30:00,Mabwe,Thomas,3390/23,0978130699,Nhima,Dr Watson,S XLA,,AUTH #307823,FALSE
+2023-09-04,16:00:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-04,16:30:00,Phiri,Chewe,1057/22,0973629686,Nhima,Dr Watson,Filling,,,FALSE
+2023-09-04,17:00:00,Wilson,Crispen ,2462/23,0771777114,Nhima,Dr Watson,RCT 2nd Visit,,,FALSE
+2023-09-04,17:30:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-04,18:00:00,Miti,Laura,1507/22,0962331919,Nhima,Dr Watson,Crown fitting,,,FALSE
 2023-09-04,18:30:00,Mwinda,Lucy,3451/23,0973745669,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-04,19:00:00,,,,,,,,,,FALSE
-2023-09-04,19:30:00,,,,,,,,,,FALSE
+2023-09-04,19:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-04,19:30:00,,,,,,Dr Watson,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
@@ -11685,63 +11699,63 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-2023-09-05,07:00:00,,,,,,,,,,FALSE
-2023-09-05,07:30:00,,,,,,,,,,FALSE
-2023-09-05,08:00:00,,,,,,,,,,FALSE
+2023-09-05,07:00:00,Chizinga,Musonda,3468/23,0776282266,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-05,07:30:00,Haketa,Milimo,3470/23,0961715845,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-05,08:00:00,,,,,,Mrs Moshoka,,,,FALSE
 2023-09-05,08:30:00,Munyenyembe,Joy,3445/23,0972593883,Nhima,Mrs Moshoka,Filling,,,FALSE
 2023-09-05,09:00:00,Simooya,Taylor,0813/22,0977377015,Nhima,Mrs Moshoka,Filling,,,FALSE
-2023-09-05,09:30:00,,,,,,,,,,FALSE
-2023-09-05,10:00:00,,,,,,,,,,FALSE
-2023-09-05,10:30:00,,,,,,,,,,FALSE
-2023-09-05,11:00:00,,,,,,,,,,FALSE
-2023-09-05,11:30:00,,,,,,,,,,FALSE
-2023-09-05,12:00:00,,,,,,,,,,FALSE
-2023-09-05,12:30:00,,,,,,,,,,FALSE
-2023-09-05,13:00:00,,,,,,,,,,FALSE
-2023-09-05,13:30:00,,,,,,,,,,FALSE
-2023-09-05,14:00:00,,,,,,,,,,FALSE
-2023-09-05,14:30:00,,,,,,,,,,FALSE
-2023-09-05,15:00:00,,,,,,,,,,FALSE
-2023-09-05,15:30:00,,,,,,,,,,FALSE
-2023-09-05,16:00:00,,,,,,,,,,FALSE
-2023-09-05,16:30:00,,,,,,,,,,FALSE
-2023-09-05,17:00:00,,,,,,,,,,FALSE
-2023-09-05,18:00:00,,,,,,,,,,FALSE
+2023-09-05,09:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-05,10:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-05,10:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-05,11:00:00,Dingani,John,3466/23,0966771938,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-05,11:30:00,Zulu,Emily,3130/23,0977690167,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-05,12:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-05,12:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-05,13:00:00,Mkwanazi,Theophilius,3430/23,0977395511,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-05,13:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-05,14:00:00,Nangamba,Nellie,3433/23,0977777247,Nhima,Dr Watson,S XLA,,AUTH #309607,FALSE
+2023-09-05,14:30:00,Musela,Grace,3239/23,0977803780,Nhima,Dr Watson,S XLA,,AUTH #309025,FALSE
+2023-09-05,15:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-05,15:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-05,16:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-05,16:30:00,Kalande,Angela,3425/23,0979874610,Nhima,Dr Watson,Filling,,,FALSE
+2023-09-05,17:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-05,17:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-05,18:00:00,,,,,,Dr Watson,,,,FALSE
 2023-09-05,18:30:00,Mwinda,Lucy,3451/23,0973745669,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-05,19:00:00,,,,,,,,,,FALSE
-2023-09-05,19:30:00,,,,,,,,,,FALSE
+2023-09-05,19:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-05,19:30:00,,,,,,Dr Watson,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-2023-09-06,07:00:00,,,,,,,,,,FALSE
-2023-09-06,07:30:00,,,,,,,,,,FALSE
-2023-09-06,08:00:00,Katongo,Memory,2715/23,0974875672,,Mrs Moshoka,Filling,,,FALSE
-2023-09-06,08:30:00,,,,,,,,,,FALSE
-2023-09-06,09:00:00,,,,,,,,,,FALSE
+2023-09-06,07:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-06,07:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-06,08:00:00,Katongo,Memory,2715/23,0974875672,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-06,08:30:00,Mkwanazi,Sophie,,,Nhima,Mrs Moshoka,,,,FALSE
+2023-09-06,09:00:00,,,,,,Mrs Moshoka,,,,FALSE
 2023-09-06,09:30:00,Kooma,Rebecca,3440/23,0977811363,Nhima,Mrs Moshoka,Filling,,,FALSE
 2023-09-06,10:00:00,Mwami,Clarence,3441/23,0977859415,Nhima,Mrs Moshoka,SP,,,FALSE
-2023-09-06,10:30:00,,,,,,,,,,FALSE
-2023-09-06,11:00:00,,,,,,,,,,FALSE
-2023-09-06,11:30:00,,,,,,,,,,FALSE
-2023-09-06,12:00:00,,,,,,,,,,FALSE
-2023-09-06,12:30:00,,,,,,,,,,FALSE
-2023-09-06,13:00:00,,,,,,,,,,FALSE
-2023-09-06,13:30:00,,,,,,,,,,FALSE
-2023-09-06,14:00:00,,,,,,,,,,FALSE
-2023-09-06,14:30:00,Nangamba,Nellie,3433/23,0977777247,,Dr Watson,SXLA,,AUTH #309607,FALSE
-2023-09-06,15:00:00,,,,,,,,,,FALSE
-2023-09-06,15:30:00,,,,,,,,,,FALSE
-2023-09-06,16:00:00,,,,,,,,,,FALSE
-2023-09-06,16:30:00,,,,,,,,,,FALSE
-2023-09-06,17:00:00,,,,,,,,,,FALSE
-2023-09-06,18:00:00,,,,,,,,,,FALSE
+2023-09-06,10:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-06,11:00:00,Nawa,Precious,3454/23,0979840389,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-06,11:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-06,12:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-06,12:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-06,13:00:00,Msadabwe,Christine,2514/23,0966740083,Nhima,Mrs Moshoka,Visit,,,FALSE
+2023-09-06,13:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-06,14:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-06,14:30:00,Sakala,Shelly,3354/23,0974808716,Nhima,Dr Watson,2nd Try in,,,FALSE
+2023-09-06,15:00:00,Mulenga,Victor,3282/23,0977272808,Nhima,Dr Watson,Crown prep,,AUTH #,FALSE
+2023-09-06,15:30:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-06,16:00:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-06,16:30:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-06,17:00:00,Bwalya,Violet,1616/22,0977465600,Nhima,Dr Watson,RCT 2nd Visit,,,FALSE
+2023-09-06,17:30:00,X,X,,,,Dr Watson,X,,,FALSE
+2023-09-06,18:00:00,X,X,,,,Dr Watson,X,,,FALSE
 2023-09-06,18:30:00,Mwinda,Lucy,3451/23,0973745669,Nhima,Dr Watson,Filling,,,FALSE
-2023-09-06,19:00:00,,,,,,,,,,FALSE
-2023-09-06,19:30:00,,,,,,,,,,FALSE
+2023-09-06,19:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-06,19:30:00,,,,,,Dr Watson,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
@@ -11751,6 +11765,32 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
+2023-09-07,07:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,07:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,08:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,08:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,09:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,09:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,10:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,10:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,11:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,11:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,12:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,12:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,13:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-07,13:30:00,Siame,Musonda,3357/23,0975014277,Nhima,Dr Watson,S XLA,,,FALSE
+2023-09-07,14:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,14:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,15:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,15:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,16:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,16:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,17:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,17:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,18:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,18:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,19:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-07,19:30:00,,,,,,Dr Watson,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
@@ -11761,6 +11801,32 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
+2023-09-08,07:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,07:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,08:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,08:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,09:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,09:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,10:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,10:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,11:00:00,Chilila,Peter,1460/22,0977762053,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-08,11:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,12:00:00,Chibule,Mildred,3429/23,0975788078,Nhima,Mrs Moshoka,Filling,,,FALSE
+2023-09-08,12:30:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,13:00:00,,,,,,Mrs Moshoka,,,,FALSE
+2023-09-08,13:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,14:00:00,Zeko,Martha,2693/23,0979385845,Nhima,Dr Watson,Crown prep,,AUTH #309971,FALSE
+2023-09-08,14:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,15:00:00,Musonda,Mutale,,,Nhima,Dr Watson,Filling,,,FALSE
+2023-09-08,15:30:00,Kakoma,Christine,,,Nhima,Dr Watson,Filling,,,FALSE
+2023-09-08,16:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,16:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,17:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,17:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,18:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,18:30:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,19:00:00,,,,,,Dr Watson,,,,FALSE
+2023-09-08,19:30:00,,,,,,Dr Watson,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
@@ -11773,77 +11839,24 @@ date,time,lastName,firstName,patientFile,phone,payment,doctor,treatment,cost,com
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
-,,,,,,,,,,,FALSE
+2023-09-09,08:00:00,,,,,,,,,,FALSE
+2023-09-09,08:30:00,,,,,,,,,,FALSE
+2023-09-09,09:00:00,Horn,Henri,2585/23,0978894452,Nhima,Dr Watson,2nd Try In,,,FALSE
+2023-09-09,09:30:00,,,,,,,,,,FALSE
+2023-09-09,10:00:00,Patel,Smitaben,,,Nhima,Dr Watson,Consultation,,,FALSE
+2023-09-09,10:30:00,,,,,,,,,,FALSE
+2023-09-09,11:00:00,,,,,,,,,,FALSE
+2023-09-09,11:30:00,,,,,,,,,,FALSE
+2023-09-09,12:00:00,Chama,Daniel,,,Nhima,Dr Watson,Bridge Fitting,,,FALSE
+2023-09-09,12:30:00,,,,,,,,,,FALSE
+2023-09-09,13:00:00,,,,,,,,,,FALSE
+2023-09-09,13:30:00,,,,,,,,,,FALSE
+2023-09-09,14:00:00,,,,,,,,,,FALSE
+2023-09-09,14:30:00,,,,,,,,,,FALSE
+2023-09-09,15:00:00,,,,,,,,,,FALSE
+2023-09-09,15:30:00,,,,,,,,,,FALSE
+2023-09-09,16:00:00,,,,,,,,,,FALSE
+2023-09-09,16:30:00,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE
 ,,,,,,,,,,,FALSE

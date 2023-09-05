@@ -16,6 +16,26 @@ export default function Header() {
                         Patients
                     </NavLink>
                 </li>
+                <li className="menuItem">
+                    <NavLink className="menuLink" to="/reports">
+                        Reports
+                    </NavLink>
+                </li>
+                <li className="menuItem">
+                    <NavLink className="menuLink" to="/analytics">
+                        Analytics
+                    </NavLink>
+                </li>
+                <li className="menuItem">
+                    <NavLink className="menuLink" to="/settings">
+                        Settings
+                    </NavLink>
+                </li>
+                <li className="menuItem">
+                    <NavLink className="menuLink" to="/login">
+                        Log In
+                    </NavLink>
+                </li>
             </ul>
         </header>
     );

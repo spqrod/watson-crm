@@ -1,6 +1,8 @@
 const mysql = require("mysql2");
 const dayjs = require("dayjs");
 const csvtojson = require("csvtojson");
+const bcrypt = require("bcrypt");
+const { Logger } = require("winston");
 
 const pool = mysql.createPool({
     host: process.env.DATABASE_HOST,
@@ -69,6 +71,28 @@ const database = {
         delete: function(id) {
             return pool.query("delete from appointments where id=?", id);
         },
+
+    },
+
+    users: {
+
+        addNew(username, password) {
+            bcrypt.hash(password, 10)
+                .then(hashedPassword => {
+                    const query = "insert into users (username, password) values (?, ?)";
+                    pool.query(query, [username, hashedPassword]);
+                })
+                .catch(() => logger.info("Password was not hashed successfully"));
+            },
+
+        find(username) {
+            const query = `select * from users where username=?`;
+            return pool.query(query, [username]).then(res => res[0][0]);
+        }
+
+    },
+
+    analytics: {
         countTreatment(treatment, month, year) {
             const query = "select count(treatment) from appointments where treatment=? and month(date)=? and year(date)=?";
             const params = [treatment, month, year];
@@ -79,24 +103,36 @@ const database = {
                     console.log(`Number of treatments "${treatment}" for month ${month} of year ${year} is ${value}`);
                 });
         },
-    },
-
-    users: {
-
-    },
+        sum(payment, month, year) {
+            const query = "select sum(cost) from appointments where payment=? and month(date)=? and year(date)=?"
+            pool.query(query, [payment, month, year])
+                .then(res => {
+                    const key = Object.keys(res[0][0])[0];
+                    const value = res[0][0][key];
+                    console.log(`Total sum for ${payment} in month ${month} of ${year} is \n${Math.round(value)}`)
+                });
+        },
+        countPatients(month, year) {
+            // Need to count unique patientFile, so that if the same patient came 2 during the month, we will count it as 1
+            const query = "select count(patientFile) from appointments where month(date)=? and year(date)=?";
+            pool.query(query, [month, year]);
+        },
+        countPatientsForAge(minAge, maxAge, month, year) {
+            // Need to make a join with patients on birthDate
+            const query = "select * from appointments where month(date)=? and year(date)=?";
+            const params = [minAge, maxAge, month, year];
+            pool.query(query, params);
+        },
+    }
 }
 
 module.exports = { database };
 
-// database.appointments.countTreatment("Filling", 7, 2023);
-// database.appointments.countTreatment("XLA", 7, 2023);
-// database.appointments.countTreatment("SXLA", 7, 2023);
-// database.appointments.countTreatment("Disimpaction", 7, 2023);
-// database.appointments.countTreatment("Denture", 7, 2023);
-// database.appointments.countTreatment("Crown", 7, 2023);
-// database.appointments.countTreatment("Teeth whitening", 7, 2023);
-// database.appointments.countTreatment("Scaling and polishing", 7, 2023);
-// database.appointments.countTreatment("SP", 7, 2023);
+// database.users.addNew("admin", "1234");
+
+// database.analytics.countTreatment("Filling", 7, 2023);
+// database.analytics.sum("Nhima", 8, 2023);
+
 
 
 
@@ -143,12 +179,12 @@ const databaseHelper = {
             pool.query(query);
         },
         importAppointmentsFromCSVFile() {
-            const csvFilePath = "appointments.csv";
+            const csvFilePath = "./backupFromGoogleSheets/appointments.csv";
             csvtojson()
                 .fromFile(csvFilePath)
                 .then(appointmentsArray => appointmentsArray.forEach(appointment => {
                     if (appointment.date)
-                        database.addNewAppointment(appointment);
+                        database.appointments.addNew(appointment);
                 }));
         }
     },
@@ -177,7 +213,7 @@ const databaseHelper = {
             pool.query(query).then(res => console.log(res[0]));
         },
         importPatientsFromCSVFile() {
-            const csvFilePath = "patients.csv";
+            const csvFilePath = "./backupFromGoogleSheets/patients.csv";
             csvtojson()
                 .fromFile(csvFilePath)
                 .then(patientsArray => patientsArray.forEach(patient => {
@@ -185,7 +221,7 @@ const databaseHelper = {
                         if ((patient.dateOfBirth == "") || !dayjs(patient.dateOfBirth).isValid())
                             patient.dateOfBirth = "1000-01-01";
                         patient.dateOfBirth = dayjs(patient.dateOfBirth).format(dateFormatForDB);
-                        database.addNewPatient(patient);
+                        database.patients.addNew(patient);
                 }));
         }
     },
@@ -198,12 +234,21 @@ const databaseHelper = {
             const query = "describe users";
             pool.query(query).then((res) => console.log(res[0]));
         },
+        getAll() {
+            const query = "select * from users";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        deleteAll() {
+            const query = "delete from users";
+            pool.query(query).then((res) => console.log(res[0]));
+        }
     }
 };
 
 // databaseHelper.users.createTable();
 // databaseHelper.users.describeTable();
-
+// databaseHelper.users.getAll();
+// databaseHelper.users.deleteAll();
 
 // databaseHelper.appointments.importAppointmentsFromCSVFile()
 // databaseHelper.appointments.createTable();
