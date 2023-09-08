@@ -1,12 +1,10 @@
 .appointmentsPage {
 
     .contentContainer {
-        height: 100%;
+        /* height: 100%; */
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 100px 50px 1fr;
-        background-color: var(--surface);
-        border: var(--border);
         
         .header {
             grid-column: 1 / 4;

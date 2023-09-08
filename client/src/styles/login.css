@@ -1,0 +1,30 @@
+.loginPage {
+
+    &.section {
+        height: 100vh;
+        margin: 0;
+        background-color: var(--background);
+        border: none;
+    }
+
+    .dialog {
+        width: 600px;
+        height: 600px;
+
+        .form {
+
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--big-gap);
+
+
+            .buttonsContainer {
+
+            }
+        }
+    }
+}

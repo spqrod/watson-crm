@@ -11,7 +11,7 @@ const bcrypt = require("bcrypt");
 
 const { database } = require("./database.js");
 const { sanitizeString } = require("./sanitizeString.js");
-const auth = require("./auth")
+const authorizeToken = require("./authorizeToken.js");
 
 app.use(express.static("build"));
 app.use(express.json());
@@ -206,32 +206,17 @@ app.post("/login", (req, res) => {
         })
         .then(passwordCheck => {
             if (passwordCheck) {
-                const token = jwt.sign(
-                    {
-                      username: username,
-                    },
-                    "RANDOM-TOKEN",
-                    { expiresIn: "24h" }
-                  );
-                  res.send({ token })
+                const token = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET);
+                res.send({ token: token });
             }
             else 
-                res.send("Incorrect password");
+                res.sendStatus(403);
         })
         .catch(response => res.send("SOMETHING WENT WRONG"));
 });
 
-app.post("/test", auth, (req, res) => {
-    res.json({ message: "success" });
+app.post("/test", authorizeToken, (req, res) => {
+    res.send(req.username);
 });
-
-
-
-
-
-
-
-
-
 
 app.listen(port, () => logger.info(`Listening to port ${port}`));

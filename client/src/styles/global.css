@@ -35,9 +35,10 @@ p, a, span, div {
 }
 
 .section {
-    height: calc(100vh - var(--header-height));
-    padding: var(--big-gap) var(--side-padding-for-sections);
-    background-color: var(--background);
+    height: calc(100vh - var(--header-height) - var(--big-gap) * 2);
+    margin: var(--big-gap) var(--side-padding-for-sections) var(--big-gap) var(--side-padding-for-sections);
+    background-color: var(--surface);
+    border: var(--border);
 }
 
 input, textarea, select {

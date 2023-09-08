@@ -1,0 +1,13 @@
+POST http://localhost/test
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.YWRtaW4.pwoBR2UKXj_hb0vFxkgW9tqgqQwiPvintOuRWYjNSrM
+Content-Type: application/json
+
+###
+
+POST http://localhost/login
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "1234"
+}
