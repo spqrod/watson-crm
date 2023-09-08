@@ -202,17 +202,18 @@ app.post("/login", (req, res) => {
             if (response)
                 return bcrypt.compare(password, response.password);
             else 
-                res.send("User does not exist");
+                res.json({ message: "User does not exist" });
         })
         .then(passwordCheck => {
             if (passwordCheck) {
                 const token = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET);
-                res.send({ token: token });
+                res.json({ token: token });
             }
-            else 
-                res.sendStatus(403);
+            else if (passwordCheck === false) {
+                res.json({ message: "Wrong password or username" });
+            }
         })
-        .catch(response => res.send("SOMETHING WENT WRONG"));
+        .catch(response => res.json({ message: "SOMETHING WENT WRONG" }));
 });
 
 app.post("/test", authorizeToken, (req, res) => {

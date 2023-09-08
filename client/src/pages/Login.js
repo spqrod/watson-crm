@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../styles/login.css";
 
 export default function Login() {
@@ -13,7 +13,9 @@ export default function Login() {
                 },
                 body: JSON.stringify(user)
             };
-            fetch(fetchURL, fetchOptions);
+            fetch(fetchURL, fetchOptions)
+                .then(res => res.json())
+                .then(res => setServerMessage(res.message));
         }
     }
 
@@ -37,10 +39,11 @@ export default function Login() {
         }
     }
 
+    const [ serverMessage, setServerMessage ] = useState("");
+
     useEffect(() => {
         const dialog = document.querySelector(".dialog");
         dialog.showModal();
-
     }, []);
 
     return (
@@ -56,13 +59,13 @@ export default function Login() {
                         <input className="inputField" type="text" name="password" id="password" onChange = { controller.makeSubmitButtonActive } 
                         />
                     </div>
+                    <p className="serverMessage">{ serverMessage }</p>
                     <div className="buttonsContainer">
                         <button className={`button submitButton disabled`} type="submit">
                             Submit
                         </button>
                     </div> 
                 </form>
-
             </dialog>
         </section>
     );

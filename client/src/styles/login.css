@@ -1,3 +1,7 @@
+* {
+    transition: all 5s ease;
+}
+
 .loginPage {
 
     &.section {
@@ -12,7 +16,6 @@
         height: 600px;
 
         .form {
-
             height: 100%;
             width: 100%;
             display: flex;
@@ -21,9 +24,8 @@
             justify-content: center;
             gap: var(--big-gap);
 
-
-            .buttonsContainer {
-
+            .serverMessage {
+                color: red;
             }
         }
     }
