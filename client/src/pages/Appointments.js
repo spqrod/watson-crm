@@ -19,7 +19,6 @@ export default function Appointments() {
     const todayDate = dayjs().format(dateFormatForHeader);
     const tomorrowDate = dayjs().add(1, "day").format(dateFormatForHeader);
     const [ datePickerDate, setDatePickerDate ] = useState(todayDate);
-    const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
 
     const api = {
@@ -264,7 +263,6 @@ export default function Appointments() {
                                     type="date" 
                                     id="datePicker" 
                                     name="datePicker" 
-                                    min={ todayForPicker } 
                                     max={ sixMonthsFromTodayForPicker } 
                                     onChange={controller.handleDateSelectInDatePicker}/>
                             </label>
