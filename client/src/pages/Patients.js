@@ -1,10 +1,10 @@
 import "../styles/patients.css";
 import PatientList from "../components/PatientList";
 import PatientFormForDialog from "../components/PatientFormDialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 export default function Patients() {
@@ -13,10 +13,15 @@ export default function Patients() {
     const [ appointmentsForArray, setAppointmentsForArray ] = useState([]);
     const [ selectedPatient, setSelectedPatient ] = useState();
     const [ dialogMode, setDialogMode ] = useState();
+    const navigate = useNavigate();
 
     const dateFormatForDB = "YYYY-MM-DD";
 
     const api = {
+        checkAuthorization() {
+            const fetchURL = "/authorization";
+            return fetch(fetchURL);
+        },
         getPatients: function(searchString) {
             searchString = encodeURIComponent(searchString);
             const fetchURL = `/patients/${searchString}`;
@@ -61,6 +66,13 @@ export default function Patients() {
     };
 
     const controller = {
+        checkAuthorization() {
+            api.checkAuthorization()
+                .then(res => {
+                    if ((res.status === 401) || (res.status === 403))
+                        navigate("/login");
+                });
+        },
         handleAddNewPatient: function() {
             setDialogMode("addNew");
             display.showDialog();
@@ -209,6 +221,10 @@ export default function Patients() {
             searchInput.value = "";
         }
     };
+
+    useEffect(() => {
+        controller.checkAuthorization();
+    }, []);
 
     return (
         <section className="patientsPage section">

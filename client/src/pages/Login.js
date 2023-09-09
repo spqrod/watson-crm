@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/login.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
 
@@ -13,9 +14,8 @@ export default function Login() {
                 },
                 body: JSON.stringify(user)
             };
-            fetch(fetchURL, fetchOptions)
-                .then(res => res.json())
-                .then(res => setServerMessage(res.message));
+            return fetch(fetchURL, fetchOptions)
+                .then(res => res.json());
         }
     }
 
@@ -28,7 +28,13 @@ export default function Login() {
             const username = e.target.username.value;
             const password = e.target.password.value;
             const user = { username, password }
-            api.submit(user);
+            api.submit(user)
+                .then(res => {
+                    setServerMessage(res.message);
+                    if (res.success) 
+                        document.cookie = `token=${res.token}; max-age=60*60*12`;
+                        navigate("/reports");
+                });
         }
     };
 
@@ -40,6 +46,7 @@ export default function Login() {
     }
 
     const [ serverMessage, setServerMessage ] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const dialog = document.querySelector(".dialog");
@@ -47,7 +54,7 @@ export default function Login() {
     }, []);
 
     return (
-        <section className="loginPage section">
+        <section className="loginPage section">            
             <dialog className="dialog loginFormDialog">
                 <form className="form" onSubmit={ controller.handleSubmit }>
                     <div className="labelAndInputContainer">

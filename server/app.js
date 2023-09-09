@@ -8,6 +8,7 @@ const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 const { database } = require("./database.js");
 const { sanitizeString } = require("./sanitizeString.js");
@@ -17,6 +18,7 @@ app.use(express.static("build"));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const port = 80;    
 
@@ -56,7 +58,11 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/appointments/", (req, res) => {
+app.get("/authorization", authorizeToken, (req, res) => {
+    res.sendStatus(200);
+});
+
+app.get("/appointments", (req, res) => {
     if (req.query.date) {
         const date = sanitizeString(req.query.date);
         database.appointments.getForDate(date)
@@ -101,7 +107,7 @@ app.post("/appointments", (req, res) => {
         });
 });
 
-app.put("/appointments/", (req, res) => {
+app.put("/appointments", (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
         if (typeof req.body[key] !== "boolean")
             req.body[key] = sanitizeString(String(value));
@@ -166,7 +172,7 @@ app.post("/patients", (req, res) => {
         });
 });
 
-app.put("/patients/", (req, res) => {
+app.put("/patients", (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
         if (value !== null)
             req.body[key] = sanitizeString(String(value));
@@ -193,9 +199,15 @@ app.delete("/patients/:id", (req, res) => {
         });
 });
 
+app.get("/reports", authorizeToken, (req, res) => {
+    console.log("Success");
+    res.json({ isAuthorized: true });
+});
+
 app.post("/login", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
+    console.log(req.cookies);
 
     database.users.find(username)
         .then(response => {
@@ -207,7 +219,7 @@ app.post("/login", (req, res) => {
         .then(passwordCheck => {
             if (passwordCheck) {
                 const token = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET);
-                res.json({ token: token });
+                res.json({ token: token, message: "Success!", success: true });
             }
             else if (passwordCheck === false) {
                 res.json({ message: "Wrong password or username" });
