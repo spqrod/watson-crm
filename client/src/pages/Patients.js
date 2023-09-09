@@ -209,10 +209,6 @@ export default function Patients() {
         }
     };
 
-    useEffect(() => {
-        controller.checkAuthorization();
-    }, []);
-
     return (
         <section className="patientsPage section">
             <div className="contentContainer">

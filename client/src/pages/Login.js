@@ -17,7 +17,7 @@ export default function Login() {
             return fetch(fetchURL, fetchOptions)
                 .then(res => res.json());
         }
-    }
+    };
 
     const controller = {
         makeSubmitButtonActive() {

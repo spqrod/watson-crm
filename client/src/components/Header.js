@@ -1,7 +1,18 @@
 import { Link, NavLink } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 import "../styles/header.css";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+
+    const navigate = useNavigate();
+
+    const controller = {
+        handleLogOut() {
+            document.cookie = "token=0";
+            navigate("/login");
+        }
+    }
 
     return (
         <header className="header">
@@ -32,9 +43,9 @@ export default function Header() {
                     </NavLink>
                 </li>
                 <li className="menuItem">
-                    <NavLink className="menuLink" to="/login">
-                        Log In
-                    </NavLink>
+                    <div className="menuLink" onClick={ controller.handleLogOut }>
+                        <LogoutIcon /> Log Out
+                    </div>
                 </li>
             </ul>
         </header>
