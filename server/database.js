@@ -75,12 +75,11 @@ const database = {
     },
 
     users: {
-
-        addNew(username, password) {
+        addNew(username, password, accessLevel) {
             bcrypt.hash(password, 10)
                 .then(hashedPassword => {
-                    const query = "insert into users (username, password) values (?, ?)";
-                    pool.query(query, [username, hashedPassword]);
+                    const query = "insert into users (username, password, accessLevel) values (?, ?, ?)";
+                    pool.query(query, [username, hashedPassword, accessLevel]);
                 })
                 .catch(() => logger.info("Password was not hashed successfully"));
             },
@@ -89,7 +88,6 @@ const database = {
             const query = `select * from users where username=?`;
             return pool.query(query, [username]).then(res => res[0][0]);
         }
-
     },
 
     analytics: {
@@ -128,8 +126,8 @@ const database = {
 
 module.exports = { database };
 
-// database.users.addNew("reception", "1");
-// database.users.addNew("drwatson", "2");
+// database.users.addNew("reception", "123", "reception");
+// database.users.addNew("drwatson", "321", "director");
 // database.users.addNew("drwatson", "notAllThoseWhoWanderAreLost2023");
 
 // database.analytics.countTreatment("Filling", 7, 2023);
@@ -229,7 +227,7 @@ const databaseHelper = {
     },
     users: {
         createTable() {
-            const query = "create table users (id mediumint auto_increment not null primary key, username varchar(255) unique, password varchar(255) unique)";
+            const query = "create table users (id mediumint auto_increment not null primary key, username varchar(255) unique, password varchar(255) unique, accessLevel varchar(255))";
             pool.query(query);
         },
         describeTable() {
@@ -243,11 +241,16 @@ const databaseHelper = {
         deleteAll() {
             const query = "delete from users";
             pool.query(query).then((res) => console.log(res[0]));
-        }
+        },
+        dropTable() {
+            const query = "drop table users";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
     }
 };
 
 // databaseHelper.users.createTable();
+// databaseHelper.users.dropTable();
 // databaseHelper.users.describeTable();
 // databaseHelper.users.getAll();
 // databaseHelper.users.deleteAll();

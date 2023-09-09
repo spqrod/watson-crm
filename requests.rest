@@ -11,3 +11,7 @@ content-type: application/json
     "username": "admin",
     "password": "1234"
 }
+
+###
+
+GET http://localhost/analytics

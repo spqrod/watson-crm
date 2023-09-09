@@ -13,6 +13,7 @@ const cookieParser = require("cookie-parser");
 const { database } = require("./database.js");
 const { sanitizeString } = require("./sanitizeString.js");
 const authorizeToken = require("./authorizeToken.js");
+const checkAccessLevel = require("./checkAccessLevel.js");
 
 app.use(express.static("build"));
 app.use(express.json());
@@ -200,25 +201,35 @@ app.delete("/patients/:id", authorizeToken, (req, res) => {
 });
 
 app.get("/reports", authorizeToken, (req, res) => {
-    console.log("Success");
-    res.json({ isAuthorized: true });
+
+});
+
+app.get("/analytics", authorizeToken, checkAccessLevel, (req, res) => {
+
+});
+
+app.get("/settings", authorizeToken, checkAccessLevel, (req, res) => {
+
 });
 
 app.post("/login", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
+    let accessLevel;
 
     database.users.find(username)
         .then(response => {
-            if (response)
+            if (response) {
+                accessLevel = response.accessLevel;
                 return bcrypt.compare(password, response.password);
+            }
             else 
                 res.json({ message: "User does not exist" });
         })
         .then(passwordCheck => {
             if (passwordCheck) {
-                const token = jwt.sign(username, process.env.ACCESS_TOKEN_SECRET);
-                res.json({ token: token, message: "Success!", success: true });
+                const token = jwt.sign(accessLevel, process.env.ACCESS_TOKEN_SECRET);
+                res.json({ token: token, success: true, accessLevel: accessLevel });
             }
             else if (passwordCheck === false) {
                 res.json({ message: "Wrong password or username" });

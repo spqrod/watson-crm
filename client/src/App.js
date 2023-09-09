@@ -15,6 +15,8 @@ function App() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const cookies = document.cookie.split(';').map(item => item.split('=')).reduce((acc, [k, v]) => (acc[k.trim().replace('"', '')] = v) && acc, {});
+  const accessLevel = cookies.accessLevel;
 
     const api = {
       checkAuthorization() {
@@ -27,7 +29,6 @@ function App() {
       checkAuthorization() {
         api.checkAuthorization()
             .then(res => {
-              console.log(res.status);
                 if ((res.status === 401) || (res.status === 403))
                   navigate("/login");
             });
@@ -40,13 +41,16 @@ function App() {
 
   return (
     <div>
-      { location.pathname === "/login" ? null : <Header /> }
+      { location.pathname === "/login" ? null : <Header accessLevel={ accessLevel }/> }
       <Routes>
         <Route path="/appointments" element={<Appointments />} />
         <Route path="/patients" element={<Patients />} />
         <Route path="/reports" element={<Reports />} />
-        <Route path="/analytics" element={<Analytics />} />
-        <Route path="/settings" element={<Settings />} />
+        { accessLevel === "director" ? 
+          <>
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/settings" element={<Settings />} />
+          </> : null }
         <Route path="/login" element={<Login />} />
         <Route path="/*" element={<Navigate to="/login"/>}/>
       </Routes>

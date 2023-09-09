@@ -33,6 +33,7 @@ export default function Login() {
                     setServerMessage(res.message);
                     if (res.success) {
                         document.cookie = `token=${res.token}; max-age=60*60*12`;
+                        document.cookie = `accessLevel=${res.accessLevel}; max-age=60*60*12`;
                         navigate("/reports");
                     };
                 });
