@@ -138,6 +138,7 @@ export default function PatientFormDialog(data) {
                             type="tel" 
                             name="phone" 
                             id="phone" 
+                            autoComplete="tel"
                             defaultValue={ dialogMode === "update" ? selectedPatient.phone : "" }
                             onChange={ controller.makeUpdateButtonActive }
                         />

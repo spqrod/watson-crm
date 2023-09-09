@@ -15,8 +15,7 @@ function App() {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const cookies = document.cookie.split(';').map(item => item.split('=')).reduce((acc, [k, v]) => (acc[k.trim().replace('"', '')] = v) && acc, {});
-  const accessLevel = cookies.accessLevel;
+
 
     const api = {
       checkAuthorization() {
@@ -32,11 +31,19 @@ function App() {
                 if ((res.status === 401) || (res.status === 403))
                   navigate("/login");
             });
-        },
+      },
+      getCookiesAsObject() {
+        const cookies = document.cookie.split(';').map(item => item.split('=')).reduce((acc, [k, v]) => (acc[k.trim().replace('"', '')] = v) && acc, {});
+        return cookies;
+      }
     };
 
+  const cookies = controller.getCookiesAsObject();
+  const accessLevel = cookies.accessLevel;
+
   useEffect(() => {
-    controller.checkAuthorization();
+    if (location.pathname !== "/login")
+      controller.checkAuthorization();
   }, [location.pathname]);
 
   return (

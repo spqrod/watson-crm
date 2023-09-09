@@ -61,7 +61,7 @@ export default function Login() {
                 <form className="form" onSubmit={ controller.handleSubmit }>
                     <div className="labelAndInputContainer">
                         <label htmlFor="username">Username: </label>
-                        <input className="inputField" type="text" name="username" id="username"/>
+                        <input className="inputField" type="text" name="username" id="username" autoComplete="username"/>
                     </div>
                     <div className="labelAndInputContainer">
                         <label htmlFor="password">Password: </label>

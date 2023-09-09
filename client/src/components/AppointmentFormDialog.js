@@ -244,10 +244,10 @@ export default function AppointmentFormDialog(data) {
                             <input
                                 className="inputField" 
                                 type="text" 
-                                name="doctor" 
-                                id="doctor" 
+                                name="payment" 
+                                id="payment" 
                                 readOnly = { isInPatientFormDialog ? true : false}
-                                defaultValue={ selectedAppointment ? selectedAppointment.doctor : ""}
+                                defaultValue={ selectedAppointment ? selectedAppointment.payment : ""}
                             /> : null
                         }
                     </div>
@@ -284,6 +284,7 @@ export default function AppointmentFormDialog(data) {
                             type="tel" 
                             name="phone" 
                             id="phone" 
+                            autoComplete="tel"
                             defaultValue={selectedAppointment ? selectedAppointment.phone : ""}
                             onChange = { controller.makeSubmitButtonActive }
                             readOnly = { isInPatientFormDialog ? true : false}
