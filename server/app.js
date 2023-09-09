@@ -62,7 +62,7 @@ app.get("/authorization", authorizeToken, (req, res) => {
     res.sendStatus(200);
 });
 
-app.get("/appointments", (req, res) => {
+app.get("/appointments", authorizeToken, (req, res) => {
     if (req.query.date) {
         const date = sanitizeString(req.query.date);
         database.appointments.getForDate(date)
@@ -93,7 +93,7 @@ app.get("/appointments", (req, res) => {
     }
 });
 
-app.post("/appointments", (req, res) => {
+app.post("/appointments", authorizeToken, (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
         if (typeof req.body[key] != "boolean")
             req.body[key] = sanitizeString(String(value));    
@@ -107,7 +107,7 @@ app.post("/appointments", (req, res) => {
         });
 });
 
-app.put("/appointments", (req, res) => {
+app.put("/appointments", authorizeToken, (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
         if (typeof req.body[key] !== "boolean")
             req.body[key] = sanitizeString(String(value));
@@ -123,7 +123,7 @@ app.put("/appointments", (req, res) => {
         });
 });
 
-app.delete("/appointments/:id", (req, res) => {
+app.delete("/appointments/:id", authorizeToken, (req, res) => {
     let { id } = req.params;
     id = sanitizeString(id);
     database.appointments.delete(id)
@@ -134,7 +134,7 @@ app.delete("/appointments/:id", (req, res) => {
         });
 });
     
-app.get("/taken-time-slots/:selectedDate", (req, res) => {
+app.get("/taken-time-slots/:selectedDate", authorizeToken, (req, res) => {
     let { selectedDate } = req.params;
     selectedDate = dayjs(selectedDate).format(dateFormatForDB);
     let takenTimeSlots = [];
@@ -145,7 +145,7 @@ app.get("/taken-time-slots/:selectedDate", (req, res) => {
     });
 });
 
-app.get("/patients/:searchString", (req, res) => {
+app.get("/patients/:searchString", authorizeToken, (req, res) => {
     let searchString = req.params.searchString;
     searchString = decodeURIComponent(searchString);
     searchString = sanitizeString(searchString);
@@ -157,7 +157,7 @@ app.get("/patients/:searchString", (req, res) => {
         .catch(error => logger.info(error));
 });
 
-app.post("/patients", (req, res) => {
+app.post("/patients", authorizeToken, (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
         if ((typeof req.body[key] != "boolean") && (typeof req.body[key] != "number") && (req.body[key] != null))
             req.body[key] = sanitizeString(String(value));    
@@ -172,7 +172,7 @@ app.post("/patients", (req, res) => {
         });
 });
 
-app.put("/patients", (req, res) => {
+app.put("/patients", authorizeToken, (req, res) => {
     for (const [key, value] of Object.entries(req.body)) {
         if (value !== null)
             req.body[key] = sanitizeString(String(value));
@@ -188,7 +188,7 @@ app.put("/patients", (req, res) => {
         });
 });
 
-app.delete("/patients/:id", (req, res) => {
+app.delete("/patients/:id", authorizeToken, (req, res) => {
     let id = req.params.id;
     id = sanitizeString(id);
     database.patients.delete(id)
@@ -207,7 +207,6 @@ app.get("/reports", authorizeToken, (req, res) => {
 app.post("/login", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    console.log(req.cookies);
 
     database.users.find(username)
         .then(response => {
@@ -226,10 +225,6 @@ app.post("/login", (req, res) => {
             }
         })
         .catch(response => res.json({ message: "SOMETHING WENT WRONG" }));
-});
-
-app.post("/test", authorizeToken, (req, res) => {
-    res.send(req.username);
 });
 
 app.listen(port, () => logger.info(`Listening to port ${port}`));

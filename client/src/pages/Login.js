@@ -31,9 +31,10 @@ export default function Login() {
             api.submit(user)
                 .then(res => {
                     setServerMessage(res.message);
-                    if (res.success) 
+                    if (res.success) {
                         document.cookie = `token=${res.token}; max-age=60*60*12`;
                         navigate("/reports");
+                    };
                 });
         }
     };

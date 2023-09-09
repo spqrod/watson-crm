@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import { useNavigate } from "react-router-dom";
-
 
 import dayjs from "dayjs";
 
@@ -15,7 +13,6 @@ export default function Appointments() {
     const [ appointmentsArray, setAppointmentsArray ] = useState();
     const [ selectedAppointment, setSelectedAppointment ] = useState();
     const [ takenTimeSlotsForTimePicker, setTakenTimeSlotsForTimePicker ] = useState([]);
-    const navigate = useNavigate();
 
     const dateFormatForDB = "YYYY-MM-DD";
     const dateFormatForHeader = "dddd, DD.MM.YYYY";
@@ -26,10 +23,6 @@ export default function Appointments() {
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
 
     const api = {
-        checkAuthorization() {
-            const fetchURL = "/authorization";
-            return fetch(fetchURL);
-        },
         getAppointments: function(date) {
             const fetchURL = `/appointments?date=${date}`;
             return fetch(fetchURL).then(res => res.json());
@@ -74,13 +67,6 @@ export default function Appointments() {
     };
 
     const controller = {
-        checkAuthorization() {
-            api.checkAuthorization()
-                .then(res => {
-                    if ((res.status === 401) || (res.status === 403))
-                        navigate("/login");
-                });
-        },
         getAppointments: function(selectedDate) {
             api.getAppointments(selectedDate).then(res => {
                 res.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
@@ -256,10 +242,6 @@ export default function Appointments() {
             searchInput.value = "";
         }
     };
-
-    useEffect(() => {
-        controller.checkAuthorization();
-    }, []);
 
     return (
         <section className="appointmentsPage section">

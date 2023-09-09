@@ -128,7 +128,9 @@ const database = {
 
 module.exports = { database };
 
-// database.users.addNew("admin", "1234");
+// database.users.addNew("reception", "1");
+// database.users.addNew("drwatson", "2");
+// database.users.addNew("drwatson", "notAllThoseWhoWanderAreLost2023");
 
 // database.analytics.countTreatment("Filling", 7, 2023);
 // database.analytics.sum("Nhima", 8, 2023);
