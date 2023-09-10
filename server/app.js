@@ -212,6 +212,39 @@ app.get("/settings", authorizeToken, checkAccessLevel, (req, res) => {
 
 });
 
+app.get("/doctors", authorizeToken, (req, res) => {
+    database.doctors.getAll()
+        .then(doctors => { 
+            const doctorsArray = [];
+            doctors.forEach(item => {
+                doctorsArray.push(item.doctor);
+            })
+            res.json(doctorsArray) 
+        });
+});
+
+app.get("/treatments", authorizeToken, (req, res) => {
+    database.treatments.getAll()
+        .then(treatments => { 
+            const treatmentsArray = [];
+            treatments.forEach(item => {
+                treatmentsArray.push(item.treatment);
+            })
+            res.json(treatmentsArray) 
+        });
+});
+
+app.get("/payments", authorizeToken, (req, res) => {
+    database.payments.getAll()
+        .then(payments => { 
+            const paymentsArray = [];
+            payments.forEach(item => {
+                paymentsArray.push(item.payment);
+            })
+            res.json(paymentsArray) 
+        });
+});
+
 app.post("/login", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;

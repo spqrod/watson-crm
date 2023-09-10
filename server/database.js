@@ -19,7 +19,6 @@ const database = {
         const query = "select time from appointments where date=?"
         return pool.query(query, date).then(res => res[0]);
     },
-
     patients: {
         search(searchString) {
             const query = `select * from patients where concat(firstName, lastName, file, nrc, phone, insuranceId) like "%${searchString}%"`;
@@ -45,7 +44,6 @@ const database = {
                 .then(res => res[0][0]);
         }, 
     },
-    
     appointments: {
         getForDate: function(date) {
             const query = "select id, date, time, firstName, lastName, doctor, treatment, payment, cost, patientFile, phone, comments, noshow from appointments where date=? order by time";
@@ -73,7 +71,6 @@ const database = {
         },
 
     },
-
     users: {
         addNew(username, password, accessLevel) {
             bcrypt.hash(password, 10)
@@ -87,9 +84,116 @@ const database = {
         find(username) {
             const query = `select * from users where username=?`;
             return pool.query(query, [username]).then(res => res[0][0]);
-        }
+        },
+        createTable() {
+            const query = "create table users (id mediumint auto_increment not null primary key, username varchar(255) unique, password varchar(255) unique, accessLevel varchar(255))";
+            pool.query(query);
+        },
+        describeTable() {
+            const query = "describe users";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        getAll() {
+            const query = "select * from users";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        deleteAll() {
+            const query = "delete from users";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        dropTable() {
+            const query = "drop table users";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
     },
-
+    doctors: {
+        addNew(...doctors) {
+            doctors.forEach(doctor => {
+                const query = "insert into doctors (doctor) values (?)";
+                pool.query(query, [doctor]);
+            });
+        },
+        find(username) {
+            const query = `select * from doctors where username=?`;
+            return pool.query(query, [username]).then(res => res[0][0]);
+        },
+        createTable() {
+            const query = "create table doctors (id mediumint auto_increment not null primary key, doctor varchar(255) unique)";
+            pool.query(query);
+        },
+        describeTable() {
+            const query = "describe doctors";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        getAll() {
+            const query = "select doctor from doctors";
+            return pool.query(query).then(res => res[0]);
+        },
+        deleteAll() {
+            const query = "delete from doctors";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        dropTable() {
+            const query = "drop table doctors";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+    },
+    treatments: {
+        addNew(...treatments) {
+            treatments.forEach(treatment => {
+                const query = "insert into treatments (treatment) values (?)";
+                pool.query(query, [treatment]);
+            });
+        },
+        createTable() {
+            const query = "create table treatments (id mediumint auto_increment not null primary key, treatment varchar(255) unique)";
+            pool.query(query);
+        },
+        describeTable() {
+            const query = "describe treatments";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        getAll() {
+            const query = "select treatment from treatments";
+            return pool.query(query).then(res => res[0]);
+        },
+        deleteAll() {
+            const query = "delete from treatments";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        dropTable() {
+            const query = "drop table treatments";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+    },
+    payments: {
+        addNew(...payments) {
+            payments.forEach(payment => {
+                const query = "insert into payments (payment) values (?)";
+                pool.query(query, [payment]);
+            });
+        },
+        createTable() {
+            const query = "create table payments (id mediumint auto_increment not null primary key, payment varchar(255) unique)";
+            pool.query(query);
+        },
+        describeTable() {
+            const query = "describe payments";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        getAll() {
+            const query = "select payment from payments";
+            return pool.query(query).then(res => res[0]);
+        },
+        deleteAll() {
+            const query = "delete from payments";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        dropTable() {
+            const query = "drop table payments";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+    },
     analytics: {
         countTreatment(treatment, month, year) {
             const query = "select count(treatment) from appointments where treatment=? and month(date)=? and year(date)=?";
@@ -121,7 +225,7 @@ const database = {
             const params = [minAge, maxAge, month, year];
             pool.query(query, params);
         },
-    }
+    },
 }
 
 module.exports = { database };
@@ -132,6 +236,17 @@ module.exports = { database };
 
 // database.analytics.countTreatment("Filling", 7, 2023);
 // database.analytics.sum("Nhima", 8, 2023);
+
+// database.doctors.addNew("Dr Watson", "Mrs Moshoka", "Dr Chanda");
+// database.doctors.deleteAll();
+
+// database.treatments.createTable();
+// database.treatments.addNew("CONS", "PF", "TF", "XLA", "S", "DIS", "OP", "SP", "PI", "FA", "RCT", "TW", "CP", "IMP", "NG", "PD", "AT", "FD", "PFM", "ZC", "IM", "JA");
+// database.treatments.getAll();
+
+// database.payments.createTable();
+// database.payments.getAll();
+// database.payments.addNew("Nhima", "Cash", "Swipe", "TT", "SES", "Liberty", "Medlink");
 
 
 
@@ -225,28 +340,7 @@ const databaseHelper = {
                 }));
         }
     },
-    users: {
-        createTable() {
-            const query = "create table users (id mediumint auto_increment not null primary key, username varchar(255) unique, password varchar(255) unique, accessLevel varchar(255))";
-            pool.query(query);
-        },
-        describeTable() {
-            const query = "describe users";
-            pool.query(query).then((res) => console.log(res[0]));
-        },
-        getAll() {
-            const query = "select * from users";
-            pool.query(query).then((res) => console.log(res[0]));
-        },
-        deleteAll() {
-            const query = "delete from users";
-            pool.query(query).then((res) => console.log(res[0]));
-        },
-        dropTable() {
-            const query = "drop table users";
-            pool.query(query).then((res) => console.log(res[0]));
-        },
-    }
+   
 };
 
 // databaseHelper.users.createTable();
@@ -270,3 +364,4 @@ const databaseHelper = {
 // databaseHelper.patients.getAllPatients();
 // databaseHelper.patients.describePatientsTable()
 // databaseHelper.patients.importPatientsFromCSVFile();
+

@@ -13,6 +13,9 @@ export default function AppointmentFormDialog(data) {
     const [ selectedAppointment, setSelectedAppointment ] = useState(data.appointment);
     const [ takenTimeSlotsForTimePicker, setTakenTimeSlotsForTimePicker ] = useState([data.timeSlots]);
     const [ selectedTime, setSelectedTime ] = useState();
+    const [ doctors, setDoctors ] = useState([]); 
+    const [ treatments, setTreatments ] = useState([]); 
+    const [ payments, setPayments ] = useState([]); 
     const todayForPicker = dayjs().format("YYYY-MM-DD");
     const sixMonthsFromTodayForPicker = dayjs().add(6, "month").format("YYYY-MM-DD");
     const { 
@@ -28,6 +31,21 @@ export default function AppointmentFormDialog(data) {
     const treatmentsList = ["Con", "XR", "TF", "PF", "RCT", "XLA", "SXLA"];
     const startHour = "07:00";
     const finishHour = "17:00";
+
+    const api = {
+        getDoctors() {
+            const fetchURL = "/doctors";
+            return fetch(fetchURL).then(res => res.json());
+        },
+        getTreatments() {
+            const fetchURL = "/treatments";
+            return fetch(fetchURL).then(res => res.json());
+        },
+        getPayments() {
+            const fetchURL = "/payments";
+            return fetch(fetchURL).then(res => res.json());
+        },
+    };
 
     const controller = {
         getSelectedDate: function() {
@@ -64,6 +82,18 @@ export default function AppointmentFormDialog(data) {
             const date = dayjs().hour(hours).minute(minutes).second(0).toDate();
             return date;
         },
+        getDoctors() {
+            api.getDoctors()
+                .then(res => setDoctors(res));
+        },
+        getTreatments() {
+            api.getTreatments()
+                .then(res => setTreatments(res));
+        },
+        getPayments() {
+            api.getPayments()
+                .then(res => setPayments(res));
+        },
     };
 
     const display = {
@@ -75,6 +105,12 @@ export default function AppointmentFormDialog(data) {
             });
         },
     };
+
+    useEffect(() => {
+        controller.getDoctors();
+        controller.getTreatments();
+        controller.getPayments();
+    }, []);
 
     useEffect(() => {
         setSelectedAppointment(data.appointment);
@@ -177,7 +213,7 @@ export default function AppointmentFormDialog(data) {
                                 onChange = { controller.makeSubmitButtonActive }
                             >
                                 <option hidden>{selectedAppointment ? selectedAppointment.treatment : ""}</option>
-                                { treatmentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                                { treatments.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                             </select> : null
                         }
                         { 
@@ -205,7 +241,7 @@ export default function AppointmentFormDialog(data) {
                             readOnly = { isInPatientFormDialog ? true : false}
                         >
                             <option hidden>{selectedAppointment ? selectedAppointment.doctor : ""}</option>
-                            { doctorsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                            { doctors.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select> : null 
                         }
 
@@ -235,7 +271,7 @@ export default function AppointmentFormDialog(data) {
 
                         >
                             <option hidden>{selectedAppointment ? selectedAppointment.payment : ""}</option>
-                            { paymentsList.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
+                            { payments.map((item) => (<option key={ item } value={ item }>{ item }</option>)) }
                         </select> : null
                         }
 
