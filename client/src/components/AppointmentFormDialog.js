@@ -100,7 +100,7 @@ export default function AppointmentFormDialog(data) {
                     <CloseIcon />
                 </button>
             </form>
-            <form className="appointmentForm" 
+            <form className={`appointmentForm ${isInPatientFormDialog ? "inPatientDialogForm" : null}`}
                  onSubmit = { 
                     isOnAppointmentsPage ? 
                         selectedAppointment ? 

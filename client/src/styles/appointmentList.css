@@ -25,7 +25,9 @@
         }
     }
 
-    .noAppointmentsFoundLine {
-        padding-left: var(--medium-gap);
-    }
+
+}
+
+.noAppointmentsFoundLine {
+    display: none;
 }

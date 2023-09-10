@@ -43,7 +43,7 @@ export default function AppointmentList(data) {
                     </li>
                 ))
                 : (
-                    <p classList="noAppointmentsFoundLine">No Appointments Found</p>
+                    <p className="noAppointmentsFoundLine">No Appointments Found</p>
                 ) 
                 : null
             }

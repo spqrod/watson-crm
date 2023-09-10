@@ -9,6 +9,16 @@
         height: 100%;
         overflow: scroll;
         padding-top: calc(var(--big-gap) * 2);
+
+        &.inPatientDialogForm {
+            
+            .inputField:focus, input:focus {
+                background-color: var(--surface);
+                color: var(--on-surface);
+                border: 1px solid var(--surface);
+                border-bottom: var(--border);
+            }
+        }
         
         .infoContainer {
             align-self: end;
@@ -28,7 +38,6 @@
                 .timeHiddenInputField {
                     display: none;
                 }
-                
             }
 
             .commentsContainer {

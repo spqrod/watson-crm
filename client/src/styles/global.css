@@ -46,15 +46,15 @@ input, textarea, select {
         padding: var(--small-gap);
         font-size: 18px;
         font-family: var(--font-family-2);
-        /* color: var(--on-background); */
         background-color: var(--surface);
+        color: var(--on-surface);
         border: 1px solid var(--surface);
         border-bottom: var(--border);
         outline: none;
         transition: var(--transition-fast);
     }
     &:focus {
-        outline: none;
+        /* outline: none; */
         background-color: white;
         color: black;
         border: var(--border);
