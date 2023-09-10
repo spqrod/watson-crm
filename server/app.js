@@ -261,7 +261,12 @@ app.post("/login", (req, res) => {
         })
         .then(passwordCheck => {
             if (passwordCheck) {
-                const token = jwt.sign(accessLevel, process.env.ACCESS_TOKEN_SECRET);
+                const token = jwt.sign(
+                    { accessLevel }, 
+                    process.env.ACCESS_TOKEN_SECRET, 
+                    { expiresIn: "2 days" }, 
+                    // (err) => logger.info(err)
+                );
                 res.json({ token: token, success: true, accessLevel: accessLevel });
             }
             else if (passwordCheck === false) {

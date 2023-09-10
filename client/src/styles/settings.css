@@ -1,0 +1,5 @@
+.settingsPage {
+    .contentContainer {
+        padding: var(--medium-gap);
+    }
+}

@@ -7,7 +7,7 @@ export default function Analytics() {
         <section className="analyticsPage section">
             <div className="contentContainer">
                 <p>
-                    This page is under construction..
+                    This page is under construction... 🚧👷‍♂️
                 </p>
             </div>
         </section>

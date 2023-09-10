@@ -150,7 +150,7 @@ export default function PatientFormDialog(data) {
                         />
                     </div>
                     <div className="labelAndInputContainer dateOfBirth">
-                        <label htmlFor="date">Date of Birth:</label>
+                        <label htmlFor="dateOfBirth">Date of Birth:</label>
                         <input type="date" name="dateOfBirth" id="dateOfBirth"
                             max = { display.today }
                             onChange={ controller.makeUpdateButtonActive }
@@ -245,30 +245,34 @@ export default function PatientFormDialog(data) {
                     </div>
                 </div> 
             </form>
-            <p className="appointmentsLine">Appointments:</p>
-            <div className="appointmentsListAndHeaderContainer">
-                <div className="headerRowContainer">
-                    <p>Date</p>
-                    <p>Time</p>
-                    <p>Doctor</p>
-                    <p>Treatment</p>
-                    <p>Payment</p>
+            { selectedPatient ? 
+                <div className="appointmentsContainer">
+                    <p className="appointmentsLine">Appointments:</p>
+                    <div className="appointmentsListAndHeaderContainer">
+                        <div className="headerRowContainer">
+                            <p>Date</p>
+                            <p>Time</p>
+                            <p>Doctor</p>
+                            <p>Treatment</p>
+                            <p>Payment</p>
+                        </div>
+                        <AppointmentList 
+                            appointmentsArray = { appointmentsForPatient } 
+                            handleAppointmentClick = { controller.handleAppointmentClick }
+                            isInPatientsFormDialog = { true }
+                        />
+                    </div>
+                    <AppointmentFormDialog 
+                        appointment={ selectedAppointment } 
+                        isInPatientFormDialog = { true }
+                        getTakenTimeSlots={ null } 
+                        timeSlots = { null } 
+                        handleAppointmentSubmit = { null }
+                        handleAppointmentUpdate = { null }
+                        handleAppointmentDelete = { null }
+                    />
                 </div>
-                <AppointmentList 
-                    appointmentsArray = { appointmentsForPatient } 
-                    handleAppointmentClick = { controller.handleAppointmentClick }
-                    isInPatientsFormDialog = { true }
-                />
-            </div>
-            <AppointmentFormDialog 
-                appointment={ selectedAppointment } 
-                isInPatientFormDialog = { true }
-                getTakenTimeSlots={ null } 
-                timeSlots = { null } 
-                handleAppointmentSubmit = { null }
-                handleAppointmentUpdate = { null }
-                handleAppointmentDelete = { null }
-            />
+                : null }
         </dialog>
 
     );

@@ -1,0 +1,5 @@
+.reportsPage {
+    .contentContainer {
+        padding: var(--medium-gap);
+    }
+}

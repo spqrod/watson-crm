@@ -1,0 +1,5 @@
+.analyticsPage {
+    .contentContainer {
+        padding: var(--medium-gap);
+    }
+}

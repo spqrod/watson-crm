@@ -32,8 +32,9 @@ export default function Login() {
                 .then(res => {
                     setServerMessage(res.message);
                     if (res.success) {
-                        document.cookie = `token=${res.token}; max-age=60*60*12`;
-                        document.cookie = `accessLevel=${res.accessLevel}; max-age=60*60*12`;
+                        console.log(res.token);
+                        document.cookie = `token=${res.token}; max-age=86400`;
+                        document.cookie = `accessLevel=${res.accessLevel}; max-age=86400`;
                         navigate("/reports");
                     };
                 });

@@ -41,50 +41,51 @@
         }
     }
 
-    .appointmentsLine {
-        font-style: italic;
-        align-self: start;
-        font-weight: 700;
-    }
+    .appointmentsContainer {
+        width: 100%;
 
-    .appointmentsListAndHeaderContainer {
-        flex-shrink: 1;
-        border: var(--border);
-        width: min(100%, var(--max-content-width));
-        overflow: scroll;
-
-        .headerRowContainer {
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-columns: 1fr;
-            border-bottom: var(--border);
-
-            & p:first-of-type {
-                padding-left: var(--medium-gap);
+        .appointmentsLine {
+            font-style: italic;
+            align-self: start;
+            font-weight: 700;
+        }
+    
+        .appointmentsListAndHeaderContainer {
+            flex-shrink: 1;
+            border: var(--border);
+            width: min(100%, var(--max-content-width));
+            overflow: scroll;
+    
+            .headerRowContainer {
+                display: grid;
+                grid-auto-flow: column;
+                grid-auto-columns: 1fr;
+                border-bottom: var(--border);
+    
+                & p:first-of-type {
+                    padding-left: var(--medium-gap);
+                }
+                
+                & p:last-of-type {
+                    padding-right: var(--medium-gap);
+                }
             }
-            
-            & p:last-of-type {
-                padding-right: var(--medium-gap);
+    
+            .appointmentListContainer {
+                
+                .noAppointmentsFoundLine {
+                    padding-left: var(--medium-gap);
+                }
             }
         }
-
-        .appointmentListContainer {
-            
-            .noAppointmentsFoundLine {
-                padding-left: var(--medium-gap);
+    
+        .appointmentFormDialog {
+            width: 70vw;
+            height: 70vh;
+    
+            .infoContainer {
+                align-self: center;
             }
         }
-        
-
-    }
-
-    .appointmentFormDialog {
-        width: 70vw;
-        height: 70vh;
-
-        .infoContainer {
-            align-self: center;
-        }
-
     }
 }
