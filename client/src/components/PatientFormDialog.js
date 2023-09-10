@@ -16,17 +16,21 @@ export default function PatientFormDialog(data) {
     const [ appointmentsForPatient, setAppointmentsForPatient ] = useState(data.appointments);
     const [ selectedAppointment, setSelectedAppointment ] = useState();
     const { 
-        handlePatientSearch,
         handlePatientSubmit, 
         handlePatientUpdate, 
         handlePatientDelete 
     } = data;
 
     const controller = {
-        resetFormToDefault() {
-            document.querySelector(".patientForm").reset();
-            const submitButton = document.querySelector(".button.submitButton");
-            submitButton.classList.add("disabled");
+        resetPatientFormToDefault() {
+            // Closing appointment dialog that is open inside a patient dialog triggers onClose method that belongs to the patient dialog for some reason. That is why this additional check isPatientFormDialogOpen is implemented.
+            const isPatientFormDialogOpen = document.querySelector(".patientFormDialog").open;
+            if (!isPatientFormDialogOpen) {
+                document.querySelector(".patientForm").reset();
+                const submitButton = document.querySelector(".button.submitButton");
+                submitButton.classList.add("disabled");
+                setAppointmentsForPatient([]);
+            };
         },
         makeUpdateButtonActive() {
             const submitButton = document.querySelector(".button.submitButton");
@@ -66,10 +70,12 @@ export default function PatientFormDialog(data) {
     }, [data.dialogMode]);
     
     return (
-        <dialog className="dialog patientFormDialog" onClose={ controller.resetFormToDefault } >
-            <h3 className="dialogHeader">Patient</h3>
+        <dialog className="dialog patientFormDialog" onClose={ controller.resetPatientFormToDefault } >
+            <h3 className="dialogHeader">
+                { selectedPatient ? "Patient" : "New Patient" } 
+            </h3>
             <form className="formForDialogCloseButton" method="dialog">
-                <button className="closeButton" onClick={ controller.resetFormToDefault } >
+                <button className="closeButton" >
                     <CloseIcon />
                 </button>
             </form>

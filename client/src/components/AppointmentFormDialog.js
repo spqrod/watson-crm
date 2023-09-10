@@ -34,7 +34,7 @@ export default function AppointmentFormDialog(data) {
         const datePicker = document.querySelector(".appointmentForm .datePicker");
         return datePicker.value;
         },
-        resetFormToDefault() {
+        resetAppointmentFormToDefault() {
             document.querySelector(".appointmentForm").reset();
             setSelectedTime();
             if (isOnAppointmentsPage) {
@@ -91,16 +91,16 @@ export default function AppointmentFormDialog(data) {
     }, [data.timeSlots]);
 
     return (
-        <dialog className="dialog appointmentFormDialog" onClose={ controller.resetFormToDefault } >
+        <dialog className="dialog appointmentFormDialog"  onClose={ controller.resetAppointmentFormToDefault }>
             <h3 className="dialogHeader">
-                Appointment
+                { selectedAppointment ? "Appointment" : "New Appointment" }
             </h3>
             <form className="formForDialogCloseButton" method="dialog">
-                <button className="closeButton" onClick={ controller.resetFormToDefault } >
+                <button className="closeButton"  >
                     <CloseIcon />
                 </button>
             </form>
-            <form className={`appointmentForm ${isInPatientFormDialog ? "inPatientDialogForm" : null}`}
+            <form className={`appointmentForm ${ isInPatientFormDialog ? "inPatientDialogForm" : null }`}
                  onSubmit = { 
                     isOnAppointmentsPage ? 
                         selectedAppointment ? 
