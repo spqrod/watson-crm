@@ -10,14 +10,15 @@ const logger = winston.createLogger({
       ),
     transports: [
         new winston.transports.Console(),
+        new winston.transports.File( {filename: 'logs/info.log'} ),
         // fileRotateTransport
     ],
-    // exceptionHandlers: [
-    //   new winston.transports.File({ filename: 'logs/exceptions.log' }),
-    // ],
-    // rejectionHandlers: [
-    //   new winston.transports.File({ filename: 'logs/rejections.log' }),
-    // ],
+    exceptionHandlers: [
+      new winston.transports.File({ filename: 'logs/exceptions.log' }),
+    ],
+    rejectionHandlers: [
+      new winston.transports.File({ filename: 'logs/rejections.log' }),
+    ],
 });
 
 exports.logger = logger;

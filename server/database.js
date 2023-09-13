@@ -1,8 +1,8 @@
 const mysql = require("mysql2");
 const dayjs = require("dayjs");
 const csvtojson = require("csvtojson");
-const bcrypt = require("bcrypt");
-const { Logger } = require("winston");
+const bcrypt = require("bcryptjs");
+const { logger } = require("./logger.js");
 
 const pool = mysql.createPool({
     host: process.env.DATABASE_HOST,
@@ -14,7 +14,11 @@ const pool = mysql.createPool({
 const dateFormatForDB = "YYYY-MM-DD";
 
 const database = {
-
+    testConnection() {
+        pool.query("select 1")
+            .then(() => logger.info("Database connection successful"))
+            .catch(error => logger.info("Database connection failed\n" + error));
+    },
     getTakenTimeSlotsForDate: function(date) {
         const query = "select time from appointments where date=?"
         return pool.query(query, date).then(res => res[0]);
@@ -43,6 +47,41 @@ const database = {
             return pool.query(query)
                 .then(res => res[0][0]);
         }, 
+        createTablePatients() {
+            const query = 'create table patients (id mediumint primary key not null auto_increment, firstName varchar(255), lastName varchar(255), file varchar(255), nrc varchar(255), insuranceId varchar(255), phone varchar(255), dateOfBirth date, sex char, dateAdded datetime default now(), marketing varchar(255));';
+            pool.query(query).then((res) => console.log(res));
+        },
+        dropTable() {
+            const query = "drop table patients";
+            pool.query(query);
+        },
+        describePatientsTable() {
+            const query = "describe patients";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        deleteAllPatients: function() {
+            return pool.query("delete from patients");
+        },
+        getAllPatients: function() {
+            return pool.query("select * from patients").then(res => console.log(res[0]));
+        },
+        alterTablePatients() {
+            // const query = "alter table patients modify column id varchar(255) primary key not null default '9999/99'";
+            // const query = "alter table patients drop primary key;";
+            pool.query(query).then(res => console.log(res[0]));
+        },
+        importPatientsFromCSVFile() {
+            const csvFilePath = "./backupFromGoogleSheets/patients.csv";
+            csvtojson()
+                .fromFile(csvFilePath)
+                .then(patientsArray => patientsArray.forEach(patient => {
+                    if (patient.firstName)
+                        if ((patient.dateOfBirth == "") || !dayjs(patient.dateOfBirth).isValid())
+                            patient.dateOfBirth = "1000-01-01";
+                        patient.dateOfBirth = dayjs(patient.dateOfBirth).format(dateFormatForDB);
+                        database.patients.addNew(patient);
+                }));
+        }
     },
     appointments: {
         getForDate: function(date) {
@@ -69,7 +108,38 @@ const database = {
         delete: function(id) {
             return pool.query("delete from appointments where id=?", id);
         },
-
+        createTable() {
+            const query = "create table appointments (id mediumint auto_increment not null primary key, date date, time time, firstName varchar(255), lastName varchar(255), doctor varchar(255), treatment varchar(255), payment varchar(255), cost varchar(255), patientFile varchar(255), phone varchar(255), comments varchar(255), noshow boolean, dateAdded datetime default now())";
+            pool.query(query);
+        },
+        describeAppointmentsTable() {
+            const query = "describe appointments";
+            pool.query(query).then((res) => console.log(res[0]));
+        },
+        alterTableAppointments() {
+            const query = "alter table appointments drop foreign key appointments_ibfk_1";
+            // const query = "alter table appointments add column patientFile varchar(255)";
+            pool.query(query);
+        },
+        deleteAllAppointments: function() {
+            return pool.query("delete from appointments");
+        },
+        getAllAppointments: function() {
+            pool.query("select * from appointments").then(res => console.log(res[0]));
+        },
+        dropTable() {
+            const query = "drop table appointments";
+            pool.query(query);
+        },
+        importAppointmentsFromCSVFile() {
+            const csvFilePath = "./backupFromGoogleSheets/appointments.csv";
+            csvtojson()
+                .fromFile(csvFilePath)
+                .then(appointmentsArray => appointmentsArray.forEach(appointment => {
+                    if (appointment.date)
+                        database.appointments.addNew(appointment);
+                }));
+        }
     },
     users: {
         addNew(username, password, accessLevel) {
@@ -79,15 +149,14 @@ const database = {
                     pool.query(query, [username, hashedPassword, accessLevel]);
                 })
                 .catch(() => logger.info("Password was not hashed successfully"));
-            },
-
+        },
         find(username) {
             const query = `select * from users where username=?`;
             return pool.query(query, [username]).then(res => res[0][0]);
         },
         createTable() {
             const query = "create table users (id mediumint auto_increment not null primary key, username varchar(255) unique, password varchar(255) unique, accessLevel varchar(255))";
-            pool.query(query);
+            return pool.query(query);
         },
         describeTable() {
             const query = "describe users";
@@ -103,7 +172,7 @@ const database = {
         },
         dropTable() {
             const query = "drop table users";
-            pool.query(query).then((res) => console.log(res[0]));
+            return pool.query(query).then((res) => console.log(res[0]));
         },
     },
     doctors: {
@@ -230,10 +299,6 @@ const database = {
 
 module.exports = { database };
 
-// database.users.addNew("reception", "123", "reception");
-// database.users.addNew("drwatson", "321", "director");
-// database.users.addNew("drwatson", "notAllThoseWhoWanderAreLost2023");
-
 // database.analytics.countTreatment("Filling", 7, 2023);
 // database.analytics.sum("Nhima", 8, 2023);
 
@@ -247,121 +312,3 @@ module.exports = { database };
 // database.payments.createTable();
 // database.payments.getAll();
 // database.payments.addNew("Nhima", "Cash", "Swipe", "TT", "SES", "Liberty", "Medlink");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let importedAppointmentsArray = [];
-
-const databaseHelper = {
-    appointments: {
-        createTable() {
-            const query = "create table appointments (id mediumint auto_increment not null primary key, date date, time time, firstName varchar(255), lastName varchar(255), doctor varchar(255), treatment varchar(255), payment varchar(255), cost varchar(255), patientFile varchar(255), phone varchar(255), comments varchar(255), noshow boolean, dateAdded datetime default now())";
-            pool.query(query);
-        },
-        describeAppointmentsTable() {
-            const query = "describe appointments";
-            pool.query(query).then((res) => console.log(res[0]));
-        },
-        alterTableAppointments() {
-            const query = "alter table appointments drop foreign key appointments_ibfk_1";
-            // const query = "alter table appointments add column patientFile varchar(255)";
-            pool.query(query);
-        },
-        deleteAllAppointments: function() {
-            return pool.query("delete from appointments");
-        },
-        getAllAppointments: function() {
-            pool.query("select * from appointments").then(res => console.log(res[0]));
-        },
-        dropTable() {
-            const query = "drop table appointments";
-            pool.query(query);
-        },
-        importAppointmentsFromCSVFile() {
-            const csvFilePath = "./backupFromGoogleSheets/appointments.csv";
-            csvtojson()
-                .fromFile(csvFilePath)
-                .then(appointmentsArray => appointmentsArray.forEach(appointment => {
-                    if (appointment.date)
-                        database.appointments.addNew(appointment);
-                }));
-        }
-    },
-    patients: {
-        createTablePatients() {
-            const query = 'create table patients (id mediumint primary key not null auto_increment, firstName varchar(255), lastName varchar(255), file varchar(255), nrc varchar(255), insuranceId varchar(255), phone varchar(255), dateOfBirth date, sex char, dateAdded datetime default now(), marketing varchar(255));';
-            pool.query(query).then((res) => console.log(res));
-        },
-        dropTable() {
-            const query = "drop table patients";
-            pool.query(query);
-        },
-        describePatientsTable() {
-            const query = "describe patients";
-            pool.query(query).then((res) => console.log(res[0]));
-        },
-        deleteAllPatients: function() {
-            return pool.query("delete from patients");
-        },
-        getAllPatients: function() {
-            return pool.query("select * from patients").then(res => console.log(res[0]));
-        },
-        alterTablePatients() {
-            // const query = "alter table patients modify column id varchar(255) primary key not null default '9999/99'";
-            // const query = "alter table patients drop primary key;";
-            pool.query(query).then(res => console.log(res[0]));
-        },
-        importPatientsFromCSVFile() {
-            const csvFilePath = "./backupFromGoogleSheets/patients.csv";
-            csvtojson()
-                .fromFile(csvFilePath)
-                .then(patientsArray => patientsArray.forEach(patient => {
-                    if (patient.firstName)
-                        if ((patient.dateOfBirth == "") || !dayjs(patient.dateOfBirth).isValid())
-                            patient.dateOfBirth = "1000-01-01";
-                        patient.dateOfBirth = dayjs(patient.dateOfBirth).format(dateFormatForDB);
-                        database.patients.addNew(patient);
-                }));
-        }
-    },
-   
-};
-
-// databaseHelper.users.createTable();
-// databaseHelper.users.dropTable();
-// databaseHelper.users.describeTable();
-// databaseHelper.users.getAll();
-// databaseHelper.users.deleteAll();
-
-// databaseHelper.appointments.importAppointmentsFromCSVFile()
-// databaseHelper.appointments.createTable();
-// databaseHelper.appointments.dropTable();
-// databaseHelper.appointments.getAllAppointments();
-// databaseHelper.appointments.deleteAllAppointments();
-// databaseHelper.appointments.describeAppointmentsTable();
-// databaseHelper.appointments.alterTableAppointments();
-
-// databaseHelper.patients.createTablePatients();
-// databaseHelper.patients.dropTable();
-// databaseHelper.patients.alterTablePatients();
-// databaseHelper.patients.deleteAllPatients();
-// databaseHelper.patients.getAllPatients();
-// databaseHelper.patients.describePatientsTable()
-// databaseHelper.patients.importPatientsFromCSVFile();
-

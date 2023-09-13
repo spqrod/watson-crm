@@ -7,7 +7,7 @@ const dayjs = require("dayjs");
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 
 const { database } = require("./database.js");
@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const port = 80;    
+const port = process.env.PORT || 80;
 
 const dateFormatForDB = "YYYY-MM-DD";
 
@@ -277,3 +277,5 @@ app.post("/login", (req, res) => {
 });
 
 app.listen(port, () => logger.info(`Listening to port ${port}`));
+
+database.testConnection();
