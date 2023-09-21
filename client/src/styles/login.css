@@ -7,7 +7,7 @@
         border: none;
     }
 
-    .dialog {
+    .loginFormDialog {
         width: 600px;
         height: 600px;
 
@@ -20,8 +20,22 @@
             justify-content: center;
             gap: var(--big-gap);
 
-            .serverMessage {
+            .serverMessage.fail {
                 color: red;
+            }
+
+            .serverMessage.success {
+                color: green;
+            }
+
+            .buttonsContainer {
+                display: flex;
+                flex-direction: column;
+                gap: var(--medium-gap);
+            }
+    
+            .registerLine {
+                text-decoration: underline;
             }
         }
     }

@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 export default function AppointmentFormDialog(data) {
 
     const [ selectedAppointment, setSelectedAppointment ] = useState(data.appointment);
+    const [ noshow, setNoshow ] = useState(false);
     const [ takenTimeSlotsForTimePicker, setTakenTimeSlotsForTimePicker ] = useState([data.timeSlots]);
     const [ selectedTime, setSelectedTime ] = useState();
     const [ doctors, setDoctors ] = useState([]); 
@@ -24,11 +25,9 @@ export default function AppointmentFormDialog(data) {
         handleAppointmentUpdate, 
         handleAppointmentDelete,
         isInPatientFormDialog,
-        isOnAppointmentsPage
+        isOnAppointmentsPage,
+        isNewAppointment,
     } = data;
-    const doctorsList = ["Dr Watson", "Mrs Moshoka", "Dr Chanda"];
-    const paymentsList = ["Nhima", "Cash", "Swipe", "TT", "SES", "Liberty", "Medlink"];
-    const treatmentsList = ["Con", "XR", "TF", "PF", "RCT", "XLA", "SXLA"];
     const startHour = "07:00";
     const finishHour = "17:00";
 
@@ -115,8 +114,12 @@ export default function AppointmentFormDialog(data) {
     useEffect(() => {
         setSelectedAppointment(data.appointment);
         if (data.appointment) {
-            controller.updateNoshowCheckbox(data.appointment.noshow);
-            setSelectedTime(controller.convertTimeSlotToDateObject(data.appointment.time));
+            if (isOnAppointmentsPage)
+                controller.updateNoshowCheckbox(data.appointment.noshow);
+            else if (isInPatientFormDialog)
+                setNoshow(data.appointment.noshow);
+            if (data.appointment.time)
+                setSelectedTime(controller.convertTimeSlotToDateObject(data.appointment.time));
         } else 
             setSelectedTime();
     }, [data.appointment]);
@@ -129,7 +132,7 @@ export default function AppointmentFormDialog(data) {
     return (
         <dialog className="dialog appointmentFormDialog"  onClose={ controller.resetAppointmentFormToDefault }>
             <h3 className="dialogHeader">
-                { selectedAppointment ? "Appointment" : "New Appointment" }
+                { isNewAppointment ? "New Appointment" : "Appointment" }
             </h3>
             <form className="formForDialogCloseButton" method="dialog">
                 <button className="closeButton"  >
@@ -139,8 +142,8 @@ export default function AppointmentFormDialog(data) {
             <form className={`appointmentForm ${ isInPatientFormDialog ? "inPatientDialogForm" : null }`}
                  onSubmit = { 
                     isOnAppointmentsPage ? 
-                        selectedAppointment ? 
-                            handleAppointmentUpdate : handleAppointmentSubmit 
+                        isNewAppointment ? 
+                            handleAppointmentSubmit : handleAppointmentUpdate
                             : null }> 
                 <div className="infoContainer">
                     <div className="labelAndInputContainer date">
@@ -153,7 +156,7 @@ export default function AppointmentFormDialog(data) {
                                 getTakenTimeSlots(e.target.value);
                                 if (selectedAppointment) controller.makeSubmitButtonActive();
                             }}
-                            defaultValue={ selectedAppointment ? dayjs(selectedAppointment.date).format("YYYY-MM-DD") : ""}
+                            defaultValue={ selectedAppointment ? dayjs(selectedAppointment.date).format("YYYY-MM-DD") : "yyyy-mm-dd" }
                             readOnly = { isInPatientFormDialog ? true : false}
                         />
                     </div>
@@ -343,33 +346,44 @@ export default function AppointmentFormDialog(data) {
                         </textarea>
                     </div>
                 </div>
+
+                { isInPatientFormDialog ? noshow ? 
+                    <div className="labelAndInputContainer commentsContainer">
+                        <p>The patient did not come for the appointment (No-show)</p>
+                    </div>
+                : null : null }
+
                 { isOnAppointmentsPage ? 
                     <div className="buttonsContainer">
-                        <button 
-                            className={`button deleteButton ${ selectedAppointment ? null : "disabled"}`} 
-                            type="button" 
-                            onClick={ handleAppointmentDelete }
-                        >
-                            <DeleteOutlineOutlinedIcon />
-                            Delete
-                        </button>
-                        <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
-                            <input
-                                className="inputField noshowCheckbox" 
-                                type="checkbox" 
-                                name="nowshow" 
-                                id="noshow" 
-                                onClick ={ controller.makeSubmitButtonActive }
-                            /> 
-                            <label htmlFor="noshow">No-show</label>
-                        </div>
+                        { isNewAppointment ? null :
+                            <button 
+                                className={`button deleteButton ${ selectedAppointment ? null : "disabled"}`} 
+                                type="button" 
+                                onClick={ handleAppointmentDelete }
+                            >
+                                <DeleteOutlineOutlinedIcon />
+                                Delete
+                            </button>
+                        }
+                        { isNewAppointment ? null :
+                            <div className={`button noShowButton ${ selectedAppointment ? null : "disabled"}`}> 
+                                <input
+                                    className="inputField noshowCheckbox" 
+                                    type="checkbox" 
+                                    name="nowshow" 
+                                    id="noshow" 
+                                    onClick ={ controller.makeSubmitButtonActive }
+                                /> 
+                                <label htmlFor="noshow">No-show</label>
+                            </div>
+                        }
                         <button 
                             className={`button submitButton disabled`} 
                             type="submit"
                         >
-                            { selectedAppointment ? 
-                                <><AutorenewOutlinedIcon />Update Appointment</> :
-                                <><AddOutlinedIcon />Add New Appointment</>
+                            { isNewAppointment ? 
+                                <><AddOutlinedIcon />Add New Appointment</> :
+                                <><AutorenewOutlinedIcon />Update Appointment</>
                             }
                         </button>
                     </div> 

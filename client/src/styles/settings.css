@@ -1,5 +1,23 @@
 .settingsPage {
+
     .contentContainer {
+
         padding: var(--medium-gap);
+        display: flex;
+        flex-direction: column;
+        gap: var(--big-gap);
+        overflow-y: auto;
+        height: 100%;
+
+        .listContainer {
+
+            display: flex;
+            flex-direction: column;
+            gap: var(--medium-gap);
+
+            .button {
+                align-self: start;
+            }
+        }
     }
 }

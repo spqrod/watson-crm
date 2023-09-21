@@ -10,14 +10,14 @@ h1, h2, p, span, a, div {
 }
 
 h1 {
-    font-size: 42px;
+    font-size: var(--h1-text-size);
     text-align: center;
     font-family: var(--font-family-1);
     padding-bottom: var(--big-gap);
 }
 
 h2 {
-    font-size: 34px;
+    font-size: var(--h2-text-size);
     text-align: center;
     padding-top: var(--big-gap);
     padding-bottom: var(--big-gap);
@@ -25,12 +25,12 @@ h2 {
 }
 
 h3 {
-    font-size: 24px;
+    font-size: var(--h3-text-size);
     font-family: var(--font-family-1);
 }
 
 p, a, span, div {
-    font-size: 18px;
+    font-size: var(--normal-text-size);
     font-family: var(--font-family-2);
 }
 
@@ -44,7 +44,7 @@ p, a, span, div {
 input, textarea, select {
     &[type=text], &[type=tel], &[type=email], &[type=date], &[type=time], & {
         padding: var(--small-gap);
-        font-size: 18px;
+        font-size: var(--normal-text-size);
         font-family: var(--font-family-2);
         background-color: var(--surface);
         color: var(--on-surface);
@@ -54,22 +54,23 @@ input, textarea, select {
         transition: var(--transition-fast);
     }
     &:focus {
-        /* outline: none; */
         background-color: white;
         color: black;
         border: var(--border);
     }
     &[disabled] {
-        /* background-color: white; */
         color: black;
         cursor: not-allowed;
+    }
+    &[type=password] {
+        font: small-caption;
+        font-size: var(--normal-text-size);
     }
 }
 
 /* Button */
 
 .button {
-    /* min-width: 229px; */
     height: 50px;
     padding: var(--small-gap);
     position: relative;
@@ -86,12 +87,22 @@ input, textarea, select {
     cursor: pointer;
 
     font-family: var(--font-family-2);
-    font-size: 18px;
+    font-size: var(--normal-text-size);
     text-transform: uppercase;
 
     border: var(--border);
 
     transition: var(--transition);
+
+    &.secondary {
+        background-color: var(--transparent);
+        color: var(--on-surface);
+
+        &:hover {
+            background-color: var(--primary-container);
+            color: var(--on-primary-container);
+        }
+    }
 
     &.disabled {
         background-color: var(--inactive);
@@ -152,7 +163,7 @@ input, textarea, select {
     }
     &::backdrop {
         animation-name: dialogBackdropAnimation;
-        animation-duration: 1s;
+        animation-duration: 0.2s;
         animation-fill-mode: forwards;
     }
 }
@@ -162,7 +173,7 @@ input, textarea, select {
         background-color: rgba(255, 255, 255, 0);
     }
     100% {
-        background-color: rgba(46, 46, 46, 0.587);
+        background-color: rgba(41, 41, 41, 0.587);
     }
 } 
 

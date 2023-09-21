@@ -5,9 +5,11 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import AutorenewOutlinedIcon from '@mui/icons-material/AutorenewOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import AppointmentList from "./AppointmentList";
 import AppointmentFormDialog from "./AppointmentFormDialog";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function PatientFormDialog(data) {
 
@@ -20,6 +22,7 @@ export default function PatientFormDialog(data) {
         handlePatientUpdate, 
         handlePatientDelete 
     } = data;
+    const navigate = useNavigate();
 
     const controller = {
         resetPatientFormToDefault() {
@@ -37,7 +40,7 @@ export default function PatientFormDialog(data) {
             submitButton.classList.remove("disabled");
         },
         getAppointment: function(id) {
-            const appointment = appointmentsForPatient.find(item => item.id == id);
+            const appointment = appointmentsForPatient.find(item => item.id === Number(id));
             return appointment;
         },
         handleAppointmentClick(e) {
@@ -45,6 +48,14 @@ export default function PatientFormDialog(data) {
             const appointment = controller.getAppointment(appointmentID);
             setSelectedAppointment(appointment);
             display.showAppointmentDialog();
+        },
+        addNewAppointment(e) {
+            localStorage.clear();
+            localStorage.setItem("isNewAppointmentFromPatientPage", "true");
+            for (const [key, value] of Object.entries(selectedPatient)) {
+                localStorage.setItem(key, value);
+            }
+            navigate("/appointments");
         }
     };
 
@@ -233,6 +244,11 @@ export default function PatientFormDialog(data) {
                             <DeleteOutlineOutlinedIcon />
                             Delete
                         </button>
+                        { dialogMode === "update" ? 
+                            <button className="button createNewAppointment" type="button" onClick={ controller.addNewAppointment }>
+                                <AddOutlinedIcon /> Add New Appointment
+                            </button> 
+                        : null }
                         <button 
                             className={`button submitButton disabled`} 
                             type="submit"

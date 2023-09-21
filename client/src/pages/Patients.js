@@ -1,15 +1,16 @@
 import "../styles/patients.css";
 import PatientList from "../components/PatientList";
 import PatientFormForDialog from "../components/PatientFormDialog";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import dayjs from "dayjs";
+import LoadingScreen, { showLoadingScreen, hideLoadingScreen }  from "../components/LoadingScreen.js";
 
 export default function Patients() {
 
     const [ patientsArray, setPatientsArray ] = useState([]);
-    const [ appointmentsForArray, setAppointmentsForArray ] = useState([]);
+    const [ appointmentsForPatient, setAppointmentsForPatient ] = useState([]);
     const [ selectedPatient, setSelectedPatient ] = useState();
     const [ dialogMode, setDialogMode ] = useState();
 
@@ -55,7 +56,8 @@ export default function Patients() {
         getAppointmentForPatient(patientFile) {
             patientFile = encodeURIComponent(patientFile);
             const fetchURL = `/appointments?patientFile=${patientFile}`;
-            return fetch(fetchURL).then(res => res.json());
+            return fetch(fetchURL)
+                .then(res => res.json());
         }
     };
 
@@ -66,34 +68,39 @@ export default function Patients() {
         },
         handleSearchSubmit(e) {
             e.preventDefault();
-
             display.removeHighlightFromAddNewContainer();
             display.highlightSearchContainer();
             display.highlightHeaderRowContainer();
             display.highlightPatientListContainer();
-
             const searchString = e.target.search.value;
-
-            api.getPatients(searchString).then(res => setPatientsArray(res));
+            showLoadingScreen();
+            api.getPatients(searchString).then(res => {
+                hideLoadingScreen();
+                setPatientsArray(res);
+            });
         },
         getPatient: function(id) {
             const patient = patientsArray.find(item => item.id == id);
             return patient;
         },
         getAppointments(patientFile) {
-            api.getAppointmentForPatient(patientFile)
+            return api.getAppointmentForPatient(patientFile)
                 .then(appointments => {
                     appointments.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
-                    setAppointmentsForArray(appointments)
+                    setAppointmentsForPatient(appointments);
                 });
         },
         handlePatientClick: function(e) {
             const patientID = e.currentTarget.id;
             const patient = controller.getPatient(patientID);
             setSelectedPatient(patient);
-            controller.getAppointments(patient.file);
             setDialogMode("update");
-            display.showDialog();
+            showLoadingScreen();
+            controller.getAppointments(patient.file)
+                .then(() => {
+                    hideLoadingScreen();
+                    display.showDialog();
+                });
         },
         handlePatientSubmit: function (e) {
             e.preventDefault();
@@ -113,11 +120,13 @@ export default function Patients() {
                 sex: e.target.sex.value ? e.target.sex.value : null,
                 marketing: e.target.marketing.value ? e.target.marketing.value : null,
             };
+            showLoadingScreen();
             api.addNewPatient(patient)
                 .then(lastAddedPatient => {
                     display.closeDialog();
                     document.querySelector(".patientForm").reset();
                     setPatientsArray([lastAddedPatient]);
+                    hideLoadingScreen();
             });
         },
         handlePatientUpdate: function (e) {
@@ -134,6 +143,7 @@ export default function Patients() {
                 sex: e.target.sex.value,
                 marketing: e.target.marketing.value,
             };
+            showLoadingScreen();
             api.updatePatient(patient)
                 .then(() => {
                     display.closeDialog();
@@ -141,10 +151,14 @@ export default function Patients() {
                     const searchString = document.querySelector(".searchInput").value;
                     return api.getPatients(searchString);
                 })
-                .then(res => setPatientsArray(res));
+                .then(res => {
+                    setPatientsArray(res)
+                    hideLoadingScreen();
+                });
         },
         handlePatientDelete: function(e) {
             e.preventDefault();
+            showLoadingScreen();
             api.deletePatient(selectedPatient.id).then(() => {
                 display.closeDialog();
                 document.querySelector(".patientForm").reset();
@@ -158,6 +172,7 @@ export default function Patients() {
                     display.removeHighlightFromPatientListContainer();
                     setPatientsArray([]);
                 }
+                hideLoadingScreen();
             });
         },
     };
@@ -209,6 +224,11 @@ export default function Patients() {
         }
     };
 
+    useEffect(() => {
+        // showLoadingScreen();
+        // display.showDialog();
+    })
+
     return (
         <section className="patientsPage section">
             <div className="contentContainer">
@@ -240,12 +260,13 @@ export default function Patients() {
             <PatientFormForDialog 
                 dialogMode = { dialogMode }
                 patient = { selectedPatient } 
-                appointments = { appointmentsForArray }
+                appointments = { appointmentsForPatient }
                 handlePatientSearch = { controller.handlePatientSearch }
                 handlePatientSubmit = { controller.handlePatientSubmit }
                 handlePatientUpdate = { controller.handlePatientUpdate }
                 handlePatientDelete = { controller.handlePatientDelete }
             />
+            <LoadingScreen />
         </section>
     );
 }

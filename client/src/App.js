@@ -16,7 +16,6 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-
     const api = {
       checkAuthorization() {
         const fetchURL = "/authorization";
@@ -33,13 +32,15 @@ function App() {
             });
       },
       getCookiesAsObject() {
-        const cookies = document.cookie.split(';').map(item => item.split('=')).reduce((acc, [k, v]) => (acc[k.trim().replace('"', '')] = v) && acc, {});
-        return cookies;
+        if (document.cookie) {
+          const cookies = document.cookie.split(';').map(item => item.split('=')).reduce((acc, [k, v]) => (acc[k.trim().replace('"', '')] = v) && acc, {});
+          return cookies;
+        } else return null;
       }
     };
 
   const cookies = controller.getCookiesAsObject();
-  const accessLevel = cookies.accessLevel;
+  const accessLevel = cookies ? cookies.accessLevel : null;
 
   useEffect(() => {
     if (location.pathname !== "/login")

@@ -1,5 +1,6 @@
 import "../styles/appointmentList.css";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 
 export default function AppointmentList(data) {
 
@@ -13,8 +14,12 @@ export default function AppointmentList(data) {
     return (
         <ul className="appointmentListContainer">
             {   
-                appointmentsArray ? appointmentsArray.length > 0 ? appointmentsArray.map((appointment, index) => (
-                    <li id={ appointment.id } className="appointmentListItem" onClick={ handleAppointmentClick }>
+                appointmentsArray ? appointmentsArray.length > 0 ? appointmentsArray.map((appointment) => (
+                    <li id={ appointment.id } test="test" 
+                        className = {
+                            `appointmentListItem ${ appointment.noshow ? "noshow" : "" } ${appointment.isEmptyTimeSlot ? "emptyTimeSlot" : "" }`
+                        } 
+                        onClick={ handleAppointmentClick }>
                             <div className="infoContainer date">
                                 <p>{ dayjs(appointment.date).format("DD.MM.YYYY") }</p>
                             </div> 

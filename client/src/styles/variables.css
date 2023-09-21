@@ -19,19 +19,26 @@
     --small-gap: 8px;
     --max-content-width: 1200px;
     --side-padding-for-sections: max(7vw, calc((100vw - var(--max-content-width)) / 2));
+    --normal-text-size: 18px;
+    --h1-text-size: 42px;
+    --h2-text-size: 34px;
+    --h3-text-size: 24px;
+
 
     --primary: #f56f6f;
     --on-primary: #ffffff;
-
     --primary-container: #3160ed;
     --on-primary-container: #ffffff;
+
+    --secondary: #64bcff;
+
 
     --background: #ffffff;
     --on-background: #1f1a1c;
 
     --surface: #f0f3ff;
     --on-surface: #1f1a1c;
-    --surface-variant: #ccd9f9;
+    --surface-variant: #bfd1ff;
     --on-surface-variant: #504348;
 
     --inactive: lightgrey;
@@ -39,7 +46,10 @@
     
     --outline: #827378;
 
+    --transparent: rgba(255, 255, 255, 0);
+
     --close-button: red;
+    --warning-secondary: rgb(254, 128, 128);
 
     --border: 1px solid var(--outline);
     --border-radius: 0px;

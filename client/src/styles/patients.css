@@ -71,7 +71,7 @@
         .patientListContainer {
             grid-column: 1 / 4;
             grid-row: 3 / 4;
-            overflow: scroll;
+            overflow-y: auto;
             padding-bottom: var(--medium-gap);
             transition: var(--transition);
 

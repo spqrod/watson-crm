@@ -16,7 +16,7 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        padding-top: calc(var(--medium-gap) + var(--big-gap));
+        padding-top: calc(var(--big-gap) + var(--big-gap));
         max-width: var(--max-content-width);
         
         .infoContainer {
@@ -54,7 +54,7 @@
             flex-shrink: 1;
             border: var(--border);
             width: min(100%, var(--max-content-width));
-            overflow: scroll;
+            overflow-y: auto;
     
             .headerRowContainer {
                 display: grid;
@@ -80,8 +80,8 @@
         }
     
         .appointmentFormDialog {
-            width: 70vw;
-            height: 70vh;
+            width: 75vw;
+            height: 75vh;
     
             .infoContainer {
                 align-self: center;

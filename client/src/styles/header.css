@@ -27,11 +27,14 @@ header.header {
                 border-right: 1px solid rgba(255, 255, 255, 0);
                 transition: var(--transition);
                 padding: 0 var(--medium-gap);
+                font-size: 24px;
 
                 &.active {
                     background-color: var(--surface-variant);
                     border-left: var(--border);
                     border-right: var(--border);
+                    font-weight: 700;
+                    text-decoration: underline;
                 }
             }
 

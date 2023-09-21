@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import LoadingScreen, { showLoadingScreen, hideLoadingScreen }  from "../components/LoadingScreen.js";
 
 import dayjs from "dayjs";
 
@@ -13,6 +14,8 @@ export default function Appointments() {
     const [ appointmentsArray, setAppointmentsArray ] = useState();
     const [ selectedAppointment, setSelectedAppointment ] = useState();
     const [ takenTimeSlotsForTimePicker, setTakenTimeSlotsForTimePicker ] = useState([]);
+    const [ isNewAppointment, setIsNewAppointment ] = useState(false);
+
 
     const dateFormatForDB = "YYYY-MM-DD";
     const dateFormatForHeader = "dddd, DD.MM.YYYY";
@@ -67,17 +70,29 @@ export default function Appointments() {
 
     const controller = {
         getAppointments: function(selectedDate) {
-            api.getAppointments(selectedDate).then(res => {
-                res.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
-                setAppointmentsArray(res);
+            showLoadingScreen();
+            return api.getAppointments(selectedDate)
+                .then(appointments => {
+                    appointments.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
+                    setAppointmentsArray(appointments);
+                    hideLoadingScreen();
             });
         },
         handleAppointmentClick: function(e) {
+            const isEmptyAppointment = e.currentTarget.classList.contains("emptyTimeSlot");
             const appointmentID = e.currentTarget.id;
             const appointment = controller.getAppointment(appointmentID);
             setSelectedAppointment(appointment);
-            controller.getTakenTimeSlots(appointment.date);
-            display.showDialog();
+            showLoadingScreen();
+            controller.getTakenTimeSlots(appointment.date)
+                .then(() => {
+                    hideLoadingScreen();
+                    if (isEmptyAppointment)
+                        setIsNewAppointment(true)
+                    else 
+                        setIsNewAppointment(false)
+                    display.showDialog();
+                });
         },
         getAppointment: function(id) {
             const appointment = appointmentsArray.find(item => item.id == id);
@@ -100,9 +115,9 @@ export default function Appointments() {
         handleDateSelectInDatePicker: function() {
             const datePicker = document.querySelector(".datePickerContainer .datePicker.inputField");
             const selectedDate = dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForDB);
+            controller.getAppointments(selectedDate);
             setDatePickerDate(dayjs(datePicker.value, "YYYY-MM-DD").format(dateFormatForHeader));
             controller.handleDateSelect("datePicker");
-            controller.getAppointments(selectedDate);
         },
         handleDateSelect: function(dateAsString) {
             display.hidePreviousFullDate();
@@ -113,12 +128,18 @@ export default function Appointments() {
             display.removeHighlightFromSearchContainer();
             display.resetSearchInput();
         },
-        handleAddNew: function() {
-            setSelectedAppointment();
+        handleAddNewAppointment: function(isNewAppointmentFromPatientPage) {
+            setIsNewAppointment(true);
+            if (!isNewAppointmentFromPatientPage)
+                setSelectedAppointment();
             display.showDialog();
         },
         getTakenTimeSlots: function(date) {
-            api.getTakenTimeSlots(date).then(res => setTakenTimeSlotsForTimePicker(res));
+            showLoadingScreen();
+            return api.getTakenTimeSlots(date).then(res => {
+                setTakenTimeSlotsForTimePicker(res);
+                hideLoadingScreen();
+            });
         },
         handleAppointmentSubmit: function (e) {
             e.preventDefault();
@@ -135,11 +156,13 @@ export default function Appointments() {
                 patientFile: e.target.patientFile.value,
                 comments: e.target.comments.value,
             }
+            showLoadingScreen();
             api.addNewAppointment(appointment).then(res => {
                 display.closeDialog();
                 document.querySelector(".appointmentForm").reset();
                 const selectedDate = dayjs(appointment.date).format(dateFormatForDB);
                 controller.getAppointments(selectedDate);
+                hideLoadingScreen();
             });
         },
         handleAppointmentUpdate: function (e) {
@@ -159,33 +182,66 @@ export default function Appointments() {
                 comments: e.target.comments.value,
                 noshow: e.target.noshow.checked,
             };
+            showLoadingScreen();
             api.updateAppointment(appointment).then(res => {
                 display.closeDialog();
                 document.querySelector(".appointmentForm").reset();
                 const selectedDate = dayjs(appointment.date).format(dateFormatForDB);
                 controller.getAppointments(selectedDate);
+                hideLoadingScreen();
             });
         },
         handleAppointmentDelete: function(e) {
             e.preventDefault();
+            showLoadingScreen();
             api.deleteAppointment(selectedAppointment.id).then(() => {
                 display.closeDialog();
                 document.querySelector(".appointmentForm").reset();
                 controller.getAppointments(selectedAppointment.date);
+                hideLoadingScreen();
             });
         },
         handleSearchSubmit(e) {
             e.preventDefault();
-
             display.highlightSearchContainer();
             display.highlightHeaderRowContainer();
             display.highlightAppointmentListContainer();
             display.removeHighlightFromDateContainer();
             display.hidePreviousFullDate();
-
             const searchString = e.target.search.value;
-
-            api.searchAppointments(searchString).then(res => setAppointmentsArray(res));
+            showLoadingScreen();
+            api.searchAppointments(searchString).then(res => {
+                setAppointmentsArray(res);
+                hideLoadingScreen();
+            });
+        },
+        isThisNewAppointmentBeingCreatedFromPatientPage() {
+            return localStorage.getItem("isNewAppointmentFromPatientPage");
+        },
+        populateNewAppointmentFormWithPatientData() {
+            const isNewAppointmentFromPatientPage = true;
+            const patient = controller.getPatientFromLocalStorage();
+            const appointment = controller.createAppointmentFromPatientData(patient);
+            setSelectedAppointment(appointment);
+            controller.handleAddNewAppointment(isNewAppointmentFromPatientPage);
+        },
+        getPatientFromLocalStorage() {
+            const patient = {};
+            for (let i = 0; i < localStorage.length; i++ ) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                patient[key] = value;
+            }
+            localStorage.clear();
+            return patient;
+        },
+        createAppointmentFromPatientData(patient) {
+            const appointment = {};
+            appointment.firstName = patient.firstName;
+            appointment.lastName = patient.lastName;
+            appointment.patientFile = patient.file;
+            appointment.phone = patient.phone;
+            return appointment;
         },
     };
 
@@ -242,6 +298,13 @@ export default function Appointments() {
         }
     };
 
+    useEffect(() => {
+        if (controller.isThisNewAppointmentBeingCreatedFromPatientPage())
+            controller.populateNewAppointmentFormWithPatientData();
+        else 
+            controller.handleTodayClick();
+    }, []);
+
     return (
         <section className="appointmentsPage section">
             <div className="contentContainer">
@@ -255,8 +318,8 @@ export default function Appointments() {
                             <p>Tomorrow</p>
                             <p className="fullDate tomorrow">{ tomorrowDate }</p>
                         </div>
-                        <div className="datePickerContainer">
-                            <label htmlFor="datePicker" className="datePickerLabel" onClick={controller.handleDatePickerClick}>
+                        <div className="datePickerContainer" onClick={controller.handleDatePickerClick}>
+                            <label htmlFor="datePicker" className="datePickerLabel" >
                                 <CalendarMonthOutlinedIcon />
                                 <input 
                                     className="datePicker inputField" 
@@ -269,7 +332,7 @@ export default function Appointments() {
                             <p className="fullDate datePicker">{ datePickerDate }</p>
                         </div>
                     </div>
-                    <div className="addNewContainer" onClick={ controller.handleAddNew }>
+                    <div className="addNewContainer" onClick={ () => controller.handleAddNewAppointment(false) }>
                         <AddOutlinedIcon />New Appointment
                     </div>
                     <form className="searchContainer" onSubmit = { controller.handleSearchSubmit }>
@@ -300,10 +363,12 @@ export default function Appointments() {
                 getTakenTimeSlots={ controller.getTakenTimeSlots } 
                 timeSlots={ takenTimeSlotsForTimePicker } 
                 isOnAppointmentsPage = { true }
+                isNewAppointment = { isNewAppointment }
                 handleAppointmentSubmit = { controller.handleAppointmentSubmit }
                 handleAppointmentUpdate = { controller.handleAppointmentUpdate }
                 handleAppointmentDelete = { controller.handleAppointmentDelete }
             />
+            <LoadingScreen />
         </section>
     );
 }
