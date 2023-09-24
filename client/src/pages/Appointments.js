@@ -128,9 +128,9 @@ export default function Appointments() {
             display.removeHighlightFromSearchContainer();
             display.resetSearchInput();
         },
-        handleAddNewAppointment: function(isNewAppointmentFromPatientPage) {
+        handleAddNewAppointment: function(isNeededToPreFillAppointmentFields) {
             setIsNewAppointment(true);
-            if (!isNewAppointmentFromPatientPage)
+            if (!isNeededToPreFillAppointmentFields)
                 setSelectedAppointment();
             display.showDialog();
         },
@@ -219,11 +219,11 @@ export default function Appointments() {
             return localStorage.getItem("isNewAppointmentFromPatientPage");
         },
         populateNewAppointmentFormWithPatientData() {
-            const isNewAppointmentFromPatientPage = true;
+            const isNeededToPreFillAppointmentFields = true;
             const patient = controller.getPatientFromLocalStorage();
             const appointment = controller.createAppointmentFromPatientData(patient);
             setSelectedAppointment(appointment);
-            controller.handleAddNewAppointment(isNewAppointmentFromPatientPage);
+            controller.handleAddNewAppointment(isNeededToPreFillAppointmentFields);
         },
         getPatientFromLocalStorage() {
             const patient = {};
@@ -243,6 +243,17 @@ export default function Appointments() {
             appointment.phone = patient.phone;
             return appointment;
         },
+        handleAddAnotherAppointment() {
+            const isNeededToPreFillAppointmentFields = true;
+            const appointment = {...selectedAppointment};
+            appointment.date = null;
+            appointment.time = null;
+            appointment.doctor = null;
+            appointment.treatment = null;
+            appointment.cost = null;
+            setSelectedAppointment(appointment);
+            controller.handleAddNewAppointment(isNeededToPreFillAppointmentFields);
+        }
     };
 
     const display = {
@@ -351,6 +362,7 @@ export default function Appointments() {
                     <p>Doctor</p>
                     <p>Treatment</p>
                     <p>Payment</p>
+                    <p>Cost</p>
                 </div>
                 <AppointmentList 
                     appointmentsArray = { appointmentsArray } 
@@ -367,6 +379,7 @@ export default function Appointments() {
                 handleAppointmentSubmit = { controller.handleAppointmentSubmit }
                 handleAppointmentUpdate = { controller.handleAppointmentUpdate }
                 handleAppointmentDelete = { controller.handleAppointmentDelete }
+                handleAddAnotherAppointment = { controller.handleAddAnotherAppointment }
             />
             <LoadingScreen />
         </section>

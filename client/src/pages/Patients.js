@@ -1,7 +1,7 @@
 import "../styles/patients.css";
 import PatientList from "../components/PatientList";
 import PatientFormForDialog from "../components/PatientFormDialog";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import dayjs from "dayjs";
@@ -57,7 +57,8 @@ export default function Patients() {
             patientFile = encodeURIComponent(patientFile);
             const fetchURL = `/appointments?patientFile=${patientFile}`;
             return fetch(fetchURL)
-                .then(res => res.json());
+                .then(res => res.json())
+                .catch(error => console.log(error));
         }
     };
 
@@ -65,6 +66,8 @@ export default function Patients() {
         handleAddNewPatient: function() {
             setDialogMode("addNew");
             display.showDialog();
+            // Reset payment picker value
+            document.querySelector(".inputField.payment").value = "";
         },
         handleSearchSubmit(e) {
             e.preventDefault();
@@ -86,9 +89,12 @@ export default function Patients() {
         getAppointments(patientFile) {
             return api.getAppointmentForPatient(patientFile)
                 .then(appointments => {
-                    appointments.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
-                    setAppointmentsForPatient(appointments);
-                });
+                    if (Array.isArray(appointments)) {
+                        appointments.forEach(item => item.date = dayjs(item.date).format(dateFormatForDB));
+                        setAppointmentsForPatient(appointments);
+                    }
+                })
+                .catch(error => console.log(error));
         },
         handlePatientClick: function(e) {
             const patientID = e.currentTarget.id;
@@ -96,11 +102,17 @@ export default function Patients() {
             setSelectedPatient(patient);
             setDialogMode("update");
             showLoadingScreen();
-            controller.getAppointments(patient.file)
-                .then(() => {
-                    hideLoadingScreen();
-                    display.showDialog();
-                });
+            if (patient.file)
+                controller.getAppointments(patient.file)
+                    .then(() => {
+                        hideLoadingScreen();
+                        display.showDialog();
+                    });
+            else {
+                hideLoadingScreen();
+                display.showDialog();
+            }
+
         },
         handlePatientSubmit: function (e) {
             e.preventDefault();
@@ -114,7 +126,8 @@ export default function Patients() {
                 lastName: e.target.lastName.value,
                 file: e.target.file.value ? e.target.file.value : null,
                 nrc: e.target.nrc.value ? e.target.nrc.value : null,
-                insuranceId: e.target.insuranceId.value ? e.target.insuranceId.value : null,
+                payment: e.target.payment.value ? e.target.payment.value : null,
+                insuranceId: e.target.insuranceId && e.target.insuranceId.value ? e.target.insuranceId.value : null,
                 phone: e.target.phone.value ? e.target.phone.value : null,
                 dateOfBirth: e.target.dateOfBirth.value ? e.target.dateOfBirth.value : null,
                 sex: e.target.sex.value ? e.target.sex.value : null,
@@ -137,7 +150,8 @@ export default function Patients() {
                 lastName: e.target.lastName.value,
                 file: e.target.file.value,
                 nrc: e.target.nrc.value,
-                insuranceId: e.target.insuranceId.value,
+                payment: e.target.payment.value,
+                insuranceId: e.target.insuranceId ? e.target.insuranceId.value : null,
                 phone: e.target.phone.value,
                 dateOfBirth: e.target.dateOfBirth.value ? e.target.dateOfBirth.value : null,
                 sex: e.target.sex.value,
@@ -224,10 +238,6 @@ export default function Patients() {
         }
     };
 
-    useEffect(() => {
-        // showLoadingScreen();
-        // display.showDialog();
-    })
 
     return (
         <section className="patientsPage section">
@@ -254,8 +264,7 @@ export default function Patients() {
                 </div>
                 <PatientList 
                     patientsArray = { patientsArray } 
-                    handlePatientClick = { controller.handlePatientClick } 
-                />
+                    handlePatientClick = { controller.handlePatientClick } />
             </div>
             <PatientFormForDialog 
                 dialogMode = { dialogMode }
@@ -264,8 +273,7 @@ export default function Patients() {
                 handlePatientSearch = { controller.handlePatientSearch }
                 handlePatientSubmit = { controller.handlePatientSubmit }
                 handlePatientUpdate = { controller.handlePatientUpdate }
-                handlePatientDelete = { controller.handlePatientDelete }
-            />
+                handlePatientDelete = { controller.handlePatientDelete } />
             <LoadingScreen />
         </section>
     );

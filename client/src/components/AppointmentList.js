@@ -45,6 +45,9 @@ export default function AppointmentList(data) {
                         <div className="infoContainer insurance">
                             <p>{appointment.payment}</p>
                         </div>
+                        <div className="infoContainer cost">
+                            <p>{appointment.cost}</p>
+                        </div>
                     </li>
                 ))
                 : (

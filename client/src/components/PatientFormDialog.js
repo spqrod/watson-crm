@@ -9,20 +9,27 @@ import AppointmentList from "./AppointmentList";
 import AppointmentFormDialog from "./AppointmentFormDialog";
 import { useNavigate } from "react-router-dom";
 
-
-
 export default function PatientFormDialog(data) {
 
     const [ dialogMode, setDialogMode ] = useState(data.dialogMode);
     const [ selectedPatient, setSelectedPatient ] = useState(data.patient);
     const [ appointmentsForPatient, setAppointmentsForPatient ] = useState(data.appointments);
     const [ selectedAppointment, setSelectedAppointment ] = useState();
+    const [ payments, setPayments ] = useState([]); 
+    const [ selectedPayment, setSelectedPayment ] = useState("");
     const { 
         handlePatientSubmit, 
         handlePatientUpdate, 
         handlePatientDelete 
     } = data;
     const navigate = useNavigate();
+
+    const api = {
+        getPayments() {
+            const fetchURL = "/payments";
+            return fetch(fetchURL).then(res => res.json());
+        },
+    }
 
     const controller = {
         resetPatientFormToDefault() {
@@ -33,6 +40,7 @@ export default function PatientFormDialog(data) {
                 const submitButton = document.querySelector(".button.submitButton");
                 submitButton.classList.add("disabled");
                 setAppointmentsForPatient([]);
+                setSelectedPayment("");
             };
         },
         makeUpdateButtonActive() {
@@ -56,7 +64,11 @@ export default function PatientFormDialog(data) {
                 localStorage.setItem(key, value);
             }
             navigate("/appointments");
-        }
+        },
+        getPayments() {
+            api.getPayments()
+                .then(res => setPayments(res));
+        },
     };
 
     const display = {
@@ -65,11 +77,16 @@ export default function PatientFormDialog(data) {
         showAppointmentDialog() {
             const dialog = document.querySelector(".appointmentFormDialog");
             dialog.showModal();
+        },
+        updatePaymentLabel(payment) {
+            setSelectedPayment(payment);
         }
     };
 
     useEffect(() => {
         setSelectedPatient(data.patient);
+        if (data.patient)
+            display.updatePaymentLabel(data.patient.payment);
     }, [data.patient]);
 
     useEffect(() => {
@@ -79,6 +96,10 @@ export default function PatientFormDialog(data) {
     useEffect(() => {
         setDialogMode(data.dialogMode);
     }, [data.dialogMode]);
+
+    useEffect(() => {
+        controller.getPayments();
+    }, []);
     
     return (
         <dialog className="dialog patientFormDialog" onClose={ controller.resetPatientFormToDefault } >
@@ -90,12 +111,7 @@ export default function PatientFormDialog(data) {
                     <CloseIcon />
                 </button>
             </form>
-            <form 
-                className="patientForm" 
-                onSubmit={ dialogMode === "update" ? 
-                    handlePatientUpdate : dialogMode === "addNew" ? 
-                        handlePatientSubmit : "" }
-            >
+            <form className="patientForm" onSubmit={ dialogMode === "update" ? handlePatientUpdate : dialogMode === "addNew" ? handlePatientSubmit : "" }>
                 <div className="infoContainer">
                     <div className="labelAndInputContainer firstName">
                         <label htmlFor="firstName">First Name:</label>
@@ -138,17 +154,35 @@ export default function PatientFormDialog(data) {
 
                         />
                     </div>
-                    <div className="labelAndInputContainer insuranceId">
-                        <label htmlFor="insuranceId">Insurance ID:</label>
-                        <input 
-                            type="number" 
-                            name="insuranceId" 
-                            id="insuranceId" 
-                            defaultValue={ dialogMode === "update" ? selectedPatient.insuranceId : "" }
-                            onChange={ controller.makeUpdateButtonActive }
-
-                            />
+                    <div className="labelAndInputContainer payment">
+                        <label htmlFor="payment">Payment:</label>
+                        <select
+                            className="inputField payment"
+                            id="payment" 
+                            name="payment"
+                            onChange = { () => {
+                                controller.makeUpdateButtonActive(); 
+                                setSelectedPayment(document.querySelector(".inputField.payment").value)
+                            }}
+                        >
+                            <option hidden>{ selectedPatient ? selectedPatient.payment : ""}</option>
+                            { payments.map((item) => 
+                                (<option key={ item } value={ item }>{ item }</option>)) }
+                        </select>
                     </div>
+                    { (selectedPayment === "Cash" || selectedPayment === "Swipe" || selectedPayment === "TT") ? null : 
+                        <div className="labelAndInputContainer insuranceId">
+                            <label htmlFor="insuranceId"> 
+                                { selectedPayment !== "" ? selectedPayment : "Insurance" } ID: 
+                            </label>
+                            <input 
+                                type="number" 
+                                name="insuranceId" 
+                                id="insuranceId" 
+                                defaultValue={ dialogMode === "update" ? selectedPatient.insuranceId : "" }
+                                onChange={ controller.makeUpdateButtonActive } />
+                        </div>
+                    }
                     <div className="labelAndInputContainer phone">
                         <label htmlFor="phone">Phone:</label>
                         <input 
@@ -271,6 +305,7 @@ export default function PatientFormDialog(data) {
                             <p>Doctor</p>
                             <p>Treatment</p>
                             <p>Payment</p>
+                            <p>Cost</p>
                         </div>
                         <AppointmentList 
                             appointmentsArray = { appointmentsForPatient } 

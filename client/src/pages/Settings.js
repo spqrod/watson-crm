@@ -144,13 +144,13 @@ export default function Analytics() {
 
                 </dialog> */}
 
-{/* 
+
                 <button className="button" onClick={ controller.handleImportAppointments }>
                     Import appointments
                 </button>
                 <button className="button" onClick={ controller.handleImportPatients }>
                     Import patients
-                </button> */}
+                </button>
             </div>
         </section>
     );
